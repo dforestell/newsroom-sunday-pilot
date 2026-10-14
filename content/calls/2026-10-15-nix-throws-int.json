@@ -4,5 +4,6 @@
   "window": "TNF",
   "take": "Bo Nix throws an interception.",
   "postUrl": "https://x.com/ChipAbsolute/status/2110392111229202805",
-  "status": "pending"
+  "status": "pending",
+  "kind": "forecast"
 }
