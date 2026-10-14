@@ -1,7 +1,7 @@
 import { HomeArchive, HomeCast, HomeFeatured, HomeStories } from "@/components/home-sections";
 import { LiveScoreboard } from "@/components/scoreboard/live-scoreboard";
 import { listCalls } from "@/lib/calls";
-import { listPublicStories } from "@/lib/stories";
+import { listStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
 
 export const metadata = shareMetadata(
@@ -9,8 +9,8 @@ export const metadata = shareMetadata(
   "NFL scores and a desk with opinions from Poor Form Sports. Entertainment only. Not reporting. Not betting advice.",
 );
 
-export default async function HomePage() {
-  const [latest, ...stories] = await listPublicStories();
+export default function HomePage() {
+  const [latest, ...stories] = listStories();
 
   return (
     <div className="space-y-6">
