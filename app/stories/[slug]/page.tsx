@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { StoryBody } from "@/components/story-body";
 import { notFound } from "next/navigation";
+import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { getStory, listStories, storyVoice } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
@@ -47,6 +48,15 @@ export default async function StoryArticlePage({
         <span className="min-w-0 break-words">{story.title}</span>
       </p>
 
+      <p
+        data-story-kicker
+        className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] tracking-wide text-ink-soft uppercase"
+      >
+        <StoryLabel label={story.label} />
+        <span aria-hidden="true">·</span>
+        <time dateTime={story.date}>{story.dateLabel}</time>
+      </p>
+
       <h1 className="max-w-3xl font-heading text-4xl font-semibold tracking-tight break-words sm:text-5xl">
         {story.title}
       </h1>
@@ -63,9 +73,6 @@ export default async function StoryArticlePage({
           {story.bylineDetail ? (
             <span className="text-sm text-ink-soft">{story.bylineDetail}</span>
           ) : null}
-          <span className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
-            {story.dateLabel}
-          </span>
         </div>
       ) : null}
 
