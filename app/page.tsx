@@ -15,8 +15,8 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-1">
-        <h1 className="font-heading text-lg leading-snug font-normal text-ink-soft italic sm:text-2xl">
-          Football opinions worth arguing about, from a cast whose bad takes stay on the record.
+        <h1 className="font-heading text-lg leading-snug font-normal text-balance text-ink-soft italic sm:text-2xl">
+          Football opinions worth arguing about, from a{"\u00a0"}cast whose bad takes stay on the record.
         </h1>
       </section>
 
