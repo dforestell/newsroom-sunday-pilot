@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { storyVoice, type Story } from "@/lib/stories";
 
@@ -20,7 +21,8 @@ export function StoryCard({
         className={`border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4 ${featured ? "sm:py-6" : ""}`}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="font-mono text-[11px] tracking-wide text-masthead uppercase">
+          <p className="flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-masthead uppercase">
+            <StoryLabel label={story.label} />
             {featured ? "Featured column" : "Column"}
           </p>
           <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">

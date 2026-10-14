@@ -70,7 +70,8 @@
   --color-demo: var(--demo);
   --color-demo-foreground: var(--demo-foreground);
   --color-satire: var(--satire);
-  --color-satire-foreground: var(--satire-foreground);
+  --color-satire-fg: var(--satire-fg);
+  --color-satire-foreground: var(--satire-fg);
   --color-satire-fill: var(--satire-fill);
   --color-card-loud: var(--card-loud);
   --color-bar: var(--bar);
@@ -125,8 +126,9 @@
   --demo: #e85d04;
   --demo-foreground: #fff8ef;
   --satire: #ffb703;
-  --satire-foreground: #0c0908;
-  --satire-fill: #fb8500;
+  --satire-fg: #0c0908;
+  --satire-foreground: var(--satire-fg);
+  --satire-fill: var(--satire);
   --card-loud: #ffffff;
   --bar: #0e0c0b;
   --bar-foreground: #fff8ef;
