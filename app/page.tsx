@@ -1,11 +1,6 @@
-import { CastStrip } from "@/components/cast-strip";
-import { BestOfDemo } from "@/components/best-of-demo";
-import { CallsFeature } from "@/components/calls-record";
-import { Scoreboard } from "@/components/scoreboard";
+import { HomeArchive, HomeCast, HomeFeatured, HomeStories } from "@/components/home-sections";
 import { LiveScoreboard } from "@/components/scoreboard/live-scoreboard";
-import { StoriesStrip } from "@/components/story-card";
 import { listCalls } from "@/lib/calls";
-import { listPublicGames } from "@/lib/live/public";
 import { listStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
 
@@ -15,31 +10,24 @@ export const metadata = shareMetadata(
 );
 
 export default function HomePage() {
-  const games = listPublicGames();
-  const stories = listStories();
+  const [latest, ...stories] = listStories();
 
   return (
     <div className="space-y-6">
-      <section className="max-w-3xl space-y-2">
+      <section className="max-w-3xl space-y-1">
         <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
           Poor Form Sports
         </p>
-        <h1 className="font-heading text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
           The desk has opinions. The board labels its work.
         </h1>
-        <p className="text-sm leading-6 text-ink-soft sm:text-base">
-          Follow the NFL scoreboard when it is up, then catch up with Chip
-          Absolute and the desk. Entertainment only. Filed archives sit below
-          the board; latest desk columns lead Stories.
-        </p>
       </section>
 
-      <LiveScoreboard />
-      <CallsFeature calls={listCalls()} />
-      <Scoreboard games={games.filter((game) => game.demo)} />
-      <BestOfDemo />
-      <CastStrip />
-      <StoriesStrip stories={stories} />
+      <HomeFeatured story={latest} calls={listCalls()} />
+      <LiveScoreboard compact />
+      <HomeCast />
+      <HomeStories stories={stories.slice(0, 3)} />
+      <HomeArchive />
     </div>
   );
 }
