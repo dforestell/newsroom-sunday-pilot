@@ -21,6 +21,9 @@ const schema = z
     game: oneLine("Name the game, e.g. DET at CAR."),
     window: oneLine("Add a short window such as MNF, or omit the field.").optional(),
     take: oneLine("Add Chip's one-line take."),
+    kind: z.enum(["forecast", "argument"], {
+      error: 'Use kind "forecast" (one checkable outcome, posted before kickoff) or "argument" (an opinion with no box-score line).',
+    }),
     postUrl: z
       .string({ error: "Use an https://x.com/ChipAbsolute/status/<id> URL." })
       .trim()
@@ -36,6 +39,20 @@ const schema = z
   })
   .strict()
   .superRefine((data, ctx) => {
+    if (data.kind === "forecast" && data.status === "still-arguing") {
+      ctx.addIssue({
+        code: "custom",
+        path: ["status"],
+        message: 'A forecast is graded by the final ESPN box: use "pending", "held-up", or "missed". "still-arguing" is for arguments.',
+      });
+    }
+    if (data.kind === "argument" && data.status === "pending") {
+      ctx.addIssue({
+        code: "custom",
+        path: ["status"],
+        message: 'An argument is never pending: file it as "still-arguing" with the verified result.',
+      });
+    }
     if (data.status !== "pending" && !data.result) {
       ctx.addIssue({
         code: "custom",
@@ -46,6 +63,7 @@ const schema = z
   });
 
 export type CallStatus = z.infer<typeof schema>["status"];
+export type CallKind = z.infer<typeof schema>["kind"];
 
 export type Call = z.infer<typeof schema> & {
   dateLabel: string;
@@ -162,6 +180,7 @@ export function parseCall(file: string, source: string): Call {
     dateLabel: dateLabel(data.date),
     game: data.game,
     take: data.take,
+    kind: data.kind,
     postUrl: data.postUrl,
     status: data.status,
   };

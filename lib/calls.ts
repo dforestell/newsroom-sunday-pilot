@@ -5,6 +5,7 @@ import {
   CALL_STATUS_LABEL,
   CALL_STATUS_TONE,
   type Call,
+  type CallKind,
   type CallStatus,
 } from "./calls/content.ts";
 
@@ -15,6 +16,7 @@ export {
   CALL_STATUS_LABEL,
   CALL_STATUS_TONE,
   type Call,
+  type CallKind,
   type CallStatus,
 };
 

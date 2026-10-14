@@ -16,6 +16,7 @@ const valid = {
   game: "ATL at NO",
   window: "MNF",
   take: "Atlanta should give Bijan Robinson 25 carries.",
+  kind: "argument",
   postUrl: "https://x.com/ChipAbsolute/status/2107229099995353571",
   result: "Falcons won 45–24. Bijan had 19 carries for 145 yards and 2 TDs (7.6 a carry).",
   status: "still-arguing",
@@ -186,6 +187,7 @@ function filed(overrides: Partial<Call> & Pick<Call, "date" | "status" | "postUr
   return {
     game: "ATL at NO",
     take: "A take.",
+    kind: overrides.status === "still-arguing" ? "argument" : "forecast",
     result: "A result.",
     dateLabel: overrides.date,
     ...overrides,
@@ -388,7 +390,7 @@ test("pending call may omit result, and graded statuses may not", () => {
   assert.equal(typeof result, "string");
   const pending = parseCall(
     "2026-10-05-pending.json",
-    `${JSON.stringify({ ...withoutResult, status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }, null, 2)}\n`,
+    `${JSON.stringify({ ...withoutResult, kind: "forecast", status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }, null, 2)}\n`,
   );
   assert.equal(pending.status, "pending");
   assert.equal(pending.result, undefined);
@@ -396,7 +398,7 @@ test("pending call may omit result, and graded statuses may not", () => {
 
   const withResult = parseCall(
     "2026-10-05-pending.json",
-    callFile({ status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }),
+    callFile({ kind: "forecast", status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }),
   );
   assert.equal(withResult.result, valid.result);
 
@@ -413,7 +415,7 @@ test("check:calls accepts a pending file with no result", () => {
   assert.ok(result);
   withFiles(
     {
-      "2026-10-05-pending.json": `${JSON.stringify({ ...withoutResult, status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }, null, 2)}\n`,
+      "2026-10-05-pending.json": `${JSON.stringify({ ...withoutResult, kind: "forecast", status: "pending", postUrl: "https://x.com/ChipAbsolute/status/9" }, null, 2)}\n`,
     },
     (directory) => {
       const calls = loadCalls(directory);
@@ -453,4 +455,23 @@ test("record tally shows still-arguing separately from pending", () => {
   const tally = html.slice(html.indexOf('aria-label="Call tally"'));
   assert.match(tally, />1<\/p><p[^>]*>Still arguing</);
   assert.match(tally, />0<\/p><p[^>]*>Pending</);
+});
+
+test("every filed call carries the kind from the grading rule", () => {
+  const kinds = Object.fromEntries(loadCalls().map((call) => [call.take, call.kind]));
+  assert.equal(kinds["Bryce Young over Jared Goff."], "argument");
+  assert.equal(kinds["Atlanta should give Bijan Robinson 25 carries."], "argument");
+  for (const call of loadCalls().filter((c) => c.date >= "2026-10-08" && c.date <= "2026-10-12")) {
+    assert.equal(call.kind, "forecast", call.take);
+  }
+});
+
+test("kind is required and must match the status rules", () => {
+  const { kind, ...withoutKind } = valid;
+  assert.equal(kind, "argument");
+  assert.throws(() => parseCall("2026-10-05-x.json", `${JSON.stringify(withoutKind)}\n`), /2026-10-05-x\.json — kind:.*forecast/);
+  assert.throws(() => parseCall("2026-10-05-x.json", callFile({ kind: "prescription" })), /— kind:/);
+  assert.throws(() => parseCall("2026-10-05-x.json", callFile({ kind: "forecast" })), /— status:.*still-arguing" is for arguments/);
+  assert.throws(() => parseCall("2026-10-05-x.json", callFile({ status: "pending" })), /— status:.*never pending/);
+  assert.equal(parseCall("2026-10-05-x.json", callFile({ kind: "forecast", status: "pending" })).kind, "forecast");
 });

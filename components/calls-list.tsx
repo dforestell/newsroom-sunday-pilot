@@ -20,6 +20,9 @@ export function CallsList({ calls }: { calls: Call[] }) {
         <p className="text-sm leading-6 text-ink-soft sm:text-base">
           His takes, and how each one held up.
         </p>
+        <p className="text-sm leading-6 text-ink-soft sm:text-base">
+          Forecasts are locked before kickoff and graded by the final ESPN box. They hit only if they happen exactly as written. Arguments aren’t graded hit or miss; Chip either owns them or they stand, with the evidence in the receipt.
+        </p>
         <p className="text-sm italic text-ink-soft">
           Fictional columnist. Football satire, not reporting.
         </p>
