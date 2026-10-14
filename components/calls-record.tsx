@@ -33,7 +33,7 @@ function PostLink({ href }: { href: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="mt-2 inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+      className="mt-2 inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
     >
       The X post
     </a>
@@ -44,19 +44,19 @@ export function NextCall({ call }: { call: Call | null }) {
   return (
     <section aria-label="Next call" className="border border-border bg-card">
       <div className="border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Next call
         </p>
         {call ? (
           <>
             <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-              <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                 <time dateTime={call.date}>{call.dateLabel}</time>
                 {call.window ? ` · ${call.window}` : ""}
               </p>
               <CallStatusTag status={call.status} />
             </div>
-            <p className="mt-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+            <p className="mt-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
               {call.game}
             </p>
             <p className="mt-1 font-heading text-xl font-semibold tracking-tight break-words sm:text-2xl">
@@ -82,7 +82,7 @@ export function ChipRecord({
   return (
     <section aria-label="Chip’s record" className="border border-border bg-card">
       <div className="border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Chip’s record
         </p>
         <ul
@@ -94,7 +94,7 @@ export function ChipRecord({
               <p className="font-heading text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">
                 {record.tally[row.key]}
               </p>
-              <p className="mt-1 font-mono text-[10px] leading-tight tracking-wide text-ink-soft uppercase sm:text-[11px]">
+              <p className="mt-1 font-mono text-xs leading-tight tracking-wide text-ink-soft uppercase sm:text-[13px]">
                 {row.label}
               </p>
             </li>
@@ -107,18 +107,18 @@ export function ChipRecord({
         </p>
         {showLatest && record.latest ? (
           <div className="mt-4 border-t border-border pt-3">
-            <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+            <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
               Latest call
             </p>
             <div className="mt-2 bg-card-loud px-3 py-3 sm:px-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   <time dateTime={record.latest.date}>{record.latest.dateLabel}</time>
                   {record.latest.window ? ` · ${record.latest.window}` : ""}
                 </p>
                 <CallStatusTag status={record.latest.status} />
               </div>
-              <p className="mt-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+              <p className="mt-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
                 {record.latest.game}
               </p>
               <p className="mt-1 font-heading text-xl font-semibold tracking-tight break-words sm:text-2xl">
@@ -154,7 +154,7 @@ export function CallsFeature({ calls }: { calls: Call[] }) {
     <section aria-labelledby="calls-feature-heading" className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Chip Absolute
           </p>
           <h2 id="calls-feature-heading" className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
@@ -163,7 +163,7 @@ export function CallsFeature({ calls }: { calls: Call[] }) {
         </div>
         <Link
           href="/calls"
-          className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
         >
           All calls
         </Link>

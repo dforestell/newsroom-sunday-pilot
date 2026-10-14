@@ -35,7 +35,7 @@ export function CompactScoreRows({ games, stale }: { games: NflGame[]; stale: bo
             <span>
               {game.away.abbreviation} <span className="font-semibold">{game.away.score ?? "–"}</span>
             </span>
-            <span className="text-center text-[11px] tracking-wide text-ink-soft uppercase">{status(game, stale)}</span>
+            <span className="text-center text-[13px] tracking-wide text-ink-soft uppercase">{status(game, stale)}</span>
             <span className="text-right">
               <span className="font-semibold">{game.home.score ?? "–"}</span> {game.home.abbreviation}
             </span>

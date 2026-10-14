@@ -50,7 +50,7 @@ export default async function StoryArticlePage({
 
       <p
         data-story-kicker
-        className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] tracking-wide text-ink-soft uppercase"
+        className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[13px] tracking-wide text-ink-soft uppercase"
       >
         <StoryLabel label={story.label} />
         <span aria-hidden="true">·</span>
@@ -82,10 +82,10 @@ export default async function StoryArticlePage({
 
       {next ? (
         <section aria-label="Next story" className="border-t border-border pt-5">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Next story</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Next story</p>
           <Link href={`/stories/${next.slug}`} className="mt-1 block max-w-3xl hover:underline">
             <span className="block font-heading text-[22px] leading-snug font-semibold break-words">{next.title}</span>
-            <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+            <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
               <StoryLabel label={next.label} />
               <span>
                 {nextVoice ? `${nextVoice.name} · ` : ""}
@@ -95,7 +95,7 @@ export default async function StoryArticlePage({
           </Link>
           {more.length > 0 ? (
             <>
-              <p className="mt-5 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">More stories</p>
+              <p className="mt-5 font-mono text-sm tracking-[0.18em] text-masthead uppercase">More stories</p>
               <ul className="mt-1">
                 {more.map((item) => (
                   <li key={item.slug}>
@@ -113,7 +113,7 @@ export default async function StoryArticlePage({
 
       <section className="grid gap-2 border-t border-border pt-5 sm:grid-cols-2">
         <div>
-          <p className="mb-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="mb-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Related cast
           </p>
           {voice ? (
@@ -126,7 +126,7 @@ export default async function StoryArticlePage({
                 <span className="block font-heading text-lg font-semibold">
                   {voice.name}
                 </span>
-                <span className="font-mono text-[10px] tracking-wide text-ink-soft uppercase">
+                <span className="font-mono text-xs tracking-wide text-ink-soft uppercase">
                   {voice.title}
                 </span>
               </span>
@@ -135,7 +135,7 @@ export default async function StoryArticlePage({
         </div>
         {story.relatedGameHref ? (
           <div>
-            <p className="mb-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+            <p className="mb-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
               Related game
             </p>
             <Link

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { isDemoGamePath } from "@/lib/demo/banners";
 import { cn } from "@/lib/utils";
 
@@ -52,10 +52,22 @@ function linkClass(active: boolean) {
 export function SiteNav() {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   return (
     <nav aria-label="Main" className="font-mono tracking-[0.08em] uppercase">
-      <ul className="hidden flex-wrap items-center justify-end gap-x-4 text-[15px] sm:flex lg:flex-nowrap lg:whitespace-nowrap">
+      <ul className="hidden flex-wrap items-center justify-end gap-x-4 text-[15px] lg:flex lg:flex-nowrap lg:whitespace-nowrap">
         {nav.map((item) => {
           const active = item.match(pathname);
           return (
@@ -72,8 +84,9 @@ export function SiteNav() {
         })}
       </ul>
       <button
+        ref={toggleRef}
         type="button"
-        className="inline-flex min-h-11 items-center border-2 border-border px-3 font-mono text-sm tracking-[0.08em] uppercase sm:hidden"
+        className="inline-flex min-h-11 items-center border-2 border-border px-3 font-mono text-sm tracking-[0.08em] uppercase lg:hidden"
         aria-expanded={open}
         aria-controls="site-menu"
         onClick={() => setOpen((value) => !value)}
@@ -83,7 +96,7 @@ export function SiteNav() {
       {open ? (
         <ul
           id="site-menu"
-          className="absolute inset-x-0 top-full z-40 border-b-2 border-border bg-paper text-sm sm:hidden"
+          className="absolute inset-x-0 top-full z-40 border-b-2 border-border bg-paper text-sm lg:hidden"
         >
           {nav.map((item) => {
             const active = item.match(pathname);

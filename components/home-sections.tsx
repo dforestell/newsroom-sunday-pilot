@@ -6,9 +6,9 @@ import { CAST } from "@/lib/cast";
 import { getCallRecord, type Call } from "@/lib/calls";
 import { storyVoice, type Story } from "@/lib/stories";
 
-const kicker = "font-mono text-[11px] tracking-[0.18em] text-masthead uppercase";
+const kicker = "font-mono text-sm tracking-[0.18em] text-masthead uppercase";
 const sectionLink =
-  "inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline";
+  "inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline";
 
 function SectionHead({ label, title, href, linkLabel }: { label: string; title: string; href: string; linkLabel: string }) {
   return (
@@ -59,7 +59,7 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
             <blockquote className="border-l-4 border-satire pl-3 font-heading text-xl leading-snug font-semibold italic break-words">
               “{call.take}”
             </blockquote>
-            <figcaption className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+            <figcaption className="mt-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
               {call.game} · <time dateTime={call.date}>{call.dateLabel}</time>
             </figcaption>
           </figure>
@@ -85,7 +85,7 @@ export function HomeCast() {
               <VoiceAvatar voice={voice} size={32} className="size-8 shrink-0" />
               <span className="min-w-0">
                 <span className="block truncate font-heading text-sm font-semibold">{voice.name}</span>
-                <span className="block font-mono text-[10px] tracking-wide text-ink-soft uppercase">{voice.title}</span>
+                <span className="block font-mono text-xs tracking-wide text-ink-soft uppercase">{voice.title}</span>
               </span>
             </Link>
           </li>
@@ -106,7 +106,7 @@ export function HomeStories({ stories }: { stories: Story[] }) {
             <li key={story.slug}>
               <Link href={`/stories/${story.slug}`} className="block py-3 hover:underline">
                 <span className="block font-heading text-lg leading-snug font-semibold">{story.title}</span>
-                <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   <StoryLabel label={story.label} />
                   <span>
                     {voice ? `${voice.name} · ` : ""}

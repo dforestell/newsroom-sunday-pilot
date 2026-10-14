@@ -14,7 +14,7 @@ export default function StoriesIndexPage() {
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Poor Form Desk
         </p>
         <h1 className="font-heading text-4xl font-semibold tracking-tight break-words sm:text-5xl">

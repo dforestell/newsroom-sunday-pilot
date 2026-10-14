@@ -20,19 +20,19 @@ function isScoreboard(value: unknown): value is ScoreboardResponse {
 function PilotBoardNotice({ gameId }: { gameId?: string }) {
   return (
     <div className="border-2 border-masthead bg-card-loud px-4 py-6 text-left">
-      <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Pilot mode</p>
+      <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Pilot mode</p>
       <h3 className="mt-1 font-heading text-2xl font-semibold">The live board is asleep.</h3>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-ink-soft">
         The league is fine. The live board is quiet, so it will not pretend empty space is an NFL Sunday. The Melbourne, SNF and MNF archives below are open.
       </p>
-      <div className="mt-4 flex flex-wrap gap-x-3 gap-y-2 font-mono text-[11px] tracking-wide text-masthead uppercase">
+      <div className="mt-4 flex flex-wrap gap-x-3 gap-y-2 font-mono text-sm tracking-wide text-masthead uppercase">
         <Link href="/games/sunday-pilot" className="underline-offset-4 hover:underline">Melbourne</Link>
         <Link href="/games/demo-dal-nyg-snf" className="underline-offset-4 hover:underline">SNF</Link>
         <Link href="/games/demo-den-kc-mnf" className="underline-offset-4 hover:underline">MNF</Link>
         <Link href="/stories" className="underline-offset-4 hover:underline">Desk stories</Link>
         <Link href="/about" className="underline-offset-4 hover:underline">About</Link>
       </div>
-      {gameId ? <p className="mt-4 text-xs text-ink-soft">That live-game detail is unavailable until the pilot board wakes up.</p> : null}
+      {gameId ? <p className="mt-4 text-[13px] text-ink-soft">That live-game detail is unavailable until the pilot board wakes up.</p> : null}
     </div>
   );
 }
@@ -109,8 +109,8 @@ export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; c
     return (
       <section aria-label="NFL scoreboard" aria-busy={!data && !failed}>
         <div className="flex flex-wrap items-center justify-between gap-2 bg-bar px-3 py-2 text-bar-foreground">
-          <h2 className="font-mono text-[11px] tracking-[0.18em] uppercase">NFL scoreboard</h2>
-          <p className={`font-mono text-[10px] uppercase ${stale ? "text-demo" : "text-bar-foreground/70"}`}>{status}</p>
+          <h2 className="font-mono text-sm tracking-[0.18em] uppercase">NFL scoreboard</h2>
+          <p className={`font-mono text-xs uppercase ${stale ? "text-demo" : "text-bar-foreground/70"}`}>{status}</p>
         </div>
         <p role="status" className="sr-only">{!data ? failed ? "Scores temporarily unavailable." : "Loading scoreboard." : stale ? "Score updates are delayed." : "Scoreboard available."}</p>
         {games.length > 0 ? <CompactScoreRows games={games} stale={stale} /> : !data && failed ? <PilotBoardNotice /> : (
@@ -118,7 +118,7 @@ export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; c
             {!data ? "Fetching NFL scores…" : "No games scheduled in this window."}
           </p>
         )}
-        <Link href="/scores" className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline">All games →</Link>
+        <Link href="/scores" className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline">All games →</Link>
       </section>
     );
   }
@@ -127,10 +127,10 @@ export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; c
     <section className="space-y-3" aria-label="NFL scoreboard" aria-busy={!data && !failed}>
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">NFL scoreboard</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">NFL scoreboard</p>
           <h2 className="font-heading text-2xl font-semibold tracking-tight">{gameId ? "Game details" : "Around the league"}</h2>
         </div>
-        <p className={`font-mono text-[10px] uppercase ${stale ? "text-warn" : "text-ink-soft"}`}>
+        <p className={`font-mono text-xs uppercase ${stale ? "text-warn" : "text-ink-soft"}`}>
           {status}
         </p>
       </div>
@@ -143,8 +143,8 @@ export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; c
         )
       )}
       {others.length > 0 ? <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{others.map(game => <GameScoreCard key={game.id} game={game} stale={stale} />)}</div> : null}
-      {data ? <p className="text-xs text-ink-soft">Kickoff times shown in Central Time. Scores may lag the game.</p> : null}
-      {gameId ? <Link href="/" className="font-mono text-xs text-masthead underline underline-offset-4">← All games</Link> : null}
+      {data ? <p className="text-[13px] text-ink-soft">Kickoff times shown in Central Time. Scores may lag the game.</p> : null}
+      {gameId ? <Link href="/scores" className="font-mono text-sm text-masthead underline underline-offset-4">← All games</Link> : null}
     </section>
   );
 }

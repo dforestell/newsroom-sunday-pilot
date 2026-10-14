@@ -113,7 +113,7 @@ export function ReplayDesk({ initialMs = 0 }: { initialMs?: number }) {
             <input type="hidden" name="t" value={String(SIMULATED_REEL_MS)} />
             <button
               type="submit"
-              className="font-mono text-xs tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+              className="font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
             >
               Show full SIMULATED tape
             </button>
@@ -131,7 +131,7 @@ export function ReplayDesk({ initialMs = 0 }: { initialMs?: number }) {
 
       <section className="space-y-3">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Simulated live blog
           </p>
           <h2 className="font-heading text-2xl font-semibold">Timeline</h2>

@@ -61,7 +61,7 @@ export default async function CastVoicePage({
           }
         />
         <div className="min-w-0 space-y-2">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             {voice.desk}
           </p>
           <h1 className="font-heading text-4xl font-semibold tracking-tight break-words sm:text-5xl">
@@ -72,7 +72,7 @@ export default async function CastVoicePage({
               <DeskPill tone="outline">{voice.title}</DeskPill>
             )}
             {lead ? (
-              <span className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              <span className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                 Files after the facts land
               </span>
             ) : null}
@@ -137,7 +137,7 @@ export default async function CastVoicePage({
               href={voice.x.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center border border-border bg-card-loud px-3 font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+              className="inline-flex min-h-11 items-center border border-border bg-card-loud px-3 font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
             >
               Follow Chip on X
             </a>
@@ -150,22 +150,22 @@ export default async function CastVoicePage({
 
       <section className="grid gap-px border border-border bg-border sm:grid-cols-2">
         <div className="bg-card p-4">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Fun fact</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Fun fact</p>
           <p className="mt-2 text-sm leading-6 text-ink">{voice.funFact}</p>
         </div>
         <div className="bg-card p-4">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Appears when</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Appears when</p>
           <p className="mt-2 text-sm leading-6 text-ink">{voice.appearsWhen}</p>
         </div>
         <div className="bg-card p-4">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Favorite coworker</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Favorite coworker</p>
           <p className="mt-2 text-sm leading-6 text-ink">
             {favorite ? <Link href={`/cast/${favorite.slug}`} className="font-medium underline-offset-4 hover:underline">{favorite.name}</Link> : "The desk"}
             {" · "}{voice.favoriteCoworker.why}
           </p>
         </div>
         <div className="bg-card p-4">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Least favorite coworker</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Least favorite coworker</p>
           <p className="mt-2 text-sm leading-6 text-ink">
             {leastFavorite ? <Link href={`/cast/${leastFavorite.slug}`} className="font-medium underline-offset-4 hover:underline">{leastFavorite.name}</Link> : "The desk"}
             {" · "}{voice.leastFavoriteCoworker.why}
@@ -178,19 +178,19 @@ export default async function CastVoicePage({
           href={voice.x.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center border border-border bg-card-loud px-3 font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center border border-border bg-card-loud px-3 font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
         >
           Follow @{voice.x.handle} on X
         </a>
       ) : (
-        <span className="inline-flex items-center border border-border bg-card-loud px-3 py-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+        <span className="inline-flex items-center border border-border bg-card-loud px-3 py-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
           X account coming soon
         </span>
       ))}
 
       <section className="border border-border bg-card-loud py-4 pr-4 pl-0">
         <div className="border-l-[6px] border-masthead px-4">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Lens
           </p>
           <p className="mt-2 font-heading text-2xl leading-snug text-ink italic sm:text-[28px]">
@@ -206,7 +206,7 @@ export default async function CastVoicePage({
       ) : null}
 
       <section className="space-y-3">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           On the board
         </p>
         <h2 className="font-heading text-2xl font-semibold">Assigned games</h2>
@@ -229,7 +229,7 @@ export default async function CastVoicePage({
                     <p className="font-heading text-lg font-semibold">
                       {game.name}
                     </p>
-                    <p className="font-mono text-xs tracking-wide text-ink-soft uppercase">
+                    <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                       {game.away.short} — {game.home.short}
                     </p>
                   </Link>

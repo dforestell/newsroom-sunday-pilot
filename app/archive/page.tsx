@@ -18,7 +18,7 @@ export default function ArchiveIndexPage() {
   return (
     <div className="space-y-8">
       <section className="max-w-3xl space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Poor Form Desk</p>
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Poor Form Desk</p>
         <h1 className="font-heading text-4xl font-semibold tracking-tight break-words sm:text-5xl">Archive</h1>
         <p className="text-sm leading-6 text-ink-soft sm:text-base">
           Filed game timelines and past columns. Archives are written after the final whistle and are never live scores.
@@ -36,10 +36,10 @@ export default function ArchiveIndexPage() {
                   <Link href={`/games/${game.id}`} className="font-heading text-lg font-semibold underline-offset-4 hover:underline">
                     {game.name}
                   </Link>
-                  <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                  <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                     {chrome?.kicker ?? game.windowLabel} · Final · {game.away.short} {game.officialScore.away}–{game.officialScore.home} {game.home.short}
                   </p>
-                  <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                  <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                     {chrome?.sources ?? game.feedNote}
                     {chrome?.sourceLinks?.map((link) => (
                       <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="ml-2 text-masthead underline-offset-4 hover:underline">
