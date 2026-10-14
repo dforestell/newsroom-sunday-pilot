@@ -12,7 +12,7 @@ relatedGameLabel: Broncos–Chiefs MNF →
 
 This is a Monday night column, filed after Chiefs 31, Broncos 10. The score is the receipt. The question is one snap: [third quarter, 12:43 left, Kansas City up 14–7 on the first drive of the second half, fourth-and-one at its own 40](https://www.espn.com/nfl/playbyplay/_/gameId/401872931). What did Kansas City choose to trust?
 
-They sent three extra blockers in as eligible, handed it to Kenneth Walker, and he went left end for sixty yards and a touchdown. 21–7. Conversion Referendum: fourth-and-one on your own side of the field, hand it to the running back, sixty yards later the ballot counts itself.
+They lined up in an unusual heavy look, handed it to Kenneth Walker, and he went left end for sixty yards and a touchdown. 21–7. Conversion Referendum: fourth-and-one on your own side of the field, hand it to the running back, sixty yards later the ballot counts itself.
 
 Do not call that vibes because the result looked easy afterward. The point of a referendum is that the choice exists before the result. Fourth-and-one turns a possession into a public statement: trust the line, trust the back, accept the consequences.
 
