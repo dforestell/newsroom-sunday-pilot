@@ -17,12 +17,21 @@ const DEMO_CHROME: Record<string, DemoChrome> = {
   [melbourneId]: {
     banner: melbourneBanner,
     kicker: "Melbourne · MCG",
-    sources: "Sources: ESPN, Reuters, Rams.com, NFL gamebook",
+    sources: "Sources: ESPN recap gameId 401872657, Reuters, Rams.com, NFL gamebook",
+    sourceLinks: [
+      { label: "ESPN recap", href: "https://www.espn.com/nfl/recap?gameId=401872657" },
+      { label: "NFL.com Game Center", href: "https://www.nfl.com/games/49ers-at-rams-2026-reg-1" },
+    ],
   },
   [dalNygId]: {
     banner: dalNygBanner,
     kicker: "SNF · MetLife",
-    sources: "Sources: ESPN, CBS, NBC, Giants.com",
+    sources: "Sources: ESPN recap gameId 401872930, CBS, NBC, Giants.com",
+    sourceLinks: [
+      { label: "ESPN recap", href: "https://www.espn.com/nfl/recap?gameId=401872930" },
+      { label: "ESPN box score", href: "https://www.espn.com/nfl/game/_/gameId/401872930" },
+      { label: "NFL.com Game Center", href: "https://www.nfl.com/games/cowboys-at-giants-2026-reg-1" },
+    ],
   },
   [denKcId]: {
     banner: denKcBanner,

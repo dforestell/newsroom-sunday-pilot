@@ -61,8 +61,8 @@ test("demo source strips keep attribution and drop production crumbs", () => {
   const banners = source("lib/demo/banners.ts");
   const catalog = source("lib/live/catalog.ts");
 
-  assert.match(banners, /Sources: ESPN, Reuters, Rams.com, NFL gamebook/);
-  assert.match(banners, /Sources: ESPN, CBS, NBC, Giants.com/);
+  assert.match(banners, /Sources: ESPN recap gameId 401872657, Reuters, Rams.com, NFL gamebook/);
+  assert.match(banners, /Sources: ESPN recap gameId 401872930, CBS, NBC, Giants.com/);
   assert.match(banners, /Sources: ESPN recap gameId 401872931/);
   assert.equal(/Injury beats skipped/i.test(banners), false);
   assert.equal(/Carl silent/i.test(banners), false);
@@ -85,4 +85,12 @@ test("archive index lists filed games and the nav points at it", () => {
   assert.match(page, /never live scores/);
   assert.match(nav, /href: "\/archive",\n    label: "Archive"/);
   assert.equal(/\/games\/sunday-pilot/.test(nav), false);
+});
+
+test("Melbourne and DAL @ NYG archives link their sources", () => {
+  const banners = source("lib/demo/banners.ts");
+  assert.match(banners, /https:\/\/www\.espn\.com\/nfl\/recap\?gameId=401872657/);
+  assert.match(banners, /https:\/\/www\.nfl\.com\/games\/49ers-at-rams-2026-reg-1/);
+  assert.match(banners, /https:\/\/www\.espn\.com\/nfl\/recap\?gameId=401872930/);
+  assert.match(banners, /https:\/\/www\.nfl\.com\/games\/cowboys-at-giants-2026-reg-1/);
 });
