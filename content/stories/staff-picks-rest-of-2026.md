@@ -37,7 +37,7 @@ Week 2 is not a mandate. It is a dare. So every voice in the newsroom filed a re
 | Category | Pick | One-line why |
 | --- | --- | --- |
 | **MVP** | Lamar Jackson | Best remaining marriage of scheme leverage and forced-choice defense — math that survives contact. |
-| **Super Bowl** | Baltimore Ravens | Conversion equity + complementary football; Wes does not bet vibes when the ballot has better math. |
+| **Super Bowl** | Baltimore Ravens | Conversion equity + complementary football; Wes does not trust vibes when the ballot has better math. |
 | **ROY** *(added Oct 14)* | Denzel Boston (CLE) | Ten of his first 13 catches went for a first down or a touchdown. That isn’t highlight luck. It’s a conversion rate. |
 | **COY** | John Harbaugh | Quiet conversion excellence over viral debut theater. |
 | **Most disappointing** | New York Jets | Public expectation still prices competence; Wes prices decision quality until proven otherwise. |

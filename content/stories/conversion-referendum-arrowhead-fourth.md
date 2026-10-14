@@ -16,7 +16,7 @@ They lined up in an unusual heavy look, handed it to Kenneth Walker, and he went
 
 Do not call that vibes because the result looked easy afterward. The point of a referendum is that the choice exists before the result. Fourth-and-one turns a possession into a public statement: trust the line, trust the back, accept the consequences.
 
-Here’s the alternative they turned down. Punt from your own 40 and Denver gets the ball back down a touchdown with most of a half left. Go and miss, and Denver starts 40 yards from the end zone. Kansas City had already seen the first version of this ballot: fourth-and-two at the Denver 38 in the first quarter, Walker for three, and the drive ended in a touchdown. Same coach, same back, same answer.
+Here’s the alternative they turned down. Punt from your own 40 and Denver gets the ball back down a touchdown with most of a half left. Go and miss, and Denver starts 40 yards from the end zone. So the math was plain: convert and Kansas City keeps the ball up seven with a new set of downs, or miss and Denver needs 40 yards to tie. Kansas City had already seen the first version of this ballot: fourth-and-two at the Denver 38 in the first quarter, Walker for three, and the drive ended in a touchdown. Same coach, same back, same answer.
 
 Kansas City came back to Walker for its last touchdown too: Mahomes, short middle, two yards, Walker in the end zone. That is not chaos. That is a team that found its answer and kept asking the same question.
 
