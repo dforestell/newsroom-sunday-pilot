@@ -9,6 +9,8 @@ type DemoChrome = {
   banner: string;
   kicker: string;
   sources: string;
+  /** Linkable sources already named in `sources`. */
+  sourceLinks?: Array<{ label: string; href: string }>;
 };
 
 const DEMO_CHROME: Record<string, DemoChrome> = {
@@ -26,6 +28,7 @@ const DEMO_CHROME: Record<string, DemoChrome> = {
     banner: denKcBanner,
     kicker: "MNF · Arrowhead",
     sources: "Sources: ESPN recap gameId 401872931",
+    sourceLinks: [{ label: "ESPN recap", href: "https://www.espn.com/nfl/recap/_/gameId/401872931" }],
   },
 };
 
@@ -46,6 +49,7 @@ export function demoBannerForPath(pathname: string | null): string {
 export function isDemoGamePath(pathname: string): boolean {
   return (
     pathname === "/demo" ||
+    pathname.startsWith("/archive") ||
     pathname.startsWith("/games/sunday-pilot") ||
     pathname.startsWith("/games/demo-")
   );
