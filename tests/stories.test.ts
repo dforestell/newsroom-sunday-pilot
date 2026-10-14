@@ -154,3 +154,12 @@ test("story links open externally and Sources renders as its own section", () =>
   assert.equal(/<strong>Sources<\/strong>/.test(html), false);
   assert.match(html, /<li><a href="https:\/\/www\.espn\.com\/x" target="_blank" rel="noopener noreferrer">ESPN, recap, A@B<\/a><\/li>/);
 });
+
+test("the Nix call and Pete's challenge are the newest stories, call first", () => {
+  const stories = loadStories();
+  assert.deepEqual(stories.slice(0, 2).map((story) => [story.slug, story.voiceId]), [
+    ["chip-thursday-call-nix-sea-den-2026-10-15", "chip-absolute"],
+    ["pete-challenge-chip-nix-call-2026-10-14", "postcard-pete"],
+  ]);
+  for (const story of stories.slice(0, 2)) assert.match(story.html, /<section class="story-sources" aria-label="Sources">/);
+});
