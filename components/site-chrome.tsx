@@ -1,6 +1,6 @@
 import { BrandLockup, BrandMark } from "@/components/brand-lockup";
 import { DemoBanner } from "@/components/demo-banner";
-import { HeaderBlurb, SiteNav } from "@/components/site-nav";
+import { SiteNav } from "@/components/site-nav";
 import Link from "next/link";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -12,7 +12,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <BrandLockup />
           <SiteNav />
         </div>
-        <HeaderBlurb />
       </header>
       <main className="mx-auto w-full max-w-5xl min-w-0 flex-1 px-4 py-6 sm:px-6">
         {children}

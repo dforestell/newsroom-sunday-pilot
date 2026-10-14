@@ -106,15 +106,3 @@ export function SiteNav() {
   );
 }
 
-export function HeaderBlurb() {
-  const pathname = usePathname() ?? "/";
-  if (pathname !== "/") {
-    return null;
-  }
-  return (
-    <p className="mx-auto w-full max-w-5xl px-4 pb-3 text-sm leading-6 text-ink-soft sm:px-6">
-      NFL scores and a desk with opinions. Melbourne, SNF and MNF are filed
-      archives, not live scores.
-    </p>
-  );
-}
