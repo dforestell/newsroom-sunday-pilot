@@ -13,7 +13,7 @@ export function BrandLockup() {
         priority
       />
       <span className="flex min-w-0 items-center gap-3">
-        <span className="order-last hidden font-mono text-[11px] leading-snug tracking-[0.22em] text-masthead uppercase lg:inline">
+        <span className="order-last hidden font-mono text-[11px] leading-snug tracking-[0.22em] text-masthead uppercase xl:inline">
           Poor Form Desk · Sunday pilot
         </span>
         <Image

@@ -55,7 +55,7 @@ export function SiteNav() {
 
   return (
     <nav aria-label="Main" className="font-mono tracking-[0.08em] uppercase">
-      <ul className="hidden flex-wrap items-center justify-end gap-x-5 text-[15px] sm:flex">
+      <ul className="hidden flex-wrap items-center justify-end gap-x-4 text-[15px] sm:flex lg:flex-nowrap lg:whitespace-nowrap">
         {nav.map((item) => {
           const active = item.match(pathname);
           return (
