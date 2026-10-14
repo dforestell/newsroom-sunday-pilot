@@ -42,9 +42,9 @@ const nav = [
 
 function linkClass(active: boolean) {
   return cn(
-    "inline-flex items-center decoration-ink decoration-2 underline-offset-[6px]",
+    "inline-flex items-center underline-offset-[6px] [text-decoration-color:var(--ink)] [text-decoration-thickness:2px]",
     active
-      ? "font-semibold text-masthead underline"
+      ? "font-semibold text-masthead underline [font-weight:600]"
       : "font-medium text-ink-soft hover:text-masthead hover:underline",
   );
 }
