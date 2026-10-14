@@ -85,9 +85,12 @@ export default async function StoryArticlePage({
           <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Next story</p>
           <Link href={`/stories/${next.slug}`} className="mt-1 block max-w-3xl hover:underline">
             <span className="block font-heading text-[22px] leading-snug font-semibold break-words">{next.title}</span>
-            <span className="mt-1 block font-mono text-[11px] tracking-wide text-ink-soft uppercase">
-              {nextVoice ? `${nextVoice.name} · ` : ""}
-              {next.dateLabel}
+            <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              <StoryLabel label={next.label} />
+              <span>
+                {nextVoice ? `${nextVoice.name} · ` : ""}
+                {next.dateLabel}
+              </span>
             </span>
           </Link>
           {more.length > 0 ? (
@@ -96,8 +99,9 @@ export default async function StoryArticlePage({
               <ul className="mt-1">
                 {more.map((item) => (
                   <li key={item.slug}>
-                    <Link href={`/stories/${item.slug}`} className="inline-flex min-h-11 items-center text-sm underline-offset-4 hover:text-masthead hover:underline">
-                      {item.title}
+                    <Link href={`/stories/${item.slug}`} className="inline-flex min-h-11 items-center gap-2 text-sm underline-offset-4 hover:text-masthead hover:underline">
+                      <StoryLabel label={item.label} />
+                      <span>{item.title}</span>
                     </Link>
                   </li>
                 ))}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DeskPill } from "@/components/desk-pill";
+import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { CAST } from "@/lib/cast";
 import { getCallRecord, type Call } from "@/lib/calls";
@@ -31,7 +32,10 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
     <section aria-label="Featured" className="grid border-2 border-border bg-card-loud lg:grid-cols-[3fr_2fr]">
       {story ? (
         <Link href={`/stories/${story.slug}`} className="block min-w-0 px-4 py-4 sm:px-5">
-          <p className={kicker}>Latest column · {story.dateLabel}</p>
+          <p className={`${kicker} flex flex-wrap items-center gap-2`}>
+            <StoryLabel label={story.label} />
+            <span>Latest column · {story.dateLabel}</span>
+          </p>
           <h2 className="mt-2 font-heading text-[28px] leading-tight font-semibold tracking-tight break-words">
             {story.title}
           </h2>
@@ -102,9 +106,12 @@ export function HomeStories({ stories }: { stories: Story[] }) {
             <li key={story.slug}>
               <Link href={`/stories/${story.slug}`} className="block py-3 hover:underline">
                 <span className="block font-heading text-lg leading-snug font-semibold">{story.title}</span>
-                <span className="mt-1 block font-mono text-[11px] tracking-wide text-ink-soft uppercase">
-                  {voice ? `${voice.name} · ` : ""}
-                  {story.dateLabel}
+                <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                  <StoryLabel label={story.label} />
+                  <span>
+                    {voice ? `${voice.name} · ` : ""}
+                    {story.dateLabel}
+                  </span>
                 </span>
               </Link>
             </li>

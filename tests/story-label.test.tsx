@@ -5,6 +5,8 @@ import { StoryCard, StoriesStrip } from "../components/story-card.tsx";
 import { storyLabelParts } from "../components/story-label.tsx";
 import StoryArticlePage from "../app/stories/[slug]/page.tsx";
 import { listStories } from "../lib/stories.ts";
+import { HomeFeatured, HomeStories } from "../components/home-sections.tsx";
+import { listCalls } from "../lib/calls/content.ts";
 
 const stories = listStories();
 
@@ -42,10 +44,25 @@ for (const story of stories) {
     const kicker = html.match(/<p data-story-kicker="true"[^>]*>(.*?)<\/p>/)?.[1] ?? "";
     assert.ok(kicker.indexOf("data-story-label") < kicker.indexOf(story.dateLabel), "label precedes date");
     assert.ok(html.indexOf("data-story-kicker") < html.indexOf("<h1"), "kicker sits above the title");
+    // Next story + More stories each carry their own story's label.
+    const tail = html.slice(html.indexOf('aria-label="Next story"'));
+    const linked = [...tail.matchAll(/href="\/stories\/([^"]+)"/g)].map((m) => m[1]);
+    const labels = [...tail.matchAll(/data-story-label="([^"]+)"/g)].map((m) => m[1]);
+    assert.ok(linked.length > 0, "next story block renders");
+    assert.deepEqual(labels, linked.map((slug) => stories.find((s) => s.slug === slug)!.label));
   });
 }
 
-test("homepage strip renders one label group per story", () => {
+test("stories strip renders one label group per story", () => {
   const html = renderToStaticMarkup(<StoriesStrip stories={stories} />);
   assert.equal(html.match(/data-story-label=/g)?.length, stories.length);
+});
+
+test("homepage featured block and story rows render each story's label", () => {
+  for (const story of stories) {
+    assertLabel(renderToStaticMarkup(<HomeFeatured story={story} calls={listCalls()} />), story.label);
+  }
+  const html = renderToStaticMarkup(<HomeStories stories={stories} />);
+  const labels = [...html.matchAll(/data-story-label="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(labels, stories.map((s) => s.label));
 });
