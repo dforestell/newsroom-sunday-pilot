@@ -66,7 +66,7 @@ test("newest dates sort first and a later post wins a same-day tie", () => {
         calls.map((call) => call.take),
         ["Later same-day take.", "Earlier same-day take.", "Older take."],
       );
-      assert.deepEqual(tallyCalls(calls), { "held-up": 1, missed: 1, "still-arguing": 1, pending: 0 });
+      assert.deepEqual(tallyCalls(calls), { "held-up": 1, missed: 1, "still-arguing": 1, pending: 0, ungraded: 0 });
       const html = renderToStaticMarkup(createElement(CallsList, { calls }));
       assert.match(html, /bg-live-green[\s\S]*Held up/);
       assert.match(html, /bg-warn[\s\S]*Missed/);
@@ -95,7 +95,8 @@ test("both seed entries render with their posts, results and status", () => {
   assert.equal(goff.window, undefined);
   assert.equal(goff.take, "Bryce Young over Jared Goff.");
   assert.equal(goff.result, "Carolina won 32–26. Goff threw for 412 yards in the loss.");
-  assert.equal(goff.status, "held-up");
+  assert.equal(goff.status, "ungraded");
+  assert.equal(goff.criterion, "Argument: Bryce Young outplays Jared Goff in this game.");
   assert.equal(goff.note, undefined);
   assert.equal(goff.dateLabel, "Oct 4, 2026");
 
@@ -117,6 +118,9 @@ test("both seed entries render with their posts, results and status", () => {
   assert.match(html, /Missed/);
   assert.match(html, /Still arguing/);
   assert.match(html, /Pending/);
+  assert.match(html, /Ungraded/);
+  assert.match(html, /Posted after the final, not counted\./);
+  assert.match(html, /border border-ink-soft bg-transparent text-ink-soft/);
   assert.match(html, /Chip’s record/);
   // Live record state changes as calls are filed and graded; assert against computed values, not today's data.
   const liveRecord = getCallRecord(calls);
@@ -477,4 +481,26 @@ test("kind is required and must match the status rules", () => {
   assert.throws(() => parseCall("2026-10-05-x.json", callFile({ kind: "forecast" })), /— status:.*still-arguing" is for arguments/);
   assert.throws(() => parseCall("2026-10-05-x.json", callFile({ status: "pending" })), /— status:.*never pending/);
   assert.equal(parseCall("2026-10-05-x.json", callFile({ kind: "forecast", status: "pending" })).kind, "forecast");
+});
+
+test("ungraded calls are excluded from the tally and streak", () => {
+  const calls = [
+    filed({ date: "2026-10-03", status: "held-up", postUrl: "https://x.com/ChipAbsolute/status/3" }),
+    filed({ date: "2026-10-02", status: "ungraded", kind: "argument", postUrl: "https://x.com/ChipAbsolute/status/2" }),
+    filed({ date: "2026-10-01", status: "held-up", postUrl: "https://x.com/ChipAbsolute/status/1" }),
+  ];
+  const record = getCallRecord(calls);
+  assert.deepEqual(record.tally, { hits: 2, misses: 0, stillArguing: 0, pending: 0 });
+  assert.deepEqual(record.streak, { kind: "hot", count: 2, label: "Hot: 2 straight held up" });
+});
+
+test("live record excludes the ungraded Bryce call", () => {
+  const record = getCallRecord(loadCalls());
+  const counted = loadCalls().filter((call) => call.status === "held-up" || call.status === "missed");
+  assert.equal(record.tally.hits + record.tally.misses, counted.length);
+  assert.ok(loadCalls().some((call) => call.status === "ungraded" && call.take.startsWith("Bryce Young")));
+});
+
+test("an ungraded call may not carry its own note", () => {
+  assert.throws(() => parseCall("2026-10-04-x.json", callFile({ date: "2026-10-04", status: "ungraded", kind: "argument", note: "Nope." }).replaceAll("2026-10-05", "2026-10-04")), /ungraded call/);
 });

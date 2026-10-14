@@ -5,7 +5,7 @@ export function DeskPill({
   children,
   className,
 }: {
-  tone?: "demo" | "satire" | "final" | "live" | "sim" | "warn" | "outline" | "lead";
+  tone?: "demo" | "satire" | "final" | "live" | "sim" | "warn" | "outline" | "lead" | "ungraded";
   children: React.ReactNode;
   className?: string;
 }) {
@@ -21,6 +21,7 @@ export function DeskPill({
         tone === "warn" && "bg-warn text-demo-foreground",
         tone === "lead" && "bg-masthead text-demo-foreground",
         tone === "outline" && "border border-border bg-transparent text-ink-soft",
+        tone === "ungraded" && "border border-ink-soft bg-transparent text-ink-soft",
         className,
       )}
     >
