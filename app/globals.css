@@ -56,6 +56,11 @@
 .story-table th:first-child, .story-table td:first-child { width: 9rem; }
 .story-table th:nth-child(2), .story-table td:nth-child(2) { width: 12rem; }
 .story-table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 639.98px) {
+  .story-table { border-left: 0; border-right: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .story-table thead { background: transparent; }
+  .story-table th, .story-table td { padding: 0.5rem 0.5rem 0.5rem 0; border-left: 0; border-right: 0; }
+}
 
 @theme inline {
   --color-background: var(--background);
