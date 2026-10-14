@@ -51,6 +51,15 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
             <p className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
               {chrome?.sources ?? game.feedNote}
             </p>
+            {chrome?.sourceLinks?.length ? (
+              <p className="mt-1 flex flex-wrap gap-x-3 font-mono text-[11px] tracking-wide uppercase">
+                {chrome.sourceLinks.map((link) => (
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-masthead underline-offset-4 hover:underline">
+                    {link.label}
+                  </a>
+                ))}
+              </p>
+            ) : null}
             {voices.length > 0 ? (
               <div className="mt-4 border-t border-border pt-3">
                 <p className="font-mono text-[11px] tracking-[0.18em] text-demo uppercase">Voices in this archive</p>

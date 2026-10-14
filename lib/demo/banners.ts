@@ -9,23 +9,35 @@ type DemoChrome = {
   banner: string;
   kicker: string;
   sources: string;
+  /** Linkable sources already named in `sources`. */
+  sourceLinks?: Array<{ label: string; href: string }>;
 };
 
 const DEMO_CHROME: Record<string, DemoChrome> = {
   [melbourneId]: {
     banner: melbourneBanner,
     kicker: "Melbourne · MCG",
-    sources: "Sources: ESPN, Reuters, Rams.com, NFL gamebook",
+    sources: "Sources: ESPN recap gameId 401872657, Reuters, Rams.com, NFL gamebook",
+    sourceLinks: [
+      { label: "ESPN recap", href: "https://www.espn.com/nfl/recap?gameId=401872657" },
+      { label: "NFL.com Game Center", href: "https://www.nfl.com/games/49ers-at-rams-2026-reg-1" },
+    ],
   },
   [dalNygId]: {
     banner: dalNygBanner,
     kicker: "SNF · MetLife",
-    sources: "Sources: ESPN, CBS, NBC, Giants.com",
+    sources: "Sources: ESPN recap gameId 401872930, CBS, NBC, Giants.com",
+    sourceLinks: [
+      { label: "ESPN recap", href: "https://www.espn.com/nfl/recap?gameId=401872930" },
+      { label: "ESPN box score", href: "https://www.espn.com/nfl/game/_/gameId/401872930" },
+      { label: "NFL.com Game Center", href: "https://www.nfl.com/games/cowboys-at-giants-2026-reg-1" },
+    ],
   },
   [denKcId]: {
     banner: denKcBanner,
     kicker: "MNF · Arrowhead",
     sources: "Sources: ESPN recap gameId 401872931",
+    sourceLinks: [{ label: "ESPN recap", href: "https://www.espn.com/nfl/recap/_/gameId/401872931" }],
   },
 };
 
@@ -46,6 +58,7 @@ export function demoBannerForPath(pathname: string | null): string {
 export function isDemoGamePath(pathname: string): boolean {
   return (
     pathname === "/demo" ||
+    pathname.startsWith("/archive") ||
     pathname.startsWith("/games/sunday-pilot") ||
     pathname.startsWith("/games/demo-")
   );
