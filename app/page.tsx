@@ -15,9 +15,6 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-1">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
-          Poor Form Sports
-        </p>
         <h1 className="font-heading text-base leading-snug font-normal text-ink-soft italic sm:text-lg">
           Football opinions worth arguing about, from a cast whose bad takes stay on the record.
         </h1>
