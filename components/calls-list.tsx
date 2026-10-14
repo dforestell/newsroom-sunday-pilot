@@ -1,8 +1,38 @@
 import Link from "next/link";
-import { CallStatusTag, CallsDesk } from "@/components/calls-record";
-import type { Call } from "@/lib/calls";
+import { CallStatusTag } from "@/components/calls-record";
+import { getCallRecord, type Call, type CallRecord } from "@/lib/calls";
+
+function RecordLine({ record }: { record: CallRecord }) {
+  const tally = record.tally as CallRecord["tally"] & { stillArguing?: number };
+  return (
+    <p className="font-mono text-sm tracking-wide uppercase">
+      <span className="sr-only">Chip’s record: </span>
+      Record <span>{tally.hits}</span>–<span>{tally.misses}</span>
+      {tally.stillArguing ? <> · <span>{tally.stillArguing}</span> Still arguing</> : null}
+      {" · "}
+      <span>{tally.pending}</span> Pending
+      <span className="text-ink-soft"> · {record.streak.label}</span>
+    </p>
+  );
+}
+
+function PostLink({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+    >
+      The X post
+    </a>
+  );
+}
 
 export function CallsList({ calls }: { calls: Call[] }) {
+  const record = getCallRecord(calls);
+  const next = record.next;
+  const past = calls.filter((call) => call !== next);
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-2">
@@ -28,55 +58,60 @@ export function CallsList({ calls }: { calls: Call[] }) {
         </p>
       </section>
 
-      <CallsDesk calls={calls} showLatest />
+      <section aria-label="Next call" className="border-2 border-border bg-card-loud px-4 py-4 sm:px-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Next call</p>
+          {next ? <CallStatusTag status={next.status} /> : null}
+        </div>
+        {next ? (
+          <>
+            <p className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              <time dateTime={next.date}>{next.dateLabel}</time>
+              {next.window ? ` · ${next.window}` : ""}
+            </p>
+            <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">{next.game}</p>
+            <p className="mt-1 font-heading text-2xl font-semibold tracking-tight break-words sm:text-3xl">{next.take}</p>
+            <PostLink href={next.postUrl} />
+          </>
+        ) : (
+          <p className="mt-2 text-sm text-ink-soft">Next call drops soon.</p>
+        )}
+      </section>
 
-      {calls.length === 0 ? (
-        <p className="text-sm text-ink-soft">No calls filed.</p>
-      ) : (
-        <ul className="space-y-3">
-          {calls.map((call) => (
-            <li key={call.postUrl}>
-              <article className="border border-border bg-card">
-                <div className="border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
-                      <time dateTime={call.date}>{call.dateLabel}</time>
-                      {call.window ? ` · ${call.window}` : ""}
-                    </p>
-                    <CallStatusTag status={call.status} />
-                  </div>
-                  <p className="mt-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+      <RecordLine record={record} />
+
+      <section aria-labelledby="past-calls" className="space-y-2">
+        <h2 id="past-calls" className="border-b border-ink/15 pb-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          Past calls
+        </h2>
+        {past.length === 0 ? (
+          <p className="text-sm text-ink-soft">No calls filed.</p>
+        ) : (
+          <ul className="divide-y divide-ink/15">
+            {past.map((call) => (
+              <li key={call.postUrl} className="grid gap-x-4 gap-y-1 py-3 sm:grid-cols-[9rem_1fr_auto] sm:items-start">
+                <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                  <time dateTime={call.date}>{call.dateLabel}</time>
+                  {call.window ? ` · ${call.window}` : ""}
+                </p>
+                <div className="min-w-0">
+                  <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+                    {call === record.latest ? "Latest call · " : ""}
                     {call.game}
                   </p>
-                  <h2 className="mt-1 font-heading text-2xl font-semibold tracking-tight break-words">
-                    {call.take}
-                  </h2>
-                  {call.result ? (
-                    <p className="mt-3 text-sm leading-6 text-ink">
-                      <span className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
-                        Result
-                      </span>
-                      {" · "}
-                      {call.result}
-                    </p>
-                  ) : null}
-                  {call.note ? (
-                    <p className="mt-2 text-sm leading-6 text-ink-soft italic">{call.note}</p>
-                  ) : null}
-                  <a
-                    href={call.postUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
-                  >
-                    The X post
-                  </a>
+                  <p className="font-heading text-lg leading-snug font-semibold break-words">{call.take}</p>
+                  {call.result ? <p className="mt-1 text-sm leading-6 text-ink">{call.result}</p> : null}
+                  {call.note ? <p className="mt-1 text-sm leading-6 text-ink-soft italic">{call.note}</p> : null}
+                  <PostLink href={call.postUrl} />
                 </div>
-              </article>
-            </li>
-          ))}
-        </ul>
-      )}
+                <div className="sm:text-right">
+                  <CallStatusTag status={call.status} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
