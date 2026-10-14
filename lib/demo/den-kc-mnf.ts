@@ -84,7 +84,7 @@ export const denKcMnfDemoEntries: FeedEntry[] = [
       {
         voiceId: "postcard-pete",
         voiceName: "Postcard Pete",
-        line: "Notarized Postcard: 173 yards, two scores, one night. Cool tape. Week 1 bronze refused.",
+        line: "Notarized Postcard: 173 yards, two scores. The night is stamped. The career is still in the mail.",
       },
     ],
   },
@@ -142,7 +142,7 @@ export const denKcMnfDemoEntries: FeedEntry[] = [
       {
         voiceId: "postcard-pete",
         voiceName: "Postcard Pete",
-        line: "Notarized Postcard: debut night, one catch, two yards. Splash narrative packed a suitcase. Box score packed a stamp.",
+        line: "One catch, two yards in the debut. That’s one night, not a verdict, same as Walker’s. Pete is consistent even when it’s boring.",
       },
     ],
   },

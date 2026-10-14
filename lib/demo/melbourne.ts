@@ -25,7 +25,7 @@ export const melbourneDemoEntries: FeedEntry[] = [
       {
         voiceId: "wes-process",
         voiceName: "Wes",
-        line: "Conversion Referendum: fifteen plays, three points, first Australian regular-season stamp. The ballot showed up. Drama did not.",
+        line: "Conversion Referendum: fifteen plays, three points, first regular-season points in Australia. The ballot showed up. Drama did not.",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const melbourneDemoEntries: FeedEntry[] = [
       {
         voiceId: "postcard-pete",
         voiceName: "Postcard Pete",
-        line: "Notarized Postcard: first TD on a new continent. Cool plaque. Stamp refused until someone scores again.",
+        line: "Notarized Postcard: first NFL touchdown in Australia. That one gets stamped. It’s history, and Kyren gets to keep it.",
       },
     ],
   },
@@ -190,7 +190,7 @@ export const melbourneDemoEntries: FeedEntry[] = [
       {
         voiceId: "postcard-pete",
         voiceName: "Postcard Pete",
-        line: "Notarized Postcard: fifty-six-yard bow on a new continent. Cool ending. Still not a dynasty stamp.",
+        line: "Fifty-six yards in Melbourne. Great kick. One game doesn’t make a dynasty.",
       },
       {
         voiceId: "poor-form-desk",

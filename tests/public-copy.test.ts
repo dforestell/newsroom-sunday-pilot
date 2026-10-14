@@ -107,7 +107,7 @@ test("staff picks and other story copy stay house voice", () => {
     stories,
     /\*\*Wes\*\* picks the call that still stands after a bad bounce\./,
   );
-  assert.match(stories, /Desk may refresh these picks\. Do not treat as betting advice\. Do not engrave\./);
+  assert.match(stories, /Picks may be refreshed\. Not advice of any kind\./);
   assert.match(stories, /— Poor Form Desk · staff ballot · Sep 17, 2026/);
   assert.equal(/Update after Dillon curation/.test(stories), false);
   assert.equal(/picks process that survives/.test(stories), false);
@@ -121,16 +121,17 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   const castProfile = source("app/cast/[slug]/page.tsx");
 
   assert.ok(staff);
-  assert.equal(staff.dateLabel, "Filed Sep 17, 2026 · Corrected Sep 18, 2026");
+  assert.equal(staff.dateLabel, "Filed Sep 17, 2026 · Corrected Sep 18, 2026 · Rookie picks added Oct 14, 2026");
   assert.match(
     stories,
-    /\*\*Correction — Sep 18, 2026:\*\* An earlier version named Jim Harbaugh as the Giants coach; the correct name is John Harbaugh\. It also listed Kenneth Walker III, Isaiah Likely, Jaxson Dart and Cam Skattebo in 2026 Rookie of the Year rows\. Walker and Likely entered the NFL in 2022; Dart and Skattebo in 2025\. We have withdrawn those entries without substituting new picks\./,
+    /\*\*Correction — Sep 18, 2026:\*\* An earlier version named Jim Harbaugh as the Giants coach; the correct name is John Harbaugh\. It also listed Kenneth Walker III, Isaiah Likely, Jaxson Dart and Cam Skattebo in 2026 Rookie of the Year rows\. Walker and Likely entered the NFL in 2022; Dart and Skattebo in 2025\. We withdrew those entries\./,
   );
   assert.match(stories, /John Harbaugh \(NYG\)/);
   assert.equal(/Jim Harbaugh \(NYG\)/.test(stories), false);
-  assert.equal((stories.match(/Withdrawn — not eligible for 2026 Rookie of the Year\./g) ?? []).length, 5);
-  assert.equal((stories.match(/Withdrawn after eligibility check\. Original ballot preserved in revision history\./g) ?? []).length, 5);
-  assert.match(stories, /\|\s*\*\*ROY\*\*\s*\|\s*\*\*Stamp refused\*\*\s*\|\s*Debut lines are cool tape\. They are not bronzes\. Ask again after Thanksgiving\./);
+  assert.equal((stories.match(/Withdrawn — not eligible for 2026 Rookie of the Year\./g) ?? []).length, 0);
+  assert.equal((stories.match(/\*\*ROY\*\* \*\(added Oct 14\)\*/g) ?? []).length, 5);
+  assert.match(stories, /\*\*Update — Oct 14, 2026:\*\* The rookie rows below were filed on Oct 14/);
+  assert.match(stories, /\|\s*\*\*ROY\*\*\s*\|\s*\*\*Not yet\*\*\s*\|\s*Four good weeks is a nice postcard\. Ask again after Thanksgiving\./);
   assert.match(staff.body, /^## Poor Form Desk$/m);
   assert.equal(/optional house row/.test(stories), false);
   assert.equal(/What Chip is watching \(one bit, not a buffet\)/.test(stories), false);
@@ -140,10 +141,10 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   assert.equal(/Losing-fan banter/.test(stories), false);
   assert.equal(/pile-on thread/.test(stories), false);
   assert.equal(/^## Close$/m.test(stories), false);
-  assert.match(stories, /New house\. Same Bills\. Chip’s Lions pick paid rent, missed the furniture, and left before dessert\./);
-  assert.match(stories, /Engrave nothing before breakfast—not Allen, not Cook, and definitely not one loud night in a new building\./);
+  assert.match(stories, /New house\. Same Bills\. My Lions pick paid the first month’s rent\./);
+  assert.equal(/Engrave nothing/i.test(stories), false);
   assert.match(stories, /"With Ben\. Without Ben\."/);
-  assert.match(stories, /Ceremony is allowed to be loud\. Spoilers are allowed to be louder\. Engrave nothing before breakfast\./);
+  assert.match(stories, /Ceremony is allowed to be loud\. Spoilers are allowed to be louder\. Nobody hangs a banner before the first snap\./);
 
   assert.match(cast, /Loud picks\. His name stays on them\./);
   assert.match(cast, /He believes indoor voices are for people who haven’t made a pick yet\./);
@@ -174,7 +175,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.match(chip.bio, /One concrete absurdity, then a punch/);
   assert.equal(chip.startHere?.length, 2);
   assert.equal(chip.startHere?.[0]?.href, "/stories/likely-debut-not-a-plaque");
-  assert.equal(chip.startHere?.[0]?.title, "Likely Debut, Not a Plaque");
+  assert.equal(chip.startHere?.[0]?.title, "Likely Debut, Group Chat Rights");
   assert.equal(
     chip.startHere?.[1]?.href,
     "https://x.com/ChipAbsolute/status/2101788413338808726",
@@ -182,7 +183,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.equal(chip.startHere?.[1]?.title, "Chicago pick, owned after 9–3");
   assert.deepEqual(
     CAST.filter((voice) => voice.publicLead || voice.startHere).map((voice) => voice.slug),
-    ["chip-absolute"],
+    ["chip-absolute", "wes-process", "layover-len"],
   );
 
   const profile = source("app/cast/[slug]/page.tsx");

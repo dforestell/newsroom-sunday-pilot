@@ -92,7 +92,7 @@ export const dalNygSnfDemoEntries: FeedEntry[] = [
       {
         voiceId: "postcard-pete",
         voiceName: "Postcard Pete",
-        line: "Notarized Postcard: eight-for-eight, two scores, Week 1 debut. Cool tape. Stamp refused.",
+        line: "Notarized Postcard: eight targets, eight catches, two touchdowns. Stamped. That’s a perfect night, and Pete doesn’t say that often.",
       },
       {
         voiceId: "wes-process",

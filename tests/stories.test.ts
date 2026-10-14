@@ -27,7 +27,7 @@ test("all migrated public URLs resolve from files, preserving dates, bylines and
     assert.equal(story.label, slug.startsWith("tnf-") ? "SATIRE" : "DEMO / SATIRE");
   }
   const staff = stories.find((story) => story.slug === "staff-picks-rest-of-2026")!;
-  assert.equal(staff.dateLabel, "Filed Sep 17, 2026 · Corrected Sep 18, 2026");
+  assert.equal(staff.dateLabel, "Filed Sep 17, 2026 · Corrected Sep 18, 2026 · Rookie picks added Oct 14, 2026");
   assert.equal(staff.bylineDetail, "with the whole newsroom");
   assert.equal((staff.html.match(/<table>/g) ?? []).length, 7);
   assert.equal((staff.html.match(/<tr>/g) ?? []).length, 42);
@@ -144,4 +144,13 @@ test("newest dates sort first; same-date order is explicit and deterministic", (
       "fixture-column",
     ]);
   });
+});
+
+test("story links open externally and Sources renders as its own section", () => {
+  const html = renderMarkdown(parseMarkdown("A [stat](https://www.espn.com/x) and [home](/calls).\n\n*— Sign-off*\n\n**Sources**\n\n- [ESPN, recap, A@B](https://www.espn.com/x)\n").tree);
+  assert.match(html, /<a href="https:\/\/www\.espn\.com\/x" target="_blank" rel="noopener noreferrer">stat<\/a>/);
+  assert.match(html, /<a href="\/calls">home<\/a>/);
+  assert.match(html, /<section class="story-sources" aria-label="Sources"><p class="story-sources-kicker">Sources<\/p>\s*<ul>[\s\S]*ESPN, recap, A@B[\s\S]*<\/ul><\/section>/);
+  assert.equal(/<strong>Sources<\/strong>/.test(html), false);
+  assert.match(html, /<li><a href="https:\/\/www\.espn\.com\/x" target="_blank" rel="noopener noreferrer">ESPN, recap, A@B<\/a><\/li>/);
 });
