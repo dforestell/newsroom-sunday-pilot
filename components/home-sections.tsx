@@ -1,0 +1,127 @@
+import Link from "next/link";
+import { DeskPill } from "@/components/desk-pill";
+import { VoiceAvatar } from "@/components/voice-avatar";
+import { CAST } from "@/lib/cast";
+import { getCallRecord, type Call } from "@/lib/calls";
+import { storyVoice, type Story } from "@/lib/stories";
+
+const kicker = "font-mono text-[11px] tracking-[0.18em] text-masthead uppercase";
+const sectionLink =
+  "inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline";
+
+function SectionHead({ label, title, href, linkLabel }: { label: string; title: string; href: string; linkLabel: string }) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-2 border-t border-ink/15 pt-4">
+      <div>
+        <p className={kicker}>{label}</p>
+        <h2 className="font-heading text-xl font-semibold tracking-tight">{title}</h2>
+      </div>
+      <Link href={href} className={sectionLink}>
+        {linkLabel}
+      </Link>
+    </div>
+  );
+}
+
+export function HomeFeatured({ story, calls }: { story: Story | undefined; calls: Call[] }) {
+  const record = getCallRecord(calls);
+  const call = record.next ?? record.latest;
+  const voice = story ? storyVoice(story) : undefined;
+  return (
+    <section aria-label="Featured" className="grid border-2 border-border bg-card-loud lg:grid-cols-[3fr_2fr]">
+      {story ? (
+        <Link href={`/stories/${story.slug}`} className="block min-w-0 px-4 py-4 sm:px-5">
+          <p className={kicker}>Latest column · {story.dateLabel}</p>
+          <h2 className="mt-2 font-heading text-[28px] leading-tight font-semibold tracking-tight break-words">
+            {story.title}
+          </h2>
+          {story.dek ? <p className="mt-2 text-sm leading-6 text-ink-soft">{story.dek}</p> : null}
+          {voice ? (
+            <p className="mt-3 flex items-center gap-2 text-sm">
+              <VoiceAvatar voice={voice} size={28} className="size-7" />
+              <span className="font-medium">{voice.name}</span>
+              {story.bylineDetail ? <span className="text-ink-soft">· {story.bylineDetail}</span> : null}
+            </p>
+          ) : null}
+        </Link>
+      ) : null}
+      <div className="min-w-0 border-t border-ink/15 px-4 py-4 sm:px-5 lg:border-t-0 lg:border-l">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className={kicker}>Chip’s call{call?.status === "pending" ? "" : " · latest"}</p>
+          <DeskPill tone="satire">Satire</DeskPill>
+        </div>
+        {call ? (
+          <figure className="mt-2">
+            <blockquote className="border-l-4 border-satire pl-3 font-heading text-xl leading-snug font-semibold italic break-words">
+              “{call.take}”
+            </blockquote>
+            <figcaption className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              {call.game} · <time dateTime={call.date}>{call.dateLabel}</time>
+            </figcaption>
+          </figure>
+        ) : (
+          <p className="mt-2 text-sm text-ink-soft">Next call drops soon.</p>
+        )}
+        <Link href="/calls" className={sectionLink}>
+          All calls →
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+export function HomeCast() {
+  return (
+    <section className="space-y-2">
+      <SectionHead label="Poor Form Desk" title="Cast" href="/cast" linkLabel="Full cast →" />
+      <ul className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-4">
+        {CAST.map((voice) => (
+          <li key={voice.slug}>
+            <Link href={`/cast/${voice.slug}`} className="flex min-h-12 min-w-0 items-center gap-2 py-1 hover:underline">
+              <VoiceAvatar voice={voice} size={32} className="size-8 shrink-0" />
+              <span className="min-w-0">
+                <span className="block truncate font-heading text-sm font-semibold">{voice.name}</span>
+                <span className="block font-mono text-[10px] tracking-wide text-ink-soft uppercase">{voice.title}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export function HomeStories({ stories }: { stories: Story[] }) {
+  return (
+    <section className="space-y-2">
+      <SectionHead label="Poor Form Desk" title="Stories" href="/stories" linkLabel="All stories →" />
+      <ul className="divide-y divide-ink/15">
+        {stories.map((story) => {
+          const voice = storyVoice(story);
+          return (
+            <li key={story.slug}>
+              <Link href={`/stories/${story.slug}`} className="block py-3 hover:underline">
+                <span className="block font-heading text-lg leading-snug font-semibold">{story.title}</span>
+                <span className="mt-1 block font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                  {voice ? `${voice.name} · ` : ""}
+                  {story.dateLabel}
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+export function HomeArchive() {
+  return (
+    <section className="flex flex-wrap items-center gap-x-4 border-t border-ink/15 pt-4 font-mono text-[11px] tracking-wide uppercase">
+      <span className="text-ink-soft">Filed archives</span>
+      <Link href="/games/sunday-pilot" className={sectionLink}>Melbourne</Link>
+      <Link href="/games/demo-dal-nyg-snf" className={sectionLink}>SNF</Link>
+      <Link href="/games/demo-den-kc-mnf" className={sectionLink}>MNF</Link>
+    </section>
+  );
+}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { GameScoreCard } from "./game-score-card";
+import { CompactScoreRows } from "./compact-score-rows";
 import { NFL_BLOG_LINKS } from "@/lib/nfl/coverage";
 import type { NflGame, ScoreboardResponse } from "@/lib/nfl/types";
 import { scoreboardPresentation } from "@/lib/nfl/presentation";
@@ -36,7 +37,7 @@ function PilotBoardNotice({ gameId }: { gameId?: string }) {
   );
 }
 
-export function LiveScoreboard({ gameId }: { gameId?: string }) {
+export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; compact?: boolean }) {
   const [data, setData] = useState<ScoreboardResponse | null>(null);
   const [failed, setFailed] = useState(false);
   const [now, setNow] = useState<number | null>(null);
@@ -103,6 +104,24 @@ export function LiveScoreboard({ gameId }: { gameId?: string }) {
   });
   const featured = games.find(g => g.state === "in_progress") ?? games.find(g => g.state === "scheduled") ?? games.at(-1);
   const others = games.filter(g => g.id !== featured?.id);
+
+  if (compact) {
+    return (
+      <section aria-label="NFL scoreboard" aria-busy={!data && !failed}>
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-bar px-3 py-2 text-bar-foreground">
+          <h2 className="font-mono text-[11px] tracking-[0.18em] uppercase">NFL scoreboard</h2>
+          <p className={`font-mono text-[10px] uppercase ${stale ? "text-demo" : "text-bar-foreground/70"}`}>{status}</p>
+        </div>
+        <p role="status" className="sr-only">{!data ? failed ? "Scores temporarily unavailable." : "Loading scoreboard." : stale ? "Score updates are delayed." : "Scoreboard available."}</p>
+        {games.length > 0 ? <CompactScoreRows games={games} stale={stale} /> : !data && failed ? <PilotBoardNotice /> : (
+          <p className="border-x border-b border-ink/15 bg-card-loud px-3 py-3 text-sm text-ink-soft">
+            {!data ? "Fetching NFL scores…" : "No games scheduled in this window."}
+          </p>
+        )}
+        <Link href="/scores" className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline">All games →</Link>
+      </section>
+    );
+  }
 
   return (
     <section className="space-y-3" aria-label="NFL scoreboard" aria-busy={!data && !failed}>
