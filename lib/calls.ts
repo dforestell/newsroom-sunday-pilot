@@ -5,6 +5,7 @@ import {
   CALL_STATUS_LABEL,
   CALL_STATUS_TONE,
   type Call,
+  type CallKind,
   type CallStatus,
 } from "./calls/content.ts";
 
@@ -15,12 +16,14 @@ export {
   CALL_STATUS_LABEL,
   CALL_STATUS_TONE,
   type Call,
+  type CallKind,
   type CallStatus,
 };
 
 export type CallTally = {
   hits: number;
   misses: number;
+  stillArguing: number;
   pending: number;
 };
 
@@ -71,11 +74,12 @@ function streakFrom(calls: Call[]): CallStreak {
 }
 
 export function getCallRecord(calls: Call[]): CallRecord {
-  const tally: CallTally = { hits: 0, misses: 0, pending: 0 };
+  const tally: CallTally = { hits: 0, misses: 0, stillArguing: 0, pending: 0 };
   for (const call of calls) {
     if (isHit(call.status)) tally.hits += 1;
     else if (isMiss(call.status)) tally.misses += 1;
-    else tally.pending += 1;
+    else if (call.status === "still-arguing") tally.stillArguing += 1;
+    else if (call.status === "pending") tally.pending += 1;
   }
 
   const newest = [...calls].sort(compareNewest);

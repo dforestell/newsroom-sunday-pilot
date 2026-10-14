@@ -10,9 +10,10 @@ import {
   type CallStreak,
 } from "@/lib/calls";
 
-const tallyRows: Array<{ key: "hits" | "misses" | "pending"; label: string }> = [
+const tallyRows: Array<{ key: "hits" | "misses" | "stillArguing" | "pending"; label: string }> = [
   { key: "hits", label: "Held up" },
   { key: "misses", label: "Missed" },
+  { key: "stillArguing", label: "Still arguing" },
   { key: "pending", label: "Pending" },
 ];
 
@@ -86,7 +87,7 @@ export function ChipRecord({
         </p>
         <ul
           aria-label="Call tally"
-          className="mt-3 grid grid-cols-3 gap-px border border-border bg-border"
+          className="mt-3 grid grid-cols-2 gap-px sm:grid-cols-4 border border-border bg-border"
         >
           {tallyRows.map((row) => (
             <li key={row.key} className="bg-card px-2 py-3 text-center sm:px-4">
