@@ -9,7 +9,9 @@ order: 0
 ---
 
 **The call:** Bo Nix throws at least one interception against Seattle on Thursday, Oct 15.
+
 **What counts as success:** one or more interceptions for Nix in the final ESPN box score. Zero means the call missed, and I write that Friday.
+
 **Posted:** [Wednesday morning on X](https://x.com/ChipAbsolute/status/2110392111229202805), before kickoff. It stays on the board either way.
 
 I'll say it up top so nobody has to dig: Bo Nix throws an interception Thursday night. One. That's the whole call.

@@ -4,7 +4,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
-.story-body p, .story-body ul, .story-body ol, .story-body blockquote {
+.story-body p, .story-body ul, .story-body ol, .story-body .story-call-rail { border-left: 4px solid var(--masthead); padding-left: 1rem; }
+.story-body .story-call-rail > * + * { margin-top: 1.25rem; }
+.story-body blockquote {
   max-width: 42rem;
   line-height: 1.75;
 }

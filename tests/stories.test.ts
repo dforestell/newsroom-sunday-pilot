@@ -163,3 +163,9 @@ test("the Nix call and Pete's challenge are the newest stories, call first", () 
   ]);
   for (const story of stories.slice(0, 2)) assert.match(story.html, /<section class="story-sources" aria-label="Sources">/);
 });
+
+test("only a call column's opening gets the call rail", () => {
+  const [chip, pete] = loadStories();
+  assert.match(chip.html, /^<div class="story-call-rail"><p><strong>The call:<\/strong>[^]*?<\/p>\s*<p><strong>What counts as success:<\/strong>[^]*?<\/p>\s*<p><strong>Posted:<\/strong>[^]*?<\/p><\/div>/);
+  assert.equal(pete.html.includes("story-call-rail"), false);
+});
