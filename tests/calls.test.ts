@@ -452,9 +452,12 @@ test("record tally shows still-arguing separately from pending", () => {
     filed({ date: "2026-10-04", status: "held-up", postUrl: "https://x.com/ChipAbsolute/status/4", take: "A hit." }),
   ];
   const html = renderToStaticMarkup(createElement(CallsList, { calls }));
-  const tally = html.slice(html.indexOf('aria-label="Call tally"'));
-  assert.match(tally, />1<\/p><p[^>]*>Still arguing</);
-  assert.match(tally, />0<\/p><p[^>]*>Pending</);
+  const start = html.indexOf("Chip’s record: ");
+  assert.ok(start >= 0, "one-line record renders");
+  const line = html.slice(start, html.indexOf("</p>", start));
+  assert.match(line, /Record <span>1<\/span>–<span>0<\/span>/);
+  assert.match(line, /<span>1<\/span> Still arguing/);
+  assert.match(line, /<span>0<\/span> Pending/);
 });
 
 test("every filed call carries the kind from the grading rule", () => {

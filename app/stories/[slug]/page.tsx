@@ -30,6 +30,12 @@ export default async function StoryArticlePage({
     notFound();
   }
   const voice = storyVoice(story);
+  const all = listStories();
+  const index = all.findIndex((item) => item.slug === story.slug);
+  // Next newer story; the latest story points at the one before it instead of itself.
+  const next = index > 0 ? all[index - 1] : all[1];
+  const nextVoice = next ? storyVoice(next) : undefined;
+  const more = all.filter((item) => item.slug !== story.slug && item.slug !== next?.slug).slice(0, 3);
 
   return (
     <article className="space-y-6">
@@ -66,6 +72,33 @@ export default async function StoryArticlePage({
       {story.dek ? <p className="max-w-2xl text-base leading-7 text-ink-soft">{story.dek}</p> : null}
 
       <StoryBody html={story.html} />
+
+      {next ? (
+        <section aria-label="Next story" className="border-t border-border pt-5">
+          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Next story</p>
+          <Link href={`/stories/${next.slug}`} className="mt-1 block max-w-3xl hover:underline">
+            <span className="block font-heading text-[22px] leading-snug font-semibold break-words">{next.title}</span>
+            <span className="mt-1 block font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+              {nextVoice ? `${nextVoice.name} · ` : ""}
+              {next.dateLabel}
+            </span>
+          </Link>
+          {more.length > 0 ? (
+            <>
+              <p className="mt-5 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">More stories</p>
+              <ul className="mt-1">
+                {more.map((item) => (
+                  <li key={item.slug}>
+                    <Link href={`/stories/${item.slug}`} className="inline-flex min-h-11 items-center text-sm underline-offset-4 hover:text-masthead hover:underline">
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
+        </section>
+      ) : null}
 
       <section className="grid gap-2 border-t border-border pt-5 sm:grid-cols-2">
         <div>
