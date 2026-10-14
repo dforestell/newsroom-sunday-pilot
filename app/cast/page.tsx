@@ -23,10 +23,11 @@ export default function CastIndexPage() {
           on the timelines are shown with byline. Poor Form Desk holds the house stamp.
         </p>
       </section>
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="cast-list grid grid-cols-1 divide-y divide-border border-y border-border sm:grid-cols-2 sm:gap-4 sm:divide-y-0 sm:border-y-0 lg:grid-cols-3">
         {CAST.map((voice) => (
-          <li key={voice.slug} className="flex min-w-0 flex-col gap-2 border border-border bg-card px-4 py-4">
-            <VoiceAvatar voice={voice} size={64} className="size-16" />
+          <li key={voice.slug} className="cast-row flex min-w-0 flex-row items-start gap-3 py-3 sm:flex-col sm:gap-2 sm:border sm:border-border sm:bg-card sm:px-4 sm:py-4">
+            <VoiceAvatar voice={voice} size={64} className="size-12 shrink-0 sm:size-16" />
+            <div className="flex min-w-0 flex-col gap-1 sm:gap-2">
             <h2 className="font-heading text-xl font-semibold tracking-tight break-words">
               <Link href={`/cast/${voice.slug}`} className="underline-offset-4 hover:underline">
                 {voice.name}
@@ -42,14 +43,15 @@ export default function CastIndexPage() {
                   href={voice.x.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center break-all text-masthead underline-offset-4 hover:underline"
+                  className="inline-flex min-h-9 items-center break-all sm:min-h-11 text-masthead underline-offset-4 hover:underline"
                 >
                   @{voice.x.handle} on X
                 </a>
               ) : (
-                <span className="inline-flex min-h-11 items-center text-ink-soft">X account coming soon</span>
+                <span className="inline-flex min-h-9 items-center text-ink-soft sm:min-h-11">X account coming soon</span>
               )}
             </p>
+            </div>
           </li>
         ))}
       </ul>
