@@ -17,7 +17,7 @@ Buffalo wants a housewarming party. Detroit was invited mostly to hold the door.
 
 Buffalo opens the regular-season book on a new Highmark night. That is real ceremony energy: ribbons, volume, the timeline treating architecture like a defensive coordinator. Chip likes the building fine. He just doesn’t trust a building that starts writing the ending before the first possession.
 
-Detroit arrives with its own unfinished sentence. Week 1 already taught Lions fans what a twenty-one-point lead can turn into when the night gets long. That is not a collapse bit for pregame. It is a permission slip: nobody in Honolulu blue gets to use the phrase “comfortable win” unless the scoreboard earns it again.
+Detroit arrives with its own unfinished sentence. Week 1 already taught Lions fans [what a twenty-one-point lead can turn into](https://www.espn.com/nfl/recap/_/gameId/401872923) when the night gets long. That is not a collapse bit for pregame. It is a permission slip: nobody in Honolulu blue gets to use the phrase “comfortable win” unless the scoreboard earns it again.
 
 Buffalo’s Week 1 late scramble is the mirror. A finish is not the same thing as a finished product. If the home timeline starts selling calm competence before the Lions have the ball, Chip will be in the replies asking for a receipt.
 
@@ -31,3 +31,7 @@ Buffalo’s Week 1 late scramble is the mirror. A finish is not the same thing a
 Ceremony is allowed to be loud. Spoilers are allowed to be louder. Nobody hangs a banner before the first snap.
 
 *— Poor Form Desk, with Chip Absolute · Sep 17, 2026*
+
+**Sources**
+
+- [ESPN, recap, NO@DET](https://www.espn.com/nfl/recap/_/gameId/401872923)

@@ -37,11 +37,38 @@ const renderer = unified()
   .use(() => (tree: HtmlRoot) => {
     visit(tree, "element", (node, index, parent) => {
       if (node.tagName === "th") node.properties.scope = "col";
+      if (node.tagName === "a" && typeof node.properties.href === "string" && /^https?:\/\//.test(node.properties.href)) {
+        node.properties.target = "_blank";
+        node.properties.rel = ["noopener", "noreferrer"];
+      }
       if (node.tagName === "table" && parent && typeof index === "number") {
         parent.children[index] = {
           type: "element", tagName: "div", properties: { className: ["story-table"], tabIndex: 0, role: "region", ariaLabel: "Story table" }, children: [node],
         };
         return index + 1;
+      }
+      if (node.tagName === "p" && parent && typeof index === "number" && isSourcesKicker(node)) {
+        let next = index + 1;
+        while (next < parent.children.length) {
+          const sibling = parent.children[next];
+          if (sibling.type === "text" && !sibling.value.trim()) next += 1;
+          else break;
+        }
+        const list = parent.children[next];
+        if (list?.type === "element" && list.tagName === "ul") {
+          const section: Element = {
+            type: "element",
+            tagName: "section",
+            properties: { className: ["story-sources"], ariaLabel: "Sources" },
+            children: [
+              { type: "element", tagName: "p", properties: { className: ["story-sources-kicker"] }, children: [{ type: "text", value: "Sources" }] },
+              list,
+            ],
+          };
+          parent.children.splice(index, next - index + 1, section);
+          // Revisit the new section so its links get the external-link treatment.
+          return index;
+        }
       }
       if (node.tagName === "p" && parent && typeof index === "number") {
         const figure = figureFromParagraph(node);
@@ -53,6 +80,19 @@ const renderer = unified()
     });
   })
   .use(rehypeStringify);
+
+function isSourcesKicker(node: Element): boolean {
+  const meaningful = node.children.filter((child) => child.type !== "text" || child.value.trim());
+  const strong = meaningful[0];
+  return (
+    meaningful.length === 1 &&
+    strong.type === "element" &&
+    strong.tagName === "strong" &&
+    strong.children.length === 1 &&
+    strong.children[0].type === "text" &&
+    strong.children[0].value.trim() === "Sources"
+  );
+}
 
 function figureFromParagraph(node: Element): Element | undefined {
   const meaningful = node.children.filter((child) => child.type !== "text" || child.value.trim());

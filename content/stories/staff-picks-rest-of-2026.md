@@ -16,7 +16,7 @@ Week 2 is not a mandate. It is a dare. So every voice in the newsroom filed a re
 
 **Correction — Sep 18, 2026:** An earlier version named Jim Harbaugh as the Giants coach; the correct name is John Harbaugh. It also listed Kenneth Walker III, Isaiah Likely, Jaxson Dart and Cam Skattebo in 2026 Rookie of the Year rows. Walker and Likely entered the NFL in 2022; Dart and Skattebo in 2025. We withdrew those entries.
 
-**Update — Oct 14, 2026:** The rookie rows below were filed on Oct 14, after four weeks of games, not on Sep 17. Every pick is a 2026 draftee ([NFL.com rookie rankings, Oct 7](https://www.nfl.com/news/nfl-offensive-rookie-rankings-at-quarter-mark-of-2026-season-denzel-boston-jeremiyah-love-top-list)). Stats are through Week 4.
+**Update — Oct 14, 2026:** The rookie rows below were filed on Oct 14, after four weeks of games, not on Sep 17. [Every pick is a 2026 draftee](https://www.nfl.com/news/nfl-offensive-rookie-rankings-at-quarter-mark-of-2026-season-denzel-boston-jeremiyah-love-top-list), and stats are through Week 4.
 
 ---
 
@@ -116,3 +116,7 @@ Week 2 is not a mandate. It is a dare. So every voice in the newsroom filed a re
 Picks may be refreshed. Not advice of any kind.
 
 *— Poor Form Desk · staff ballot · Sep 17, 2026*
+
+**Sources**
+
+- [NFL.com, offensive rookie rankings, Week 4](https://www.nfl.com/news/nfl-offensive-rookie-rankings-at-quarter-mark-of-2026-season-denzel-boston-jeremiyah-love-top-list)
