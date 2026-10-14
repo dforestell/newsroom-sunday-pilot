@@ -21,7 +21,7 @@ function assertLabel(html: string, label: string) {
   const { label: rendered, texts } = chips(html);
   assert.equal(rendered, label);
   assert.deepEqual(texts.map((t) => t.text), storyLabelParts(label as never).map((p) => p.text));
-  for (const t of texts) assert.match(t.cls, t.text === "DEMO" ? /bg-demo text-demo-foreground/ : /bg-satire text-satire-foreground/);
+  for (const t of texts) assert.match(t.cls, t.text === "DEMO" ? /bg-demo text-demo-foreground/ : /bg-satire text-satire-fg/);
 }
 
 test("label parts follow the story's real label, DEMO before SATIRE", () => {
