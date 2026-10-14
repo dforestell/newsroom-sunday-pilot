@@ -66,3 +66,17 @@ test("homepage featured block and story rows render each story's label", () => {
   const labels = [...html.matchAll(/data-story-label="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(labels, stories.map((s) => s.label));
 });
+
+test("admin stories render the locked SATIRE chip in the shared story template", async () => {
+  const { StoryArticle } = await import("../components/story-article.tsx");
+  const { renderAdminStory } = await import("../lib/admin/stories.ts");
+  const rendered = renderAdminStory({
+    slug: "admin-chip-check", title: "Chip check", dek: "A dek.", body: "Body text.",
+    voiceId: stories[0].voiceId, date: "2026-10-01", sources: [], status: "published",
+    updatedAt: "2026-10-01T00:00:00Z", label: "DEMO / SATIRE",
+  } as never);
+  const html = renderToStaticMarkup(<StoryArticle story={rendered} />);
+  assert.match(html, /data-story-kicker/);
+  assertLabel(html, "SATIRE");
+  assert.equal(renderToStaticMarkup(<StoryCard story={rendered} />).includes('data-story-label="SATIRE"'), true);
+});
