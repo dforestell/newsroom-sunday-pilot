@@ -194,13 +194,13 @@ function filed(overrides: Partial<Call> & Pick<Call, "date" | "status" | "postUr
 
 test("call record is empty when nothing is filed", () => {
   const record = getCallRecord([]);
-  assert.deepEqual(record.tally, { hits: 0, misses: 0, pending: 0 });
+  assert.deepEqual(record.tally, { hits: 0, misses: 0, stillArguing: 0, pending: 0 });
   assert.deepEqual(record.streak, { kind: "none", label: "No streak yet" });
   assert.equal(record.latest, null);
   assert.equal(record.next, null);
 });
 
-test("call record counts every ungraded call as pending and does not invent a streak", () => {
+test("call record counts still-arguing and pending separately and does not invent a streak", () => {
   const pending = filed({
     date: "2026-10-03",
     status: "still-arguing",
@@ -212,7 +212,7 @@ test("call record counts every ungraded call as pending and does not invent a st
     postUrl: "https://x.com/ChipAbsolute/status/2",
   });
   const record = getCallRecord([ungraded, pending]);
-  assert.deepEqual(record.tally, { hits: 0, misses: 0, pending: 2 });
+  assert.deepEqual(record.tally, { hits: 0, misses: 0, stillArguing: 1, pending: 0 });
   assert.deepEqual(record.streak, { kind: "none", label: "No streak yet" });
   assert.equal(record.latest, pending);
   assert.equal(record.next, null);
@@ -231,7 +231,7 @@ test("one graded call is not a streak, and a hot run needs two held-up results",
     hit("2026-10-02", "3"),
     hit("2026-10-01", "2"),
   ]);
-  assert.deepEqual(hot.tally, { hits: 3, misses: 1, pending: 0 });
+  assert.deepEqual(hot.tally, { hits: 3, misses: 1, stillArguing: 0, pending: 0 });
   assert.deepEqual(hot.streak, { kind: "hot", count: 2, label: "Hot: 2 straight held up" });
   assert.equal(hot.latest?.take, "3");
 });
@@ -284,7 +284,7 @@ test("ungraded calls are skipped in the streak, and a pre-game call is next rath
   ];
   const calls = [hits[1], olderPregame, arguing, pregame, hits[0]];
   const record = getCallRecord(calls);
-  assert.deepEqual(record.tally, { hits: 2, misses: 0, pending: 3 });
+  assert.deepEqual(record.tally, { hits: 2, misses: 0, stillArguing: 1, pending: 2 });
   assert.deepEqual(record.streak, { kind: "hot", count: 2, label: "Hot: 2 straight held up" });
   assert.equal(record.next, pregame);
   assert.equal(record.latest, arguing);
@@ -359,10 +359,10 @@ test("same-day later pending post is the next call, not the latest", () => {
   assert.equal(record.next?.take, "Later same-day take.");
   assert.equal(record.latest?.take, "Earlier same-day take.");
   assert.deepEqual(record.streak, { kind: "none", label: "No streak yet" });
-  assert.deepEqual(record.tally, { hits: 1, misses: 0, pending: 1 });
+  assert.deepEqual(record.tally, { hits: 1, misses: 0, stillArguing: 0, pending: 1 });
 });
 
-test("current shelf shape stays neutral: one hit and one pending call", () => {
+test("current shelf shape stays neutral: one hit and one still-arguing call", () => {
   const record = getCallRecord([
     filed({
       date: "2026-10-05",
@@ -377,7 +377,7 @@ test("current shelf shape stays neutral: one hit and one pending call", () => {
       take: "Bryce Young over Jared Goff.",
     }),
   ]);
-  assert.deepEqual(record.tally, { hits: 1, misses: 0, pending: 1 });
+  assert.deepEqual(record.tally, { hits: 1, misses: 0, stillArguing: 1, pending: 0 });
   assert.deepEqual(record.streak, { kind: "none", label: "No streak yet" });
   assert.equal(record.latest?.take, "Atlanta should give Bijan Robinson 25 carries.");
   assert.equal(record.next, null);
@@ -442,4 +442,15 @@ test("CI command fails clearly on a bad post URL", () => {
       assert.match(result.stderr, /ChipAbsolute/);
     },
   );
+});
+
+test("record tally shows still-arguing separately from pending", () => {
+  const calls = [
+    filed({ date: "2026-10-05", status: "still-arguing", postUrl: "https://x.com/ChipAbsolute/status/5", take: "Still open." }),
+    filed({ date: "2026-10-04", status: "held-up", postUrl: "https://x.com/ChipAbsolute/status/4", take: "A hit." }),
+  ];
+  const html = renderToStaticMarkup(createElement(CallsList, { calls }));
+  const tally = html.slice(html.indexOf('aria-label="Call tally"'));
+  assert.match(tally, />1<\/p><p[^>]*>Still arguing</);
+  assert.match(tally, />0<\/p><p[^>]*>Pending</);
 });
