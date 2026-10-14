@@ -3,6 +3,7 @@
   "game": "SEA at DEN",
   "window": "TNF",
   "take": "Bo Nix throws an interception.",
+  "criterion": "Held up if Nix has one or more interceptions in the final ESPN box.",
   "postUrl": "https://x.com/ChipAbsolute/status/2110392111229202805",
   "status": "pending",
   "kind": "forecast"

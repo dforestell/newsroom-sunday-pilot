@@ -3,6 +3,7 @@
   "game": "BUF at LAR",
   "window": "MNF",
   "take": "Kyren Williams runs for 100+ yards.",
+  "criterion": "Held up if Kyren Williams has 100 or more rushing yards in the final ESPN box.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2109655713475862605",
   "result": "Buffalo won 37–34 in overtime. Kyren ran 16 times for 49 yards and a TD.",

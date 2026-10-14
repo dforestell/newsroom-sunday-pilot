@@ -66,7 +66,7 @@ export const dalNygSnfDemoEntries: FeedEntry[] = [
     kind: "fact",
     authorId: null,
     headline: "Likely 15-yard TD — NYG 14–7 HT",
-    body: "Dart→Isaiah Likely 15-yd TD (Zvada XP). NYG 14–7 HT. Likely debut TD #1.",
+    body: "Dart→Isaiah Likely 15-yd TD (Zvada XP). NYG 14–7 HT. Likely’s first TD as a Giant.",
     postedAtLabel: "Q2 0:20",
     path: "public-live",
     demo: true,

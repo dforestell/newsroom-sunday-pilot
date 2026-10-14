@@ -21,6 +21,7 @@ const schema = z
     game: oneLine("Name the game, e.g. DET at CAR."),
     window: oneLine("Add a short window such as MNF, or omit the field.").optional(),
     take: oneLine("Add Chip's one-line take."),
+    criterion: oneLine("Add a one-line success criterion, or omit the field.").optional(),
     kind: z.enum(["forecast", "argument"], {
       error: 'Use kind "forecast" (one checkable outcome, posted before kickoff) or "argument" (an opinion with no box-score line).',
     }),

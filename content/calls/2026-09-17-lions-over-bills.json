@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-17",
+  "game": "DET at BUF",
+  "window": "TNF",
+  "take": "Detroit beats Buffalo in the new house.",
+  "criterion": "Held up if Detroit wins the game, per the final ESPN score.",
+  "kind": "forecast",
+  "postUrl": "https://x.com/ChipAbsolute/status/2100715835224424696",
+  "result": "Buffalo won 41–31.",
+  "status": "missed"
+}
