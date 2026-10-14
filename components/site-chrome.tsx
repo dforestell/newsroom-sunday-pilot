@@ -1,23 +1,18 @@
 import { BrandLockup, BrandMark } from "@/components/brand-lockup";
 import { DemoBanner } from "@/components/demo-banner";
-import { SiteNav } from "@/components/site-nav";
+import { HeaderBlurb, SiteNav } from "@/components/site-nav";
 import Link from "next/link";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-full flex-col">
       <DemoBanner />
-      <header className="border-b border-border bg-paper">
-        <div className="mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-3 px-4 py-4 sm:px-6">
-          <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-            <BrandLockup />
-            <SiteNav />
-          </div>
-          <p className="max-w-3xl text-sm leading-6 text-ink-soft">
-            NFL scores and a desk with opinions. Melbourne, SNF and MNF are
-            filed archives, not live scores.
-          </p>
+      <header className="relative border-b border-border bg-paper">
+        <div className="mx-auto flex h-14 w-full max-w-5xl min-w-0 items-center justify-between gap-4 px-4 sm:h-auto sm:py-3 sm:px-6">
+          <BrandLockup />
+          <SiteNav />
         </div>
+        <HeaderBlurb />
       </header>
       <main className="mx-auto w-full max-w-5xl min-w-0 flex-1 px-4 py-6 sm:px-6">
         {children}
