@@ -34,6 +34,7 @@ const renderer = unified()
   // No rehype-raw or MDX: HTML nodes are dropped, never evaluated.
   .use(remarkRehype)
   .use(rehypeSanitize, { ...defaultSchema, clobberPrefix: "" })
+  .use(() => (tree: HtmlRoot) => { wrapCallOpening(tree); })
   .use(() => (tree: HtmlRoot) => {
     visit(tree, "element", (node, index, parent) => {
       if (node.tagName === "th") node.properties.scope = "col";
@@ -80,6 +81,25 @@ const renderer = unified()
     });
   })
   .use(rehypeStringify);
+
+function leadLabel(node: HtmlRoot["children"][number]): string | undefined {
+  if (node.type !== "element" || node.tagName !== "p") return undefined;
+  const first = node.children[0];
+  if (first?.type !== "element" || first.tagName !== "strong" || first.children[0]?.type !== "text") return undefined;
+  return first.children[0].value.trim();
+}
+
+// A call column opens with "The call:" … "Posted:" paragraphs. Group them so
+// the opening carries the same rail as the call cards on /calls.
+function wrapCallOpening(tree: HtmlRoot) {
+  const kids = tree.children;
+  const start = kids.findIndex((node) => leadLabel(node) === "The call:");
+  if (start === -1) return;
+  const end = kids.findIndex((node, i) => i > start && leadLabel(node) === "Posted:");
+  if (end === -1) return;
+  const rail: Element = { type: "element", tagName: "div", properties: { className: ["story-call-rail"] }, children: kids.slice(start, end + 1) as Element["children"] };
+  kids.splice(start, end - start + 1, rail);
+}
 
 function isSourcesKicker(node: Element): boolean {
   const meaningful = node.children.filter((child) => child.type !== "text" || child.value.trim());

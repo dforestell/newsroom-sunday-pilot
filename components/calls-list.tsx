@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CallStatusTag } from "@/components/calls-record";
+import { PublishingRhythm } from "@/components/publishing-rhythm";
 import { getCallRecord, type Call, type CallRecord } from "@/lib/calls";
 
 function RecordLine({ record }: { record: CallRecord }) {
@@ -79,6 +80,8 @@ export function CallsList({ calls }: { calls: Call[] }) {
       </section>
 
       <RecordLine record={record} />
+
+      <PublishingRhythm />
 
       <section aria-labelledby="past-calls" className="space-y-2">
         <h2 id="past-calls" className="border-b border-ink/15 pb-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
