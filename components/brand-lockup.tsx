@@ -9,11 +9,11 @@ export function BrandLockup() {
         alt=""
         width={48}
         height={48}
-        className="size-10 shrink-0 sm:size-12"
+        className="size-[22px] shrink-0 sm:size-8"
         priority
       />
-      <span className="flex min-w-0 flex-col gap-1">
-        <span className="font-mono text-[11px] leading-snug tracking-[0.14em] text-masthead uppercase sm:tracking-[0.22em]">
+      <span className="flex min-w-0 items-center gap-3">
+        <span className="order-last hidden font-mono text-[11px] leading-snug tracking-[0.22em] text-masthead uppercase xl:inline">
           Poor Form Desk · Sunday pilot
         </span>
         <Image
@@ -21,7 +21,7 @@ export function BrandLockup() {
           alt="Poor Form Sports"
           width={560}
           height={284}
-          className="h-auto w-[200px] max-w-full sm:w-[248px]"
+          className="h-[22px] w-auto sm:h-8"
           priority
         />
       </span>
