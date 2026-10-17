@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { loadCalls } from "../lib/calls/content.ts";
-import { loadStories } from "../lib/stories/content.ts";
+import { loadCalls } from "../lib/calls/files.ts";
+import { loadStories } from "../lib/stories/files.ts";
 import { CAST } from "../lib/cast.ts";
 import { dalNygSnfDemoEntries, DEMO_BANNER as dalNygBanner } from "../lib/demo/dal-nyg-snf.ts";
 import { denKcMnfDemoEntries, DEMO_BANNER as denKcBanner } from "../lib/demo/den-kc-mnf.ts";

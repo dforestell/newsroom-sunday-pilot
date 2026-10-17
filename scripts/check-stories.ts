@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
-import { FilingError, loadStories } from "../lib/stories/content.ts";
+import { FilingError } from "../lib/stories/content.ts";
+import { loadStories } from "../lib/stories/files.ts";
 
 try {
   const directory = process.argv[2] ? resolve(process.argv[2]) : undefined;

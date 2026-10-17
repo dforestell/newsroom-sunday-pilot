@@ -1,14 +1,18 @@
 import { StoryCard } from "@/components/story-card";
-import { listStories } from "@/lib/stories";
+import { listPublicStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
+
+// Filed content is inlined at build time; admin content is read from Redis and refreshed
+// every 30 seconds (or immediately after an admin save).
+export const revalidate = 30;
 
 export const metadata = shareMetadata(
   "Stories",
   "Filed columns from the Poor Form Desk. Entertainment only. Not reporting. Not betting advice.",
 );
 
-export default function StoriesIndexPage() {
-  const stories = listStories();
+export default async function StoriesIndexPage() {
+  const stories = await listPublicStories();
   const [featured, ...rest] = stories;
 
   return (

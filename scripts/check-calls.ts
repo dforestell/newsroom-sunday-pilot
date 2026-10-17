@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
-import { CallFilingError, loadCalls } from "../lib/calls/content.ts";
-import { getCallRecord } from "../lib/calls.ts";
+import { CallFilingError } from "../lib/calls/content.ts";
+import { loadCalls } from "../lib/calls/files.ts";
+import { getCallRecord } from "../lib/calls/record.ts";
 
 try {
   const directory = process.argv[2] ? resolve(process.argv[2]) : undefined;

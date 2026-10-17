@@ -3,17 +3,21 @@ import { DeskPill } from "@/components/desk-pill";
 import { StoryCard } from "@/components/story-card";
 import { demoChrome } from "@/lib/demo/banners";
 import { listPublicGames } from "@/lib/live/public";
-import { listStories } from "@/lib/stories";
+import { listPublicStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
+
+// Filed content is inlined at build time; admin content is read from Redis and refreshed
+// every 30 seconds (or immediately after an admin save).
+export const revalidate = 30;
 
 export const metadata = shareMetadata(
   "Archive",
   "Filed game archives and past columns from the Poor Form Desk. Never live scores.",
 );
 
-export default function ArchiveIndexPage() {
+export default async function ArchiveIndexPage() {
   const games = listPublicGames().filter((game) => game.demo);
-  const stories = listStories();
+  const stories = await listPublicStories();
 
   return (
     <div className="space-y-8">

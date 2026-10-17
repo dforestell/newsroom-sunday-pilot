@@ -1,10 +1,7 @@
-import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
-import { resolve, relative, join, sep } from "node:path";
 import { parseDocument } from "yaml";
 import { z } from "zod";
 import { visit } from "unist-util-visit";
 import { CAST } from "../cast.ts";
-import { games, publicLiveEntries } from "../live/catalog.ts";
 import { parseMarkdown, renderMarkdown } from "./markdown.ts";
 
 const requiredText = z.string().trim().min(1, "Add a non-empty value.");
@@ -97,54 +94,12 @@ export function parseStory(file: string, source: string) {
   return { file, story, anchors, links };
 }
 
-function routeInventory(root: string) {
-  const routes = new Map<string, Set<string>>();
-  const app = join(root, "app");
-  for (const entry of readdirSync(app, { recursive: true })) {
-    const path = String(entry).split(sep).join("/");
-    if (!/(^|\/)page\.[jt]sx?$/.test(path) || path.includes("[")) continue;
-    const route = "/" + path.replace(/(^|\/)page\.[jt]sx?$/, "").replace(/\([^/]+\)\//g, "");
-    routes.set(route, new Set());
-  }
-  for (const voice of CAST) {
-    routes.set(`/cast/${voice.slug}`, new Set());
-    routes.set(`/bloggers/${voice.slug}`, new Set());
-  }
-  routes.set("/bloggers/lead-blogger", new Set());
-  for (const game of games) {
-    const anchors = new Set(publicLiveEntries.filter((entry) => entry.gameId === game.id).map((entry) => entry.id));
-    routes.set(`/games/${game.id}`, anchors);
-    if (game.liveBlogEnabled) routes.set(`/games/${game.id}/delayed`, anchors);
-  }
-  routes.set("/games/demo", routes.get("/games/sunday-pilot") ?? new Set());
-  return routes;
-}
+export type StoryRoutes = Map<string, Set<string>>;
+export type ParsedStory = ReturnType<typeof parseStory>;
 
-export function loadStories(directory = resolve("content/stories"), root = process.cwd()): Story[] {
+/** Pure link check: no filesystem access. Routes and public assets are supplied by the caller. */
+export function checkStoryLinks(parsed: ParsedStory[], routes: StoryRoutes, isAsset: (pathname: string) => boolean): string[] {
   const issues: string[] = [];
-  const parsed: ReturnType<typeof parseStory>[] = [];
-  if (!existsSync(directory)) throw new FilingError([`${directory} — directory: Create content/stories and add a .md file using the Editor template.`]);
-  for (const name of readdirSync(directory).sort()) {
-    const file = relative(root, join(directory, name));
-    if (!name.endsWith(".md")) {
-      issues.push(`${file} — filename: Keep only plain .md story files here. Move guides/templates to docs/stories; MDX is not supported.`);
-      continue;
-    }
-    try {
-      parsed.push(parseStory(file, readFileSync(join(directory, name), "utf8")));
-    } catch (error) {
-      if (error instanceof FilingError) issues.push(...error.issues);
-      else throw error;
-    }
-  }
-  const routes = routeInventory(root);
-  const slugs = new Map<string, string>();
-  for (const item of parsed) {
-    const previous = slugs.get(item.story.slug);
-    if (previous) issues.push(`${item.file} — slug: "${item.story.slug}" is already used by ${previous}. Choose a unique slug; preserve existing public URLs.`);
-    slugs.set(item.story.slug, item.file);
-    routes.set(`/stories/${item.story.slug}`, item.anchors);
-  }
   for (const { file, story, links } of parsed) {
     for (const { field, href } of links) {
       let url: URL;
@@ -159,13 +114,14 @@ export function loadStories(directory = resolve("content/stories"), root = proce
       let anchor: string;
       try { pathname = decodeURIComponent(url.pathname).replace(/\/$/, "") || "/"; anchor = decodeURIComponent(url.hash.slice(1)); }
       catch { issues.push(`${file} — ${field}: Fix invalid percent encoding in "${href}".`); continue; }
-      const asset = resolve(root, "public", "." + pathname);
-      const publicRoot = resolve(root, "public") + sep;
-      const isAsset = asset.startsWith(publicRoot) && existsSync(asset) && statSync(asset).isFile();
-      if (!routes.has(pathname) && !isAsset) issues.push(`${file} — ${field}: "${href}" has no known page or public asset. Use an existing /games, /cast or /stories URL (or fix the target file).`);
-      else if (anchor && !isAsset && !routes.get(pathname)?.has(anchor)) issues.push(`${file} — ${field}: "${href}" has no known anchor. Use a story heading ID (story-heading-text), an existing game entry ID, or remove the fragment.`);
+      const asset = isAsset(pathname);
+      if (!routes.has(pathname) && !asset) issues.push(`${file} — ${field}: "${href}" has no known page or public asset. Use an existing /games, /cast or /stories URL (or fix the target file).`);
+      else if (anchor && !asset && !routes.get(pathname)?.has(anchor)) issues.push(`${file} — ${field}: "${href}" has no known anchor. Use a story heading ID (story-heading-text), an existing game entry ID, or remove the fragment.`);
     }
   }
-  if (issues.length) throw new FilingError(issues);
-  return parsed.map(({ story }) => story).sort((a, b) => b.date.localeCompare(a.date) || a.order - b.order || a.slug.localeCompare(b.slug));
+  return issues;
+}
+
+export function sortStories<T extends Pick<Story, "date" | "order" | "slug">>(stories: T[]): T[] {
+  return [...stories].sort((a, b) => b.date.localeCompare(a.date) || a.order - b.order || a.slug.localeCompare(b.slug));
 }
