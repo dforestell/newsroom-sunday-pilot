@@ -1,5 +1,5 @@
 import { StoryCard } from "@/components/story-card";
-import { listPublicStories } from "@/lib/stories";
+import { listStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
 
 export const metadata = shareMetadata(
@@ -7,8 +7,8 @@ export const metadata = shareMetadata(
   "Filed columns from the Poor Form Desk. Entertainment only. Not reporting. Not betting advice.",
 );
 
-export default async function StoriesIndexPage() {
-  const stories = await listPublicStories();
+export default function StoriesIndexPage() {
+  const stories = listStories();
   const [featured, ...rest] = stories;
 
   return (
