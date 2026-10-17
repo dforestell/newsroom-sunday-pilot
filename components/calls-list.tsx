@@ -23,7 +23,7 @@ function PostLink({ href }: { href: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+      className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
     >
       The X post
     </a>
@@ -37,7 +37,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           <Link
             href="/cast/chip-absolute"
             className="relative inline-flex items-center underline-offset-4 after:absolute after:-inset-x-1 after:-inset-y-3 after:content-[''] hover:underline"
@@ -61,16 +61,16 @@ export function CallsList({ calls }: { calls: Call[] }) {
 
       <section aria-label="Next call" className="border-2 border-border bg-card-loud px-4 py-4 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Next call</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Next call</p>
           {next ? <CallStatusTag status={next.status} /> : null}
         </div>
         {next ? (
           <>
-            <p className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+            <p className="mt-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
               <time dateTime={next.date}>{next.dateLabel}</time>
               {next.window ? ` · ${next.window}` : ""}
             </p>
-            <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">{next.game}</p>
+            <p className="mt-1 font-mono text-sm tracking-[0.18em] text-masthead uppercase">{next.game}</p>
             <p className="mt-1 font-heading text-2xl font-semibold tracking-tight break-words sm:text-3xl">{next.take}</p>
             <PostLink href={next.postUrl} />
           </>
@@ -84,7 +84,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
       <PublishingRhythm />
 
       <section aria-labelledby="past-calls" className="space-y-2">
-        <h2 id="past-calls" className="border-b border-ink/15 pb-2 font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <h2 id="past-calls" className="border-b border-ink/15 pb-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Past calls
         </h2>
         {past.length === 0 ? (
@@ -93,12 +93,12 @@ export function CallsList({ calls }: { calls: Call[] }) {
           <ul className="divide-y divide-ink/15">
             {past.map((call) => (
               <li key={call.postUrl} className="grid gap-x-4 gap-y-1 py-3 sm:grid-cols-[9rem_1fr_auto] sm:items-start">
-                <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   <time dateTime={call.date}>{call.dateLabel}</time>
                   {call.window ? ` · ${call.window}` : ""}
                 </p>
                 <div className="min-w-0">
-                  <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+                  <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
                     {call === record.latest ? "Latest call · " : ""}
                     {call.game}
                   </p>

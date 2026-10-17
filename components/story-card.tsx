@@ -21,11 +21,11 @@ export function StoryCard({
         className={`border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4 ${featured ? "sm:py-6" : ""}`}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wide text-masthead uppercase">
+          <p className="flex flex-wrap items-center gap-2 font-mono text-sm tracking-wide text-masthead uppercase">
             <StoryLabel label={story.label} />
             {featured ? "Featured column" : "Column"}
           </p>
-          <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+          <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
             {story.dateLabel}
           </p>
         </div>
@@ -46,7 +46,7 @@ export function StoryCard({
             {story.bylineDetail ? (
               <span className="text-ink-soft">· {story.bylineDetail}</span>
             ) : null}
-            <span className="font-mono text-[10px] tracking-wide text-ink-soft uppercase">
+            <span className="font-mono text-xs tracking-wide text-ink-soft uppercase">
               Cast
             </span>
           </p>
@@ -62,7 +62,7 @@ export function StoriesStrip({ stories }: { stories: Story[] }) {
     <section className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Poor Form Desk
           </p>
           <h2 className="font-heading text-xl font-semibold tracking-tight">
@@ -71,7 +71,7 @@ export function StoriesStrip({ stories }: { stories: Story[] }) {
         </div>
         <Link
           href="/stories"
-          className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
         >
           All stories
         </Link>

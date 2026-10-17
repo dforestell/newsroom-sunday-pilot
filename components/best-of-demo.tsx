@@ -26,7 +26,7 @@ export function BestOfDemo() {
         {lines.map(({ gameId, entry, line }) => (
           <li key={`${entry.id}-${line.voiceId}`} className="border border-border bg-card px-4 py-3">
             <p className="font-heading text-base leading-6 break-words italic">“{line.line}”</p>
-            <Link href={`/games/${gameId}#${entry.id}`} className="mt-1 inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline">
+            <Link href={`/games/${gameId}#${entry.id}`} className="mt-1 inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline">
               {voiceDisplayName(line.voiceId, line.voiceName)} · open moment
             </Link>
           </li>

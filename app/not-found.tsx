@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export default function NotFound() {
   return (
     <div className="max-w-lg space-y-4">
-      <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+      <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
         404
       </p>
       <h1 className="font-heading text-3xl font-semibold">Not on the board</h1>

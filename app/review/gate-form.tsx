@@ -12,7 +12,7 @@ export function GateForm() {
   return (
     <form action={action} className="max-w-md space-y-4 border border-ink/15 bg-card px-4 py-5">
       <div>
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Private review
         </p>
         <h1 className="font-heading text-3xl font-semibold tracking-tight">

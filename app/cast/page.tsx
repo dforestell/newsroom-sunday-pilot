@@ -12,7 +12,7 @@ export default function CastIndexPage() {
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           Poor Form Desk
         </p>
         <h1 className="font-heading text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -33,7 +33,7 @@ export default function CastIndexPage() {
                 {voice.name}
               </Link>
             </h2>
-            <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+            <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
               {voice.desk} · {voice.title}
             </p>
             <p className="text-sm leading-6 text-ink-soft">{voice.lens}</p>

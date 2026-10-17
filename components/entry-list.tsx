@@ -60,10 +60,10 @@ export function EntryList({
             >
               <div className="flex flex-wrap items-center gap-1.5">
                 {showSim ? <DeskPill tone="sim">Simulated</DeskPill> : null}
-                <span className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                <span className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   {clockStamp(entry.postedAtLabel)}
                 </span>
-                <span className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+                <span className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   {kindLabel(entry.kind)}
                 </span>
                 {entry.delayed ? <DeskPill tone="warn">Delayed</DeskPill> : null}
@@ -96,12 +96,12 @@ export function EntryList({
                 </ul>
               ) : null}
               {entry.correctsId ? (
-                <p className="mt-2 font-mono text-[11px] text-masthead uppercase">
+                <p className="mt-2 font-mono text-sm text-masthead uppercase">
                   Corrects {entry.correctsId}
                 </p>
               ) : null}
               {entry.duplicateOfId ? (
-                <p className="mt-2 font-mono text-[11px] text-ink-soft uppercase">
+                <p className="mt-2 font-mono text-[13px] text-ink-soft uppercase">
                   Duplicate of {entry.duplicateOfId}
                 </p>
               ) : null}

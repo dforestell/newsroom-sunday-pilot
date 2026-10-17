@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <section className="space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">Poor Form Sports</p>
+        <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Poor Form Sports</p>
         <h1 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">The desk rules</h1>
         <p className="text-base leading-7 text-ink-soft">
           Give the fan a job: celebrate, mock a rival, argue the math, show they got the reference, or cope with receipts.

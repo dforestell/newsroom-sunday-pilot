@@ -27,7 +27,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
         <MiniScorebug game={game} sticky />
         <div className="space-y-5 px-4 sm:px-6">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+            <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
               {chrome?.kicker ?? game.windowLabel}
             </p>
             <h1 className="font-heading text-3xl font-semibold tracking-tight break-words sm:text-4xl">
@@ -48,7 +48,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
               <DeskPill tone="outline">Archive</DeskPill>
               <DeskPill tone="final">Final</DeskPill>
             </div>
-            <p className="mt-2 font-mono text-[11px] tracking-wide text-ink-soft uppercase">
+            <p className="mt-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
               {chrome?.sources ?? game.feedNote}
             </p>
             {chrome?.sourceLinks?.length ? (
@@ -97,7 +97,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
 
   return (
     <div className="space-y-5">
-      <p className="flex min-w-0 flex-wrap items-center gap-x-2 font-mono text-[11px] tracking-wide uppercase">
+      <p className="flex min-w-0 flex-wrap items-center gap-x-2 font-mono text-[13px] tracking-wide uppercase">
         <Link href="/" className="inline-flex min-h-11 items-center text-ink-soft hover:text-masthead">
           Scoreboard
         </Link>
@@ -113,7 +113,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
         <section className="space-y-3">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
-              <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+              <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
                 Editorial live blog
               </p>
               <h2 className="font-heading text-xl font-semibold sm:text-2xl">

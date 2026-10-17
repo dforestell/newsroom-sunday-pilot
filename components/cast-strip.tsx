@@ -8,7 +8,7 @@ export function CastStrip() {
     <section className="space-y-2">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-masthead uppercase">
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Poor Form Desk
           </p>
           <h2 className="font-heading text-xl font-semibold tracking-tight">
@@ -17,7 +17,7 @@ export function CastStrip() {
         </div>
         <Link
           href="/cast"
-          className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
         >
           Full strip
         </Link>
@@ -44,10 +44,10 @@ export function CastStrip() {
                 <p className="font-heading text-sm font-semibold leading-tight break-words">
                   {voice.name}
                 </p>
-                <p className="mt-1 font-mono text-[10px] tracking-wide text-ink-soft uppercase">
+                <p className="mt-1 font-mono text-xs tracking-wide text-ink-soft uppercase">
                   {voice.title}
                 </p>
-                <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-ink-soft">
+                <p className="mt-1 line-clamp-2 text-[13px] leading-4 text-ink-soft">
                   {voice.lens}
                 </p>
               </Link>
@@ -56,7 +56,7 @@ export function CastStrip() {
                   href={voice.x.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center font-mono text-[11px] tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
+                  className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
                 >
                   @{voice.x.handle} on X
                 </a>

@@ -25,7 +25,7 @@ export function ThisLineReaction({ id }: { id: string }) {
         window.localStorage.setItem(key, next ? "1" : "0");
         window.dispatchEvent(new StorageEvent("storage", { key }));
       }}
-      className="mt-2 border border-border bg-paper px-2 py-1 font-mono text-[10px] tracking-wide text-ink-soft uppercase hover:border-masthead hover:text-masthead aria-pressed:border-masthead aria-pressed:bg-masthead aria-pressed:text-demo-foreground"
+      className="mt-2 border border-border bg-paper px-2 py-1 font-mono text-xs tracking-wide text-ink-soft uppercase hover:border-masthead hover:text-masthead aria-pressed:border-masthead aria-pressed:bg-masthead aria-pressed:text-demo-foreground"
     >
       🔥 {lit ? "Saved line" : "Mark this line"}
     </button>

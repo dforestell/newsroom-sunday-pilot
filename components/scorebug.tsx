@@ -83,7 +83,7 @@ export function GhostWindowCard({ game }: { game: Game }) {
       className="block border border-border/70 bg-card/50 px-3 py-2.5 opacity-70 transition-opacity hover:opacity-90 sm:px-4"
     >
       <div className="flex items-center justify-between gap-2">
-        <p className="font-mono text-[10px] tracking-[0.16em] text-ink-soft uppercase">
+        <p className="font-mono text-xs tracking-[0.16em] text-ink-soft uppercase">
           {game.windowLabel} · Scheduled
         </p>
         <DeskPill tone="outline">Blog off</DeskPill>
@@ -95,7 +95,7 @@ export function GhostWindowCard({ game }: { game: Game }) {
           </p>
           <p className="text-[11px] tracking-wide uppercase">{game.away.short}</p>
         </div>
-        <span className="text-[10px] text-ink-soft/70">@</span>
+        <span className="text-xs text-ink-soft/70">@</span>
         <div className="text-right">
           <p className="text-2xl font-medium text-ink-soft">
             {formatScore(game.officialScore.home)}
