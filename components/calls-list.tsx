@@ -54,6 +54,9 @@ export function CallsList({ calls }: { calls: Call[] }) {
         <p className="text-sm leading-6 text-ink-soft sm:text-base">
           Forecasts are locked before kickoff and graded by the final ESPN box. They hit only if they happen exactly as written. Arguments aren’t graded hit or miss; Chip either owns them or they stand, with the evidence in the receipt.
         </p>
+        <p className="text-sm leading-6 text-ink-soft sm:text-base">
+          Record counts calls from Sep 17, 2026.
+        </p>
         <p className="text-sm italic text-ink-soft">
           Fictional columnist. Football satire, not reporting.
         </p>
@@ -72,6 +75,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
             </p>
             <p className="mt-1 font-mono text-sm tracking-[0.18em] text-masthead uppercase">{next.game}</p>
             <p className="mt-1 font-heading text-2xl font-semibold tracking-tight break-words sm:text-3xl">{next.take}</p>
+            {next.criterion ? <p className="mt-1 text-sm leading-6 text-ink-soft">{next.criterion}</p> : null}
             <PostLink href={next.postUrl} />
           </>
         ) : (
@@ -103,6 +107,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
                     {call.game}
                   </p>
                   <p className="font-heading text-lg leading-snug font-semibold break-words">{call.take}</p>
+                  {call.criterion ? <p className="mt-1 text-sm leading-6 text-ink-soft">{call.criterion}</p> : null}
                   {call.result ? <p className="mt-1 text-sm leading-6 text-ink">{call.result}</p> : null}
                   {call.note ? <p className="mt-1 text-sm leading-6 text-ink-soft italic">{call.note}</p> : null}
                   <PostLink href={call.postUrl} />

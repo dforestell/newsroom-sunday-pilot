@@ -35,9 +35,8 @@ test("all migrated public URLs resolve from files, preserving dates, bylines and
   const highmark = stories.find((story) => story.slug === "tnf-det-buf-recap-highmark-2026-09-17")!;
   assert.equal(highmark.dateLabel, "Sep 17, 2026");
   assert.equal(highmark.bylineDetail, "with Desk segments");
-  assert.match(highmark.html, /<figure>/);
-  assert.match(highmark.html, /src="\/graphics\/dan-with-without-ben-parody-2026-09-17\.jpg"/);
-  assert.match(highmark.html, /<figcaption>With Ben. Without Ben.<\/figcaption>/);
+  assert.match(highmark.html, /Lions defense, second-half edition/);
+  assert.doesNotMatch(highmark.html, /Without Ben/);
   assert.doesNotMatch(highmark.html, /title="/);
 });
 

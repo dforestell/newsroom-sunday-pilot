@@ -29,9 +29,9 @@ Three passing touchdowns, two rushing, and the first regular-season night in the
 
 James Cook ran 21 times for 135 yards, and his one-yard touchdown with 2:50 left made it 41–24. Detroit’s late score was the kind you get when the other team already has the keys.
 
-## Lions offense, post-Ben edition
+## Lions defense, second-half edition
 
-![Parody two-panel graphic comparing Lions coach Dan Campbell with offensive coordinator Ben Johnson versus Campbell alone beside a first-down marker; with Ben shows a full yard, without Ben shows inches; PARODY watermark. Desk parody graphic.](/graphics/dan-with-without-ben-parody-2026-09-17.jpg "With Ben. Without Ben.")
+The offense did its share: 21 second-half points. [Buffalo had three real possessions after halftime](https://www.espn.com/nfl/playbyplay/_/gameId/401872932): touchdown, punt, touchdown. The fourth was Allen running out the clock. A comeback needs the other side of the ball to say “no” more than once. Detroit’s defense said it one time, and the offense went three-and-out right after.
 
 New house. Same Bills. My Lions pick paid the first month’s rent.
 

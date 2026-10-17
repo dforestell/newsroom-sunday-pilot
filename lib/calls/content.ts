@@ -21,6 +21,7 @@ const schema = z
     game: oneLine("Name the game, e.g. DET at CAR."),
     window: oneLine("Add a short window such as MNF, or omit the field.").optional(),
     take: oneLine("Add Chip's one-line take."),
+    criterion: oneLine("Add a one-line success criterion, or omit the field.").optional(),
     kind: z.enum(["forecast", "argument"], {
       error: 'Use kind "forecast" (one checkable outcome, posted before kickoff) or "argument" (an opinion with no box-score line).',
     }),
@@ -32,8 +33,8 @@ const schema = z
         "Use an https://x.com/ChipAbsolute/status/<id> URL. Other hosts, accounts, and query strings are rejected.",
       ),
     result: oneLine("Add the verified result.").optional(),
-    status: z.enum(["held-up", "missed", "still-arguing", "pending"], {
-      error: 'Use status "held-up", "missed", "still-arguing", or "pending".',
+    status: z.enum(["held-up", "missed", "still-arguing", "pending", "ungraded"], {
+      error: 'Use status "held-up", "missed", "still-arguing", "pending", or "ungraded".',
     }),
     note: oneLine("Add the note, or omit the field.").optional(),
   })
@@ -60,6 +61,13 @@ const schema = z
         message: "Add the verified result. Omit result only while status is pending.",
       });
     }
+    if (data.status === "ungraded" && data.note) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["note"],
+        message: 'An ungraded call shows the fixed note "Posted after the final, not counted." Omit note.',
+      });
+    }
   });
 
 export type CallStatus = z.infer<typeof schema>["status"];
@@ -74,14 +82,18 @@ export const CALL_STATUS_LABEL: Record<CallStatus, string> = {
   missed: "Missed",
   "still-arguing": "Still arguing",
   pending: "Pending",
+  ungraded: "Ungraded",
 };
+
+export const UNGRADED_NOTE = "Posted after the final, not counted.";
 
 export const CALL_STATUS_TONE = {
   "held-up": "live",
   missed: "warn",
   "still-arguing": "satire",
   pending: "outline",
-} as const satisfies Record<CallStatus, "live" | "warn" | "satire" | "outline">;
+  ungraded: "ungraded",
+} as const satisfies Record<CallStatus, "live" | "warn" | "satire" | "outline" | "ungraded">;
 
 export class CallFilingError extends Error {
   constructor(public issues: string[]) {
@@ -185,6 +197,7 @@ export function parseCall(file: string, source: string): Call {
     status: data.status,
   };
   if (data.result) call.result = data.result;
+  if (data.criterion) call.criterion = data.criterion;
   if (data.window) call.window = data.window;
   if (data.note) call.note = data.note;
   return call;
@@ -200,6 +213,7 @@ export function tallyCalls(calls: Call[]) {
     missed: calls.filter((call) => call.status === "missed").length,
     "still-arguing": calls.filter((call) => call.status === "still-arguing").length,
     pending: calls.filter((call) => call.status === "pending").length,
+    ungraded: calls.filter((call) => call.status === "ungraded").length,
   };
 }
 

@@ -143,7 +143,7 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   assert.equal(/^## Close$/m.test(stories), false);
   assert.match(stories, /New house\. Same Bills\. My Lions pick paid the first month’s rent\./);
   assert.equal(/Engrave nothing/i.test(stories), false);
-  assert.match(stories, /"With Ben\. Without Ben\."/);
+  assert.match(stories, /## Lions defense, second-half edition/);
   assert.match(stories, /Ceremony is allowed to be loud\. Spoilers are allowed to be louder\. Nobody hangs a banner before the first snap\./);
 
   assert.match(cast, /Loud picks\. His name stays on them\./);
@@ -183,7 +183,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.equal(chip.startHere?.[1]?.title, "Chicago pick, owned after 9–3");
   assert.deepEqual(
     CAST.filter((voice) => voice.publicLead || voice.startHere).map((voice) => voice.slug),
-    ["chip-absolute", "wes-process", "layover-len"],
+    ["chip-absolute", "wes-process", "layover-len", "boo-atlas", "chyron-carl"],
   );
 
   const profile = source("app/cast/[slug]/page.tsx");

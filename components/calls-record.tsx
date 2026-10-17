@@ -3,6 +3,7 @@ import { DeskPill } from "@/components/desk-pill";
 import {
   CALL_STATUS_LABEL,
   CALL_STATUS_TONE,
+  UNGRADED_NOTE,
   getCallRecord,
   type Call,
   type CallRecord,
@@ -24,7 +25,14 @@ function streakTone(streak: CallStreak): "live" | "warn" | "outline" {
 }
 
 export function CallStatusTag({ status }: { status: CallStatus }) {
-  return <DeskPill tone={CALL_STATUS_TONE[status]}>{CALL_STATUS_LABEL[status]}</DeskPill>;
+  const pill = <DeskPill tone={CALL_STATUS_TONE[status]}>{CALL_STATUS_LABEL[status]}</DeskPill>;
+  if (status !== "ungraded") return pill;
+  return (
+    <span className="inline-flex flex-col gap-1 sm:items-end">
+      {pill}
+      <span className="text-sm leading-6 text-ink-soft italic">{UNGRADED_NOTE}</span>
+    </span>
+  );
 }
 
 function PostLink({ href }: { href: string }) {

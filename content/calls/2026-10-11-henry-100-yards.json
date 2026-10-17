@@ -3,6 +3,7 @@
   "game": "BAL at ATL",
   "window": "SNF",
   "take": "Derrick Henry runs for 100+ yards.",
+  "criterion": "Held up if Henry has 100 or more rushing yards in the final ESPN box.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2108568219762270432",
   "result": "Baltimore won 30–23 in overtime. Henry ran 24 times for 102 yards.",
