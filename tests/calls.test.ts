@@ -9,7 +9,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { CallsFeature } from "../components/calls-record.tsx";
 import { CallsList } from "../components/calls-list.tsx";
 import { getCallRecord, type Call } from "../lib/calls.ts";
-import { CallFilingError, loadCalls, parseCall, tallyCalls } from "../lib/calls/content.ts";
+import { CallFilingError, parseCall, tallyCalls } from "../lib/calls/content.ts";
+import { loadCalls } from "../lib/calls/files.ts";
 
 const valid = {
   date: "2026-10-05",

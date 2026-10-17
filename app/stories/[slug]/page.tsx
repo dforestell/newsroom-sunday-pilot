@@ -3,10 +3,15 @@ import { StoryBody } from "@/components/story-body";
 import { notFound } from "next/navigation";
 import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
-import { getStory, listStories, storyVoice } from "@/lib/stories";
+import { getPublicStory, listPublicStories, listStories, storyVoice } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
 
-export const dynamicParams = false;
+// Filed content is inlined at build time; admin content is read from Redis and refreshed
+// every 30 seconds (or immediately after an admin save).
+export const revalidate = 30;
+
+// Filed stories are prerendered; admin stories render on demand.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return listStories().map((story) => ({ slug: story.slug }));
@@ -16,7 +21,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/stories/[slug]">) {
   const { slug } = await params;
-  const story = getStory(slug);
+  const story = await getPublicStory(slug);
   return story
     ? shareMetadata(story.title, story.dek)
     : { title: "Story" };
@@ -26,12 +31,12 @@ export default async function StoryArticlePage({
   params,
 }: PageProps<"/stories/[slug]">) {
   const { slug } = await params;
-  const story = getStory(slug);
+  const all = await listPublicStories();
+  const story = all.find((item) => item.slug === slug);
   if (!story) {
     notFound();
   }
   const voice = storyVoice(story);
-  const all = listStories();
   const index = all.findIndex((item) => item.slug === story.slug);
   // Next newer story; the latest story points at the one before it instead of itself.
   const next = index > 0 ? all[index - 1] : all[1];

@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 43147 --hostname 0.0.0.0",
-    "build": "npm run check:stories && npm run check:calls && next build",
+    "build": "npm run check:stories && npm run check:calls && npm run gen:content && next build",
     "start": "next start --port 43147 --hostname 0.0.0.0",
     "lint": "eslint",
-    "typecheck": "next typegen && tsc --noEmit",
-    "test": "node --import tsx --test tests/nfl/*.test.ts tests/*.test.ts tests/*.test.tsx",
+    "typecheck": "npm run gen:content && next typegen && tsc --noEmit",
+    "test": "npm run gen:content && node --import tsx --test tests/nfl/*.test.ts tests/*.test.ts tests/*.test.tsx",
     "check:stories": "node --import tsx scripts/check-stories.ts",
     "check:calls": "node --import tsx scripts/check-calls.ts",
     "test:nfl": "node --experimental-strip-types --test tests/nfl/*.test.ts",
     "smoke:espn": "node --experimental-strip-types scripts/smoke-espn.ts",
-    "smoke:failover": "node --experimental-strip-types scripts/smoke-failover.ts"
+    "smoke:failover": "node --experimental-strip-types scripts/smoke-failover.ts",
+    "gen:content": "node --import tsx scripts/generate-content.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

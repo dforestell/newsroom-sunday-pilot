@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local agent scratch
 /agent-tools
+
+# generated from content/ at build time
+/lib/generated/

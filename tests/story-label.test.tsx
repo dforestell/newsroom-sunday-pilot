@@ -6,7 +6,7 @@ import { storyLabelParts } from "../components/story-label.tsx";
 import StoryArticlePage from "../app/stories/[slug]/page.tsx";
 import { listStories } from "../lib/stories.ts";
 import { HomeFeatured, HomeStories } from "../components/home-sections.tsx";
-import { listCalls } from "../lib/calls/content.ts";
+import { listCalls } from "../lib/calls.ts";
 
 const stories = listStories();
 

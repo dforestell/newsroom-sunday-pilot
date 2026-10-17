@@ -4,7 +4,8 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
-import { FilingError, loadStories, parseStory } from "../lib/stories/content.ts";
+import { FilingError, parseStory } from "../lib/stories/content.ts";
+import { loadStories } from "../lib/stories/files.ts";
 import { parseMarkdown, renderMarkdown } from "../lib/stories/markdown.ts";
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/stories/${name}.md`, import.meta.url), "utf8");
