@@ -6,5 +6,6 @@
   "criterion": "Held up if Lloyd has 75 or more rushing yards in the final ESPN box.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2111099322322354342",
-  "status": "pending"
+  "status": "missed",
+  "result": "Green Bay won 23–13. Lloyd ran 8 times for 10 yards."
 }
