@@ -18,6 +18,7 @@ export async function generateMetadata({
     game.demo
       ? `${game.windowLabel}: a filed archive, never a live score.`
       : "Live NFL game detail from the Poor Form scoreboard.",
+    `/games/${game.id}`,
   );
 }
 

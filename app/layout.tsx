@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL, siteUrl } from "@/lib/site";
 import { Geist, IBM_Plex_Mono, Newsreader } from "next/font/google";
 import { SiteChrome } from "@/components/site-chrome";
 import "./globals.css";
@@ -21,7 +22,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://poorformsports.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Poor Form Sports",
     template: "%s · Poor Form Sports",
@@ -32,13 +33,14 @@ export const metadata: Metadata = {
     title: "Poor Form Sports",
     description: "NFL scores and a desk with opinions. Entertainment only. Not reporting. Not betting advice.",
     siteName: "Poor Form Sports",
-    images: [{ url: "/brand/wordmark-bar.png", alt: "Poor Form Sports" }],
+    url: siteUrl("/"),
+    images: [{ url: siteUrl("/brand/wordmark-bar.png"), alt: "Poor Form Sports" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Poor Form Sports",
     description: "NFL scores and a desk with opinions. Entertainment only.",
-    images: ["/brand/wordmark-bar.png"],
+    images: [siteUrl("/brand/wordmark-bar.png")],
   },
 };
 

@@ -9,6 +9,7 @@ export const revalidate = 30;
 export const metadata = shareMetadata(
   "Chip’s calls",
   "Chip Absolute’s takes, and how each one held up.",
+  "/calls",
 );
 
 export default async function CallsPage() {

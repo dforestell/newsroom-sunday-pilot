@@ -23,7 +23,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const story = await getPublicStory(slug);
   return story
-    ? shareMetadata(story.title, story.dek)
+    ? shareMetadata(story.title, story.dek, `/stories/${story.slug}`)
     : { title: "Story" };
 }
 

@@ -6,6 +6,7 @@ import { shareMetadata } from "@/lib/share";
 export const metadata = shareMetadata(
   "Cast",
   "Meet the Poor Form Desk: six named voices and the house Desk.",
+  "/cast",
 );
 
 export default function CastIndexPage() {

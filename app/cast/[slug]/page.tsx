@@ -20,6 +20,7 @@ export async function generateMetadata({
     ? shareMetadata(
         `${voice.name} · ${voice.title}`,
         `${voice.publicLead ?? voice.bio} Poor Form Sports.`,
+        `/cast/${voice.slug}`,
       )
     : { title: "Cast" };
 }
