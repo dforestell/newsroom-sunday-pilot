@@ -1,10 +1,12 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath, updateTag } from "next/cache";
-import { ADMIN_COOKIE, createSession, envDirectory, sessionCookieOptions } from "@/lib/admin/auth";
-import { currentAdmin, adminReady } from "@/lib/admin/session";
+import { ADMIN_COOKIE, createSession, sessionCookieOptions } from "@/lib/admin/auth";
+import { adminDirectory, currentAdmin, adminReady, isOwner } from "@/lib/admin/session";
+import { clearUserFailures, clientIp, isLimited, recordFailure } from "@/lib/admin/ratelimit";
+import { UserStore } from "@/lib/admin/users";
 import { ADMIN_CONTENT_TAG } from "@/lib/admin/keys";
 import { redisConfig } from "@/lib/admin/redis";
 import { deleteAdminCall, fetchAdminContent, putAdminCall, putAdminStory } from "@/lib/admin/store";
@@ -37,13 +39,73 @@ async function loadAdmin() {
 
 export async function loginAction(_: FormState, form: FormData): Promise<FormState> {
   if (!adminReady()) return { issues: ["Admin is not configured."] };
-  const user = envDirectory().verify(text(form, "login"), text(form, "password"));
-  if (!user) {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return { issues: ["That login and password did not match."], values: { login: text(form, "login") } };
+  const username = text(form, "username").trim().toLowerCase();
+  const values = { username };
+  const config = redisConfig();
+  const ip = clientIp(await headers());
+  if (await isLimited(config, username, ip)) {
+    return { issues: ["Too many failed sign-ins. Wait 15 minutes and try again."], values };
   }
+  const user = await adminDirectory().verify(username, text(form, "password"));
+  if (!user) {
+    await recordFailure(config, username, ip);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    return { issues: ["That username and password did not match."], values };
+  }
+  await clearUserFailures(config, username);
   (await cookies()).set(ADMIN_COOKIE, createSession(user), sessionCookieOptions());
   redirect("/admin");
+}
+
+// ---------- users (owner only) ----------
+
+async function requireOwner() {
+  const user = await requireAdmin();
+  if (!isOwner(user)) redirect("/admin/users");
+  const config = redisConfig();
+  if (!config) throw new Error("Redis is not configured.");
+  return new UserStore(config);
+}
+
+const storeDown = ["Could not reach the user store. Nothing was changed; try again."];
+
+export async function createUserAction(_: FormState, form: FormData): Promise<FormState> {
+  const store = await requireOwner();
+  const values = { username: text(form, "username").trim(), label: text(form, "label") };
+  let issues: string[];
+  try {
+    issues = await store.create({ ...values, password: text(form, "password"), confirm: text(form, "confirm") });
+  } catch {
+    return { issues: storeDown, values };
+  }
+  if (issues.length) return { issues, values };
+  redirect(`/admin/users?saved=${encodeURIComponent(values.username)}`);
+}
+
+export async function resetPasswordAction(_: FormState, form: FormData): Promise<FormState> {
+  const store = await requireOwner();
+  const username = text(form, "username");
+  let issues: string[];
+  try {
+    issues = await store.resetPassword(username, text(form, "password"), text(form, "confirm"));
+  } catch {
+    return { issues: storeDown };
+  }
+  if (issues.length) return { issues };
+  redirect(`/admin/users?saved=${encodeURIComponent(username)}`);
+}
+
+export async function setUserDisabledAction(form: FormData) {
+  const store = await requireOwner();
+  const username = text(form, "username");
+  await store.setDisabled(username, text(form, "disabled") === "true");
+  redirect(`/admin/users?saved=${encodeURIComponent(username)}`);
+}
+
+export async function deleteUserAction(form: FormData) {
+  const store = await requireOwner();
+  await store.remove(text(form, "username"));
+  redirect("/admin/users");
 }
 
 export async function logoutAction() {

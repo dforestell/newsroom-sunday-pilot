@@ -7,8 +7,8 @@ existing Upstash Redis and merged with the files in `content/` on every public p
 
 | Name | What |
 | --- | --- |
-| `ADMIN_EMAILS` | Comma-separated list of emails allowed to sign in. |
-| `ADMIN_PASSWORD` | Shared admin password. |
+| `ADMIN_EMAILS` | Owner email(s), comma-separated. The owner can also sign in with username `dillon`. |
+| `ADMIN_PASSWORD` | Owner password. |
 | `ADMIN_SESSION_SECRET` | Random string, at least 32 characters, used to sign the session cookie. Changing it signs everyone out. |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Already set for the scoreboard cache. |
 
@@ -52,11 +52,44 @@ Now:
 - `admin:stories:v2` (hash, field = slug, value = JSON story record)
 - `admin:calls:v1` (hash, field = postUrl, value = JSON call in the `content/calls` format)
 
-## Later: named persona users
+## Users and roles
 
-`lib/admin/auth.ts` keeps users behind an `AdminDirectory` interface. A persona directory
-(username + password hash, ids like `persona:<username>`) can be added without changing
-the session cookie or the pages.
+Sign in at `/admin` with **Username** and **Password**.
+
+- **Owner** (role `owner`): username `dillon` or an email in `ADMIN_EMAILS`, with
+  `ADMIN_PASSWORD`. Comes from the environment, so it works even if Redis is down.
+  Only the owner sees **Users** (`/admin/users`).
+- **Editors** (role `editor`): accounts the owner adds on `/admin/users` (for Chip and
+  other personas). Editors can do everything else in the admin: stories and calls.
+  They cannot open `/admin/users` or use its actions.
+
+On `/admin/users` the owner can add a user (username, display name, password + confirm),
+reset a password, disable/enable, and delete.
+
+- Usernames: 2–32 characters, lowercase letters, digits or hyphens. `dillon` is reserved.
+- Passwords: at least 12 characters. Stored only as an scrypt hash (node:crypto,
+  N=16384, r=8, p=1, 64-byte key) with a random 16-byte salt per user. Passwords and
+  hashes are never logged or shown.
+- Records live in the Redis hash `admin:users:v1` (field = username):
+  `{ username, label, role: "editor", passwordHash, createdAt, disabled }`.
+- Every admin request re-checks the session's user, so disabling or deleting a user signs
+  them out on their next request. A password reset does not end existing sessions
+  (disable and re-enable to force that). Changing `ADMIN_SESSION_SECRET` signs everyone out.
+- If Redis is down, editors cannot sign in (and their sessions are treated as signed out);
+  the owner can still sign in.
+
+Code: `lib/admin/auth.ts` (`AdminDirectory`: `envDirectory` for the owner,
+`redisDirectory` for editors, `combinedDirectory`), `lib/admin/users.ts`,
+`lib/admin/passwords.ts`.
+
+## Sign-in rate limit
+
+Failed sign-ins are counted in Redis per username and per client IP
+(`admin:login:fail:user:<name>`, `admin:login:fail:ip:<ip>`, first `x-forwarded-for`
+address). After 10 failures within 15 minutes, further attempts for that username or
+from that IP are refused until the window expires. A successful sign-in clears the
+username counter. If Redis is unreachable the limit fails open (sign-in still works).
+Code: `lib/admin/ratelimit.ts`.
 
 ## Local testing
 

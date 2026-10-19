@@ -23,31 +23,31 @@ const env = {
 
 // ---------- auth ----------
 
-test("login accepts allowlisted emails (case-insensitive) with the password only", () => {
+test("login accepts allowlisted emails (case-insensitive) with the password only", async () => {
   const directory = envDirectory(env);
-  assert.equal(directory.verify("editor@example.com", "correct horse")?.id, "email:editor@example.com");
-  assert.equal(directory.verify("desk@example.com", "wrong"), null);
-  assert.equal(directory.verify("someone@example.com", "correct horse"), null);
+  assert.equal((await directory.verify("editor@example.com", "correct horse"))?.id, "email:editor@example.com");
+  assert.equal(await directory.verify("desk@example.com", "wrong"), null);
+  assert.equal(await directory.verify("someone@example.com", "correct horse"), null);
 });
 
-test("sessions are signed, expire, and are revoked when the email leaves ADMIN_EMAILS", () => {
-  const user = envDirectory(env).verify("desk@example.com", "correct horse")!;
+test("sessions are signed, expire, and are revoked when the email leaves ADMIN_EMAILS", async () => {
+  const user = (await envDirectory(env).verify("desk@example.com", "correct horse"))!;
   const token = createSession(user, 1_000, env);
-  assert.equal(readSession(token, { now: 2_000, env })?.label, "desk@example.com");
-  assert.equal(readSession(token, { now: 1_000 + 13 * 3600 * 1000, env }), null, "expired");
+  assert.equal((await readSession(token, { now: 2_000, env }))?.label, "desk@example.com");
+  assert.equal(await readSession(token, { now: 1_000 + 13 * 3600 * 1000, env }), null, "expired");
   const [payload, sig] = token.split(".");
   const forged = Buffer.from(JSON.stringify({ sub: "email:desk@example.com", exp: 9e15 })).toString("base64url");
-  assert.equal(readSession(`${forged}.${sig}`, { now: 2_000, env }), null, "tampered payload");
-  assert.equal(readSession(`${payload}.x${sig}`, { now: 2_000, env }), null, "tampered signature");
-  assert.equal(readSession(token, { now: 2_000, env: { ...env, ADMIN_SESSION_SECRET: "t".repeat(40) } }), null, "rotated secret");
-  assert.equal(readSession(token, { now: 2_000, env: { ...env, ADMIN_EMAILS: "editor@example.com" } }), null, "removed user");
+  assert.equal(await readSession(`${forged}.${sig}`, { now: 2_000, env }), null, "tampered payload");
+  assert.equal(await readSession(`${payload}.x${sig}`, { now: 2_000, env }), null, "tampered signature");
+  assert.equal(await readSession(token, { now: 2_000, env: { ...env, ADMIN_SESSION_SECRET: "t".repeat(40) } }), null, "rotated secret");
+  assert.equal(await readSession(token, { now: 2_000, env: { ...env, ADMIN_EMAILS: "editor@example.com" } }), null, "removed user");
 });
 
 test("admin stays off without all three settings and a long session secret", () => {
   assert.deepEqual(missingAuthSettings(env), []);
   assert.deepEqual(missingAuthSettings({ ...env, ADMIN_SESSION_SECRET: "short" }), ["ADMIN_SESSION_SECRET (at least 32 characters)"]);
   assert.deepEqual(missingAuthSettings({}).length, 3);
-  assert.throws(() => createSession({ id: "email:x", label: "x", role: "admin" }, 0, {}));
+  assert.throws(() => createSession({ id: "email:x", label: "x", role: "owner" }, 0, {}));
 });
 
 // ---------- stories ----------
