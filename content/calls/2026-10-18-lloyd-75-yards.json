@@ -1,11 +1,13 @@
 {
   "date": "2026-10-18",
+  "sport": "NFL",
   "game": "DAL at GB",
   "window": "SNF",
   "take": "MarShawn Lloyd runs for 75+ yards against Dallas with Josh Jacobs listed out.",
   "criterion": "Held up if Lloyd has 75 or more rushing yards in the final ESPN box.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2111099322322354342",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2112187249110437954",
   "status": "missed",
   "result": "Green Bay won 23–13. Lloyd ran 8 times for 10 yards."
 }

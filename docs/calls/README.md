@@ -21,7 +21,16 @@ Chip makes two kinds of calls. Only one gets a hit or a miss. Every file sets `k
 
 **Coverage period.** The record covers calls posted from Oct 4, 2026 (first filed call) onward, 2026 regular season. Earlier takes are not in the data and are not counted.
 
-**Open item.** `2026-10-04-bryce-over-goff.json` is filed as an argument but keeps its existing `held-up` grade (counted as a hit) until that grade is reviewed. Do not copy that combination for new arguments.
+**Ungraded (`ungraded`).** `2026-10-04-bryce-over-goff.json` was posted after the final, so it is filed `ungraded`: it shows the fixed note “Posted after the final, not counted.” and is left out of the tally and streak.
+
+## Sports
+
+Every call sets `sport`. The allowed values live in one list, `lib/calls/sports.ts` (today `NFL` and `NBA`). To add a sport, append it there; `check:calls`, the admin form's Sport select and the per-sport record on `/calls` all read that list.
+
+- `game` and `window` are free text, so NBA calls file the same way: `"game": "BOS at NYK"`, `"window": "NBA Cup"`.
+- The same grading rule applies to every sport: forecasts are graded by the final ESPN box.
+- `/calls` keeps the overall record as the headline. Under it is one line per sport that has at least one call, e.g. `NFL 1–6 · NBA 0–0`. A sport with no calls is not listed. Streak and Next call stay overall.
+- Calls saved in admin before `sport` existed are read as `NFL`.
 
 ## Add a pending call
 
@@ -32,13 +41,14 @@ A new forecast, made before the game, is `pending`. Omit `result`. A new argumen
 3. Run `npm run check:calls`.
 4. Open a pull request. The Preview build reads this folder. Check `/calls` on that Preview.
 
-`window` and `note` are optional. Delete those lines when they are unused. Do not leave them as empty strings. Do not include `result` until the call is graded.
+`window`, `note` and `receiptUrl` are optional. Delete those lines when they are unused. Do not leave them as empty strings. Do not include `result` until the call is graded.
 
 ## Template
 
 ```json
 {
   "date": "2026-10-12",
+  "sport": "NFL",
   "game": "ATL at NO",
   "window": "MNF",
   "take": "One line. The take, as posted.",
@@ -55,7 +65,8 @@ Edit that same file. Do not add a second file, and do not reuse the `postUrl` on
 
 1. Set `status` to `held-up`, `missed`, or `still-arguing`.
 2. Set `result` to one verified line.
-3. Run `npm run check:calls`.
+3. If Chip posted a receipt on X, add `"receiptUrl": "https://x.com/ChipAbsolute/status/<id>"`. It shows as a **Receipt** link next to the X post on graded rows.
+4. Run `npm run check:calls`.
 
 `held-up`, `missed`, and `still-arguing` require `result`. `pending` is the only status that may omit it.
 
@@ -64,11 +75,13 @@ Edit that same file. Do not add a second file, and do not reuse the `postUrl` on
 | Field | Required | How to file |
 | --- | --- | --- |
 | `date` | Yes | Real calendar date, `"YYYY-MM-DD"`. This is the sort key and the filename prefix. |
-| `game` | Yes | Matchup, away team first, e.g. `DET at CAR`. |
-| `window` | No | Short label such as `MNF`. Omit the field when there is nothing to add. |
+| `sport` | Yes | One of the values in `lib/calls/sports.ts`: `NFL` or `NBA`. Exact case. |
+| `game` | Yes | Matchup, away team first, e.g. `DET at CAR` or `BOS at NYK`. Free text. |
+| `window` | No | Short free-text label such as `MNF`, `SNF` or `NBA Cup`. Omit the field when there is nothing to add. |
 | `take` | Yes | One line. The take Chip posted. |
 | `kind` | Yes | `forecast` or `argument`. See the grading rule. |
 | `postUrl` | Yes | Exactly `https://x.com/ChipAbsolute/status/<id>`, digits only after `status/`. No other host, account, query string, or trailing slash. One post, one file. |
+| `receiptUrl` | No | Chip's receipt post for a graded call, validated like `postUrl` (`https://x.com/ChipAbsolute/status/<id>`). Not allowed on `pending` calls and must differ from `postUrl`. Shows as a **Receipt** link. |
 | `result` | Required except `pending` | Verified result, one line. Omit the field while `status` is `pending`. Required for `held-up`, `missed`, and `still-arguing`. |
 | `status` | Yes | The grade. `held-up` is a hit. `missed` is a miss. `pending` is a pre-game call. `still-arguing` is an ungraded call that already has a result. There is no separate grade field. |
 | `note` | No | Extra line under the result. Omit the field when unused. |
@@ -80,8 +93,9 @@ Edit that same file. Do not add a second file, and do not reuse the `postUrl` on
 The top of `/calls` reads the same `status` field:
 
 - **Next call:** the newest `pending` call (date, game, take, X post). If none is filed, the row says “Next call drops soon.”
-- **Tally:** hits (`held-up`), misses (`missed`), still arguing (`still-arguing`), and pending (`pending` only).
+- **Tally:** overall, across every sport: hits (`held-up`), misses (`missed`), still arguing (`still-arguing`), and pending (`pending` only).
 - **Streak:** graded calls only, newest first. `pending` and `still-arguing` are skipped. Two or more hits in a row is hot (“Hot: N straight held up”). Two or more misses in a row is cold (“Cold: N straight missed”). One graded call, a split, or no graded calls is “No streak yet.”
+- **By sport:** a line under the tally with held up–missed for each sport that has a call.
 - **Latest:** the newest call whose status is not `pending`, so it does not repeat the next call. A later post wins a same-day tie.
 
 ## If the check is red
@@ -90,6 +104,8 @@ Run `npm run check:calls`. Errors name the file, the field, and the fix:
 
 ```text
 content/calls/example.json — date: Use a real calendar date in YYYY-MM-DD format.
+content/calls/example.json — sport: Use sport "NFL" or "NBA".
+content/calls/example.json — receiptUrl: A pending call has no receipt yet. Add receiptUrl when you grade the call.
 content/calls/example.json — status: Use status "held-up", "missed", "still-arguing", or "pending".
 content/calls/example.json — postUrl: Use an https://x.com/ChipAbsolute/status/<id> URL. Other hosts, accounts, and query strings are rejected.
 content/calls/example.json — take: Add Chip's one-line take.

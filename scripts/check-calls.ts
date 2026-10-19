@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 import { CallFilingError } from "../lib/calls/content.ts";
 import { loadCalls } from "../lib/calls/files.ts";
-import { getCallRecord } from "../lib/calls/record.ts";
+import { getCallRecord, sportRecords } from "../lib/calls/record.ts";
 
 try {
   const directory = process.argv[2] ? resolve(process.argv[2]) : undefined;
@@ -16,7 +16,7 @@ try {
     process.exitCode = 1;
   }
   console.log(
-    `Call filing passed: ${calls.length} calls, valid posts, results and status. Record ${record.tally.hits}–${record.tally.misses}; ${ungraded.length} ungraded (not counted).`,
+    `Call filing passed: ${calls.length} calls, valid posts, results and status. Record ${record.tally.hits}–${record.tally.misses}; ${ungraded.length} ungraded (not counted). By sport: ${sportRecords(calls).map((entry) => `${entry.sport} ${entry.hits}–${entry.misses}`).join(" · ")}.`,
   );
 } catch (error) {
   if (!(error instanceof CallFilingError)) throw error;

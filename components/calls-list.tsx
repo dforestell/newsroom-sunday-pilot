@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { CallStatusTag } from "@/components/calls-record";
 import { PublishingRhythm } from "@/components/publishing-rhythm";
-import { getCallRecord, type Call, type CallRecord } from "@/lib/calls";
+import { DeskPill } from "@/components/desk-pill";
+import { getCallRecord, sportRecords, type Call, type CallRecord, type SportRecord } from "@/lib/calls";
 
 function RecordLine({ record }: { record: CallRecord }) {
   const tally = record.tally as CallRecord["tally"] & { stillArguing?: number };
@@ -17,16 +18,45 @@ function RecordLine({ record }: { record: CallRecord }) {
   );
 }
 
-function PostLink({ href }: { href: string }) {
+function SportRecords({ records }: { records: SportRecord[] }) {
+  if (records.length === 0) return null;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
-    >
-      The X post
-    </a>
+    <p data-sport-records className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
+      <span className="sr-only">Record by sport: </span>
+      {records.map((record, index) => (
+        <span key={record.sport}>
+          {index > 0 ? " · " : ""}
+          {record.sport} {record.hits}–{record.misses}
+        </span>
+      ))}
+    </p>
+  );
+}
+
+function SportChip({ sport }: { sport: Call["sport"] }) {
+  return (
+    <DeskPill tone="outline" className="text-xs">
+      <span className="sr-only">Sport: </span>
+      {sport}
+    </DeskPill>
+  );
+}
+
+const linkClass =
+  "inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline";
+
+function PostLinks({ call }: { call: Call }) {
+  return (
+    <p className="flex flex-wrap gap-x-4">
+      <a href={call.postUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        The X post
+      </a>
+      {call.receiptUrl && call.status !== "pending" ? (
+        <a href={call.receiptUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          Receipt
+        </a>
+      ) : null}
+    </p>
   );
 }
 
@@ -69,21 +99,27 @@ export function CallsList({ calls }: { calls: Call[] }) {
         </div>
         {next ? (
           <>
-            <p className="mt-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
-              <time dateTime={next.date}>{next.dateLabel}</time>
-              {next.window ? ` · ${next.window}` : ""}
+            <p className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
+              <SportChip sport={next.sport} />
+              <span>
+                <time dateTime={next.date}>{next.dateLabel}</time>
+                {next.window ? ` · ${next.window}` : ""}
+              </span>
             </p>
             <p className="mt-1 font-mono text-sm tracking-[0.18em] text-masthead uppercase">{next.game}</p>
             <p className="mt-1 font-heading text-2xl font-semibold tracking-tight break-words sm:text-3xl">{next.take}</p>
             {next.criterion ? <p className="mt-1 text-sm leading-6 text-ink-soft">{next.criterion}</p> : null}
-            <PostLink href={next.postUrl} />
+            <PostLinks call={next} />
           </>
         ) : (
           <p className="mt-2 text-sm text-ink-soft">Next call drops soon.</p>
         )}
       </section>
 
-      <RecordLine record={record} />
+      <div className="space-y-1">
+        <RecordLine record={record} />
+        <SportRecords records={sportRecords(calls)} />
+      </div>
 
       <PublishingRhythm />
 
@@ -97,10 +133,13 @@ export function CallsList({ calls }: { calls: Call[] }) {
           <ul className="divide-y divide-ink/15">
             {past.map((call) => (
               <li key={call.postUrl} className="grid gap-x-4 gap-y-1 py-3 sm:grid-cols-[9rem_1fr_auto] sm:items-start">
-                <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
-                  <time dateTime={call.date}>{call.dateLabel}</time>
-                  {call.window ? ` · ${call.window}` : ""}
-                </p>
+                <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-1">
+                  <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
+                    <time dateTime={call.date}>{call.dateLabel}</time>
+                    {call.window ? ` · ${call.window}` : ""}
+                  </p>
+                  <SportChip sport={call.sport} />
+                </div>
                 <div className="min-w-0">
                   <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
                     {call === record.latest ? "Latest call · " : ""}
@@ -110,7 +149,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
                   {call.criterion ? <p className="mt-1 text-sm leading-6 text-ink-soft">{call.criterion}</p> : null}
                   {call.result ? <p className="mt-1 text-sm leading-6 text-ink">{call.result}</p> : null}
                   {call.note ? <p className="mt-1 text-sm leading-6 text-ink-soft italic">{call.note}</p> : null}
-                  <PostLink href={call.postUrl} />
+                  <PostLinks call={call} />
                 </div>
                 <div className="sm:text-right">
                   <CallStatusTag status={call.status} />

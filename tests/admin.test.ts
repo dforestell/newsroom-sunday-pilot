@@ -108,13 +108,23 @@ test("admin calls use the same validation as check:calls", () => {
     const result = validateAdminCall({ ...fields });
     return "issues" in result ? result.issues.join("\n") : "";
   };
-  const base = { date: "2026-10-25", game: "SEA at DEN", take: "A take.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/1", status: "pending" };
+  const base = { date: "2026-10-25", sport: "NFL", game: "SEA at DEN", take: "A take.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/1", status: "pending" };
   assert.ok("call" in validateAdminCall(base));
   assert.match(bad({ ...base, status: "still-arguing" }), /A forecast is graded by the final ESPN box/);
   assert.match(bad({ ...base, status: "missed" }), /Add the verified result/);
   assert.match(bad({ ...base, postUrl: "https://twitter.com/ChipAbsolute/status/1" }), /x\.com\/ChipAbsolute/);
   assert.match(bad({ ...base, date: "2026-02-30" }), /real calendar date/);
   assert.match(bad({ ...base, note: "Dillon approved" }), /Remove or rewrite public wording/);
+  assert.match(bad({ ...base, sport: "" }), /sport: Use sport "NFL" or "NBA"/);
+  assert.match(bad({ ...base, sport: "MLB" }), /sport: Use sport "NFL" or "NBA"/);
+  assert.match(bad({ ...base, status: "missed", result: "R.", receiptUrl: "https://x.com/someone/status/2" }), /receiptUrl:.*x\.com\/ChipAbsolute/);
+  assert.match(bad({ ...base, receiptUrl: "https://x.com/ChipAbsolute/status/2" }), /pending call has no receipt yet/);
+  const nba = validateAdminCall({ ...base, sport: "NBA", game: "BOS at NYK", window: "NBA Cup", status: "missed", result: "R.", receiptUrl: "https://x.com/ChipAbsolute/status/2" });
+  assert.ok("call" in nba);
+  if ("call" in nba) {
+    assert.equal(nba.call.sport, "NBA");
+    assert.equal(nba.json.receiptUrl, "https://x.com/ChipAbsolute/status/2");
+  }
 });
 
 test("grading a filed call in admin replaces it by postUrl, and record, streak and next call use the merged set", () => {
@@ -130,6 +140,7 @@ test("grading a filed call in admin replaces it by postUrl, and record, streak a
   assert.equal(after.tally.hits, before.tally.hits + 1);
   assert.equal(after.tally.misses, before.tally.misses);
   assert.equal(after.next?.take, "New call.");
+  assert.equal(merged.find((call) => call.postUrl.endsWith("/99"))?.sport, "NFL", "admin calls saved without a sport read as NFL");
   assert.equal(after.latest?.postUrl, lloyd.postUrl);
   assert.equal(after.streak.kind, "none", "a hit after misses breaks the cold streak");
 });
