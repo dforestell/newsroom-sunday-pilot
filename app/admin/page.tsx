@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { missingAuthSettings } from "@/lib/admin/auth";
 import { redisConfig } from "@/lib/admin/redis";
-import { currentAdmin } from "@/lib/admin/session";
+import { currentAdmin, isOwner } from "@/lib/admin/session";
 import { mergeCalls } from "@/lib/admin/merge";
 import { CALL_STATUS_LABEL } from "@/lib/calls";
 import { FILE_CALLS } from "@/lib/generated/content";
@@ -42,9 +42,12 @@ export default async function AdminPage({ searchParams }: PageProps<"/admin">) {
       <section className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-heading text-3xl font-semibold">Desk admin</h1>
-          <p className="text-sm text-ink-soft">Signed in as {user.label}. Changes show on the site within a few seconds.</p>
+          <p className="text-sm text-ink-soft">Signed in as {user.label} ({user.role}). Changes show on the site within a few seconds.</p>
         </div>
-        <form action={logoutAction}><button className={small}>Sign out</button></form>
+        <div className="flex flex-wrap gap-4">
+          {isOwner(user) ? <Link href="/admin/users" className={small}>Users</Link> : null}
+          <form action={logoutAction}><button className={small}>Sign out</button></form>
+        </div>
       </section>
       {params.saved ? <p role="status" className="border-2 border-live-green px-4 py-2 text-sm">Saved: {String(params.saved)}</p> : null}
       {!content ? <p role="alert" className="border-2 border-masthead px-4 py-2 text-sm">The content store is not reachable right now. Lists below may be incomplete; saving is disabled until it is back.</p> : null}
