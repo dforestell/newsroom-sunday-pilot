@@ -18,6 +18,7 @@ export async function generateMetadata({
     return shareMetadata(
       `${game.name} · Archive`,
       `${game.windowLabel}: a filed archive, never a live score.`,
+      `/games/${game.id}/delayed`,
     );
   }
   return { title: `${game.name} · Updates delayed` };

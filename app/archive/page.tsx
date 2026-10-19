@@ -13,6 +13,7 @@ export const revalidate = 30;
 export const metadata = shareMetadata(
   "Archive",
   "Filed game archives and past columns from the Poor Form Desk. Never live scores.",
+  "/archive",
 );
 
 export default async function ArchiveIndexPage() {

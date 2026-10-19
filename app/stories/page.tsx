@@ -9,6 +9,7 @@ export const revalidate = 30;
 export const metadata = shareMetadata(
   "Stories",
   "Filed columns from the Poor Form Desk. Entertainment only. Not reporting. Not betting advice.",
+  "/stories",
 );
 
 export default async function StoriesIndexPage() {

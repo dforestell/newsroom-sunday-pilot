@@ -11,6 +11,7 @@ export const revalidate = 30;
 export const metadata = shareMetadata(
   "NFL board + desk",
   "NFL scores and a desk with opinions from Poor Form Sports. Entertainment only. Not reporting. Not betting advice.",
+  "/",
 );
 
 export default async function HomePage() {
