@@ -79,6 +79,7 @@ test("every filed call is tagged with a listed sport, and the Nix and Lloyd rece
   const receipt = (name: string) => FILE_CALLS.find((filed) => filed.take.includes(name))?.receiptUrl;
   assert.equal(receipt("Nix"), "https://x.com/ChipAbsolute/status/2111099294501445833");
   assert.equal(receipt("Lloyd"), "https://x.com/ChipAbsolute/status/2112187249110437954");
+  assert.equal(receipt("McCaffrey"), "https://x.com/ChipAbsolute/status/2112548066654101706");
 });
 
 test("per-sport records list only sports with calls, in list order, and skip ungraded calls", () => {
