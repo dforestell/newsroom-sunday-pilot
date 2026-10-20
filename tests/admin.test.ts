@@ -101,7 +101,22 @@ test("merged story list: published admin stories join filed ones, newest first; 
 
 // ---------- calls ----------
 
-const lloyd = FILE_CALLS.find((call) => call.status === "pending")!;
+// A synthetic filed pending call, so this test does not depend on whether a real
+// call happens to be pending in content/calls.
+const lloyd = {
+  ...FILE_CALLS[0],
+  date: "2026-12-01",
+  dateLabel: "Dec 1, 2026",
+  game: "DAL at GB",
+  take: "Synthetic pending call.",
+  criterion: "Held up if it happens.",
+  kind: "forecast" as const,
+  postUrl: "https://x.com/ChipAbsolute/status/97",
+  status: "pending" as const,
+  result: undefined,
+  note: undefined,
+};
+const FILED = [...FILE_CALLS, lloyd];
 
 test("admin calls use the same validation as check:calls", () => {
   const bad = (fields: Record<string, string>) => {
@@ -128,13 +143,13 @@ test("admin calls use the same validation as check:calls", () => {
 });
 
 test("grading a filed call in admin replaces it by postUrl, and record, streak and next call use the merged set", () => {
-  const before = getCallRecord(FILE_CALLS);
+  const before = getCallRecord(FILED);
   assert.equal(before.next?.postUrl, lloyd.postUrl);
   const graded = { ...lloyd, status: "held-up", result: "Lloyd ran for 81 yards.", criterion: lloyd.criterion ?? "" };
-  const added = { date: "2026-10-25", game: "SEA at DEN", take: "New call.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/99", status: "pending" };
+  const added = { date: "2026-12-08", game: "SEA at DEN", take: "New call.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/99", status: "pending" };
   const invalid = { date: "nope", postUrl: "https://x.com/ChipAbsolute/status/98" };
-  const merged = mergeCalls(FILE_CALLS, [graded, added, invalid] as never);
-  assert.equal(merged.length, FILE_CALLS.length + 1);
+  const merged = mergeCalls(FILED, [graded, added, invalid] as never);
+  assert.equal(merged.length, FILED.length + 1);
   assert.equal(merged.filter((call) => call.postUrl === lloyd.postUrl).length, 1);
   const after = getCallRecord(merged);
   assert.equal(after.tally.hits, before.tally.hits + 1);
