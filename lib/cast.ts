@@ -38,7 +38,7 @@ export const CAST: Voice[] = [
     title: "Lead",
     lens: "Loud picks. His name stays on them.",
     bio: "Chip Absolute is the bar-stool lead. One concrete absurdity, then a punch — if you delete the punch and it still sounds like a PA announcer, he rewrites. Loud is fine. Filler is not.",
-    publicLead: "He takes football personally. You’re allowed to make that his problem.",
+    publicLead: "He takes sports personally. You’re allowed to make that his problem.",
     publicDek: "He’ll defend his team, question your excuses, and leave his name on the bad takes.",
     startHere: [
       {

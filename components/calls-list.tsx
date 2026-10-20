@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CallStatusTag } from "@/components/calls-record";
 import { PublishingRhythm } from "@/components/publishing-rhythm";
-import { DeskPill } from "@/components/desk-pill";
+import { SportChip } from "@/components/sport-chip";
 import { getCallRecord, sportRecords, type Call, type CallRecord, type SportRecord } from "@/lib/calls";
 
 function RecordLine({ record }: { record: CallRecord }) {
@@ -30,15 +30,6 @@ function SportRecords({ records }: { records: SportRecord[] }) {
         </span>
       ))}
     </p>
-  );
-}
-
-function SportChip({ sport }: { sport: Call["sport"] }) {
-  return (
-    <DeskPill tone="outline" className="text-xs">
-      <span className="sr-only">Sport: </span>
-      {sport}
-    </DeskPill>
   );
 }
 
@@ -82,13 +73,13 @@ export function CallsList({ calls }: { calls: Call[] }) {
           His takes, and how each one held up.
         </p>
         <p className="text-sm leading-6 text-ink-soft sm:text-base">
-          Forecasts are locked before kickoff and graded by the final ESPN box. They hit only if they happen exactly as written. Arguments aren’t graded hit or miss; Chip either owns them or they stand, with the evidence in the receipt.
+          Forecasts are locked before the game starts and graded by the final ESPN box. They hit only if they happen exactly as written. Arguments aren’t graded hit or miss; Chip either owns them or they stand, with the evidence in the receipt.
         </p>
         <p className="text-sm leading-6 text-ink-soft sm:text-base">
           Record counts calls from Sep 17, 2026.
         </p>
         <p className="text-sm italic text-ink-soft">
-          Fictional columnist. Football satire, not reporting.
+          Fictional columnist. Sports satire, not reporting.
         </p>
       </section>
 

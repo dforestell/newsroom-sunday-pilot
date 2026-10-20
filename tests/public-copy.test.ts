@@ -166,7 +166,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.ok(chip);
   assert.equal(
     chip.publicLead,
-    "He takes football personally. You’re allowed to make that his problem.",
+    "He takes sports personally. You’re allowed to make that his problem.",
   );
   assert.equal(
     chip.publicDek,
@@ -190,7 +190,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.match(profile, /voice\.publicLead/);
   assert.match(profile, /Start here/);
   assert.match(profile, /Follow Chip on X/);
-  assert.match(profile, /Fictional columnist\. Football satire, not reporting\./);
+  assert.match(profile, /Fictional columnist\. Sports satire, not reporting\./);
   assert.equal(/Highmark/.test(profile), false);
   assert.equal(/One concrete absurdity/.test(profile), false);
   assert.equal(/\bDEMO\b/.test(chip.publicLead ?? ""), false);
@@ -208,7 +208,7 @@ test("call scoreboard copy stays house voice", () => {
   assert.match(calls, /Atlanta should give Bijan Robinson 25 carries\./);
   assert.match(calls, /Bryce Young over Jared Goff\./);
 
-  const disclaimer = "Fictional columnist. Football satire, not reporting.";
+  const disclaimer = "Fictional columnist. Sports satire, not reporting.";
   const page = [source("app/calls/page.tsx"), source("components/calls-list.tsx"), source("components/calls-record.tsx"), source("app/page.tsx"), source("app/cast/[slug]/page.tsx")]
     .join("\n")
     .replaceAll(disclaimer, "Fictional columnist.");
@@ -219,7 +219,7 @@ test("call scoreboard copy stays house voice", () => {
     }
     assert.equal(/\bprocess\b/i.test(snippet), false, `calls page still says process: ${snippet}`);
   }
-  assert.match(source("components/calls-list.tsx"), /Fictional columnist\. Football satire, not reporting\./);
+  assert.match(source("components/calls-list.tsx"), /Fictional columnist\. Sports satire, not reporting\./);
   assert.match(source("app/calls/page.tsx"), /shareMetadata/);
   assert.match(source("app/cast/[slug]/page.tsx"), /href="\/calls"/);
 });

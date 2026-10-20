@@ -27,17 +27,17 @@ export const metadata: Metadata = {
     template: "%s · Poor Form Sports",
   },
   description:
-    "Poor Form Sports: NFL scores, Chip Absolute and the desk. Entertainment only. Not reporting. Not betting advice.",
+    "Poor Form Sports: stories, Chip Absolute’s calls and the desk. Entertainment only. Not reporting. Not betting advice.",
   openGraph: {
     title: "Poor Form Sports",
-    description: "NFL scores and a desk with opinions. Entertainment only. Not reporting. Not betting advice.",
+    description: "Stories and calls from a desk with opinions. Entertainment only. Not reporting. Not betting advice.",
     siteName: "Poor Form Sports",
     images: [{ url: "/brand/wordmark-bar.png", alt: "Poor Form Sports" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Poor Form Sports",
-    description: "NFL scores and a desk with opinions. Entertainment only.",
+    description: "Stories and calls from a desk with opinions. Entertainment only.",
     images: ["/brand/wordmark-bar.png"],
   },
 };
