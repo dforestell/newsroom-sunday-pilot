@@ -81,7 +81,7 @@ export function EntryList({
                     >
                       <div className="flex flex-wrap items-center gap-1.5">
                         <Link
-                          href={`/cast/${line.voiceId}`}
+                          href={`/staff/${line.voiceId}`}
                           className="font-mono text-[11px] tracking-wide text-ink uppercase underline-offset-4 hover:underline"
                         >
                           {voiceDisplayName(line.voiceId, line.voiceName)}

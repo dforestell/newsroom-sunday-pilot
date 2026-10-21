@@ -29,7 +29,7 @@ export default function CastIndexPage() {
             <VoiceAvatar voice={voice} size={64} className="size-12 shrink-0 sm:size-16" />
             <div className="flex min-w-0 flex-col gap-1 sm:gap-2">
             <h2 className="font-heading text-xl font-semibold tracking-tight break-words">
-              <Link href={`/cast/${voice.slug}`} className="underline-offset-4 hover:underline">
+              <Link href={`/staff/${voice.slug}`} className="underline-offset-4 hover:underline">
                 {voice.name}
               </Link>
             </h2>

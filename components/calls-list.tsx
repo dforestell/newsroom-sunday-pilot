@@ -60,7 +60,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
       <section className="max-w-3xl space-y-2">
         <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">
           <Link
-            href="/cast/chip-absolute"
+            href="/staff/chip-absolute"
             className="relative inline-flex items-center underline-offset-4 after:absolute after:-inset-x-1 after:-inset-y-3 after:content-[''] hover:underline"
           >
             Chip Absolute

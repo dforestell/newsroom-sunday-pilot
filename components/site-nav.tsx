@@ -28,9 +28,9 @@ const nav = [
     match: (path: string) => path.startsWith("/mail"),
   },
   {
-    href: "/cast/chip-absolute",
+    href: "/staff/chip-absolute",
     label: "Chip Absolute",
-    match: (path: string) => path.startsWith("/cast/chip-absolute"),
+    match: (path: string) => path.startsWith("/staff/chip-absolute"),
   },
 ];
 

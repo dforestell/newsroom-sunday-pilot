@@ -38,7 +38,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
                 <p>
                   Lead:{" "}
                   <Link
-                    href={`/cast/${blogger.id}`}
+                    href={`/staff/${blogger.id}`}
                     className="text-masthead underline-offset-4 hover:underline"
                   >
                     {blogger.name}
@@ -65,7 +65,7 @@ export function GameView({ id, paused }: { id: string; paused: boolean }) {
                 <p className="font-mono text-[11px] tracking-[0.18em] text-demo uppercase">Voices in this archive</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {voices.map((voice) => (
-                    <Link key={voice.slug} href={`/cast/${voice.slug}`} className="inline-flex min-h-11 items-center border border-border bg-card px-3 text-sm underline-offset-4 hover:underline">
+                    <Link key={voice.slug} href={`/staff/${voice.slug}`} className="inline-flex min-h-11 items-center border border-border bg-card px-3 text-sm underline-offset-4 hover:underline">
                       {voice.name}
                     </Link>
                   ))}

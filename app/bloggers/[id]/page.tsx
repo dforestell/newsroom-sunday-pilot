@@ -13,7 +13,7 @@ export default async function BloggerRedirectPage({
 }: PageProps<"/bloggers/[id]">) {
   const { id } = await params;
   if (id === "lead-blogger") {
-    redirect("/cast/chip-absolute");
+    redirect("/staff/chip-absolute");
   }
-  redirect(`/cast/${id}`);
+  redirect(`/staff/${id}`);
 }

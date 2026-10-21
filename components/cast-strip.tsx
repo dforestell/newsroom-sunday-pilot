@@ -28,7 +28,7 @@ export function CastStrip() {
           return (
             <li key={voice.slug}>
               <Link
-                href={`/cast/${voice.slug}`}
+                href={`/staff/${voice.slug}`}
                 className={cn(
                   "block h-full min-w-0 bg-card-loud px-3 py-3",
                   lead

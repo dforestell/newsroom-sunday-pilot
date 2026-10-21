@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { StaffLink } from "@/components/staff-link";
 import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { storyVoice, type Story } from "@/lib/stories";
@@ -13,10 +14,7 @@ export function StoryCard({
   const voice = storyVoice(story);
 
   return (
-    <Link
-      href={`/stories/${story.slug}`}
-      className="block min-w-0 border-2 border-border bg-card-loud"
-    >
+    <div className="relative block min-w-0 border-2 border-border bg-card-loud">
       <article
         className={`border-l-[6px] border-masthead px-4 py-3 sm:px-5 sm:py-4 ${featured ? "sm:py-6" : ""}`}
       >
@@ -32,7 +30,9 @@ export function StoryCard({
         <h2
           className={`mt-2 font-heading font-semibold tracking-tight break-words ${featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-[28px]"}`}
         >
-          {story.title}
+          <Link href={`/stories/${story.slug}`} className="after:absolute after:inset-0 after:content-['']">
+            {story.title}
+          </Link>
         </h2>
         {story.dek ? (
           <p className={`mt-1 leading-6 text-ink-soft ${featured ? "max-w-3xl text-base" : "text-sm"}`}>
@@ -42,7 +42,7 @@ export function StoryCard({
         {voice ? (
           <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             <VoiceAvatar voice={voice} size={28} className="size-7" />
-            <span className="font-medium text-ink">{voice.name}</span>
+            <StaffLink slug={voice.slug} raised className="font-medium text-ink">{voice.name}</StaffLink>
             {story.bylineDetail ? (
               <span className="text-ink-soft">· {story.bylineDetail}</span>
             ) : null}
@@ -52,7 +52,7 @@ export function StoryCard({
           </p>
         ) : null}
       </article>
-    </Link>
+    </div>
   );
 }
 

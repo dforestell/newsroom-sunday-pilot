@@ -69,7 +69,7 @@ export default async function StoryArticlePage({
       {voice ? (
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href={`/cast/${voice.slug}`}
+            href={`/staff/${voice.slug}`}
             className="inline-flex min-h-11 items-center gap-2"
           >
             <VoiceAvatar voice={voice} size={36} className="size-9" />
@@ -123,7 +123,7 @@ export default async function StoryArticlePage({
           </p>
           {voice ? (
             <Link
-              href={`/cast/${voice.slug}`}
+              href={`/staff/${voice.slug}`}
               className="flex h-full min-h-[4.5rem] items-center gap-3 border-2 border-border bg-card-loud px-4 py-3"
             >
               <VoiceAvatar voice={voice} size={40} className="size-10" />

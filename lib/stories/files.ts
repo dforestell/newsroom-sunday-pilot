@@ -17,6 +17,7 @@ export function routeInventory(root: string): StoryRoutes {
   }
   for (const voice of CAST) {
     routes.set(`/cast/${voice.slug}`, new Set());
+    routes.set(`/staff/${voice.slug}`, new Set());
     routes.set(`/bloggers/${voice.slug}`, new Set());
   }
   routes.set("/bloggers/lead-blogger", new Set());
