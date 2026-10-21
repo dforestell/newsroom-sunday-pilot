@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SPORTS } from "./sports.ts";
 
 const oneLine = (empty: string) =>
   z
@@ -6,6 +7,14 @@ const oneLine = (empty: string) =>
     .trim()
     .min(1, empty)
     .refine((value) => !/[\r\n]/.test(value), "Keep this to one line.");
+
+const chipPostUrl = z
+  .string({ error: "Use an https://x.com/ChipAbsolute/status/<id> URL." })
+  .trim()
+  .regex(
+    /^https:\/\/x\.com\/ChipAbsolute\/status\/\d+$/,
+    "Use an https://x.com/ChipAbsolute/status/<id> URL. Other hosts, accounts, and query strings are rejected.",
+  );
 
 const schema = z
   .object({
@@ -16,20 +25,16 @@ const schema = z
         const value = new Date(`${date}T00:00:00Z`);
         return Number.isFinite(value.getTime()) && value.toISOString().slice(0, 10) === date;
       }, "Use a real calendar date in YYYY-MM-DD format."),
-    game: oneLine("Name the game, e.g. DET at CAR."),
-    window: oneLine("Add a short window such as MNF, or omit the field.").optional(),
+    sport: z.enum(SPORTS, { error: `Use sport ${SPORTS.map((sport) => `"${sport}"`).join(" or ")}.` }),
+    game: oneLine("Name the game, away team first, e.g. DET at CAR or BOS at NYK."),
+    window: oneLine("Add a short window such as MNF, SNF or NBA Cup, or omit the field.").optional(),
     take: oneLine("Add Chip's one-line take."),
     criterion: oneLine("Add a one-line success criterion, or omit the field.").optional(),
     kind: z.enum(["forecast", "argument"], {
       error: 'Use kind "forecast" (one checkable outcome, posted before kickoff) or "argument" (an opinion with no box-score line).',
     }),
-    postUrl: z
-      .string({ error: "Use an https://x.com/ChipAbsolute/status/<id> URL." })
-      .trim()
-      .regex(
-        /^https:\/\/x\.com\/ChipAbsolute\/status\/\d+$/,
-        "Use an https://x.com/ChipAbsolute/status/<id> URL. Other hosts, accounts, and query strings are rejected.",
-      ),
+    postUrl: chipPostUrl,
+    receiptUrl: chipPostUrl.optional(),
     result: oneLine("Add the verified result.").optional(),
     status: z.enum(["held-up", "missed", "still-arguing", "pending", "ungraded"], {
       error: 'Use status "held-up", "missed", "still-arguing", "pending", or "ungraded".',
@@ -59,6 +64,20 @@ const schema = z
         message: "Add the verified result. Omit result only while status is pending.",
       });
     }
+    if (data.receiptUrl && data.status === "pending") {
+      ctx.addIssue({
+        code: "custom",
+        path: ["receiptUrl"],
+        message: "A pending call has no receipt yet. Add receiptUrl when you grade the call.",
+      });
+    }
+    if (data.receiptUrl && data.receiptUrl === data.postUrl) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["receiptUrl"],
+        message: "The receipt is Chip's follow-up post, not the call itself. Use the receipt post's URL.",
+      });
+    }
     if (data.status === "ungraded" && data.note) {
       ctx.addIssue({
         code: "custom",
@@ -70,6 +89,7 @@ const schema = z
 
 export type CallStatus = z.infer<typeof schema>["status"];
 export type CallKind = z.infer<typeof schema>["kind"];
+export type { Sport } from "./sports.ts";
 
 export type Call = z.infer<typeof schema> & {
   dateLabel: string;
@@ -188,6 +208,7 @@ export function parseCall(file: string, source: string): Call {
   const call: Call = {
     date: data.date,
     dateLabel: dateLabel(data.date),
+    sport: data.sport,
     game: data.game,
     take: data.take,
     kind: data.kind,
@@ -198,6 +219,7 @@ export function parseCall(file: string, source: string): Call {
   if (data.criterion) call.criterion = data.criterion;
   if (data.window) call.window = data.window;
   if (data.note) call.note = data.note;
+  if (data.receiptUrl) call.receiptUrl = data.receiptUrl;
   return call;
 }
 

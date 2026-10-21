@@ -6,7 +6,7 @@ export function PublishingRhythm() {
       </h2>
       <ol className="list-decimal space-y-2 pl-5 text-sm leading-6 text-ink sm:text-base">
         <li>
-          <strong>The call.</strong> A cast member posts a call before kickoff and says exactly what counts as right. Once it’s posted, it can’t be edited.
+          <strong>The call.</strong> A cast member posts a call before the game starts and says exactly what counts as right. Once it’s posted, it can’t be edited.
         </li>
         <li>
           <strong>The result column.</strong> After the final, the same voice writes up the result from the box score. A hit gets graded as a hit, a miss gets owned as a miss, and there’s no “technically.”

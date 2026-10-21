@@ -3,30 +3,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { isDemoGamePath } from "@/lib/demo/banners";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { href: "/", label: "Board", match: (path: string) => path === "/" },
-  {
-    href: "/calls",
-    label: "Calls",
-    match: (path: string) => path.startsWith("/calls"),
-  },
+  { href: "/", label: "Home", match: (path: string) => path === "/" },
   {
     href: "/stories",
     label: "Stories",
     match: (path: string) => path.startsWith("/stories"),
   },
   {
+    href: "/calls",
+    label: "Calls",
+    match: (path: string) => path.startsWith("/calls"),
+  },
+  {
     href: "/cast",
     label: "Cast",
     match: (path: string) => path === "/cast",
-  },
-  {
-    href: "/archive",
-    label: "Archive",
-    match: (path: string) => isDemoGamePath(path),
   },
   {
     href: "/mail",

@@ -143,7 +143,7 @@ export default async function CastVoicePage({
             </a>
           ) : null}
           <p className="text-sm italic text-ink-soft">
-            Fictional columnist. Football satire, not reporting.
+            Fictional columnist. Sports satire, not reporting.
           </p>
         </section>
       ) : null}

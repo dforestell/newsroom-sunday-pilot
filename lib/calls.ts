@@ -14,7 +14,8 @@ export {
   type CallKind,
   type CallStatus,
 } from "./calls/content.ts";
-export { getCallRecord, type CallRecord, type CallStreak, type CallTally } from "./calls/record.ts";
+export { getCallRecord, sportRecords, type CallRecord, type CallStreak, type CallTally, type SportRecord } from "./calls/record.ts";
+export { SPORTS, type Sport } from "./calls/sports.ts";
 import type { Call } from "./calls/content.ts";
 
 /** Filed calls only (build-time snapshot). */

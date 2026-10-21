@@ -1,6 +1,7 @@
 import { sortCalls, type Call } from "../calls/content.ts";
 import { sortStories, type Story } from "../stories/content.ts";
 import { validateAdminCall, type AdminCallRecord } from "./calls.ts";
+import { DEFAULT_SPORT } from "../calls/sports.ts";
 import { buildAdminStory, type AdminStoryRecord } from "./stories.ts";
 
 /**
@@ -30,7 +31,8 @@ export function mergeStories(filed: Story[], admin: AdminStoryRecord[]): Story[]
 export function mergeCalls(filed: Call[], admin: AdminCallRecord[]): Call[] {
   const byPost = new Map(filed.map((call) => [call.postUrl, call]));
   for (const record of admin) {
-    const built = validateAdminCall(record);
+    // Admin calls saved before `sport` existed are read as the default sport.
+    const built = validateAdminCall({ ...record, sport: record.sport?.trim() || DEFAULT_SPORT });
     if ("call" in built) byPost.set(built.call.postUrl, built.call);
   }
   return sortCalls([...byPost.values()]);

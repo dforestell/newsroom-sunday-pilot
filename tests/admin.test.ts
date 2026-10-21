@@ -101,35 +101,61 @@ test("merged story list: published admin stories join filed ones, newest first; 
 
 // ---------- calls ----------
 
-const lloyd = FILE_CALLS.find((call) => call.status === "pending")!;
+// A synthetic filed pending call, so this test does not depend on whether a real
+// call happens to be pending in content/calls.
+const lloyd = {
+  ...FILE_CALLS[0],
+  date: "2026-12-01",
+  dateLabel: "Dec 1, 2026",
+  game: "DAL at GB",
+  take: "Synthetic pending call.",
+  criterion: "Held up if it happens.",
+  kind: "forecast" as const,
+  postUrl: "https://x.com/ChipAbsolute/status/97",
+  status: "pending" as const,
+  result: undefined,
+  note: undefined,
+};
+const FILED = [...FILE_CALLS, lloyd];
 
 test("admin calls use the same validation as check:calls", () => {
   const bad = (fields: Record<string, string>) => {
     const result = validateAdminCall({ ...fields });
     return "issues" in result ? result.issues.join("\n") : "";
   };
-  const base = { date: "2026-10-25", game: "SEA at DEN", take: "A take.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/1", status: "pending" };
+  const base = { date: "2026-10-25", sport: "NFL", game: "SEA at DEN", take: "A take.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/1", status: "pending" };
   assert.ok("call" in validateAdminCall(base));
   assert.match(bad({ ...base, status: "still-arguing" }), /A forecast is graded by the final ESPN box/);
   assert.match(bad({ ...base, status: "missed" }), /Add the verified result/);
   assert.match(bad({ ...base, postUrl: "https://twitter.com/ChipAbsolute/status/1" }), /x\.com\/ChipAbsolute/);
   assert.match(bad({ ...base, date: "2026-02-30" }), /real calendar date/);
   assert.match(bad({ ...base, note: "Dillon approved" }), /Remove or rewrite public wording/);
+  assert.match(bad({ ...base, sport: "" }), /sport: Use sport "NFL" or "NBA"/);
+  assert.match(bad({ ...base, sport: "MLB" }), /sport: Use sport "NFL" or "NBA"/);
+  assert.match(bad({ ...base, status: "missed", result: "R.", receiptUrl: "https://x.com/someone/status/2" }), /receiptUrl:.*x\.com\/ChipAbsolute/);
+  assert.match(bad({ ...base, receiptUrl: "https://x.com/ChipAbsolute/status/2" }), /pending call has no receipt yet/);
+  const nba = validateAdminCall({ ...base, sport: "NBA", game: "BOS at NYK", window: "NBA Cup", status: "missed", result: "R.", receiptUrl: "https://x.com/ChipAbsolute/status/2" });
+  assert.ok("call" in nba);
+  if ("call" in nba) {
+    assert.equal(nba.call.sport, "NBA");
+    assert.equal(nba.json.receiptUrl, "https://x.com/ChipAbsolute/status/2");
+  }
 });
 
 test("grading a filed call in admin replaces it by postUrl, and record, streak and next call use the merged set", () => {
-  const before = getCallRecord(FILE_CALLS);
+  const before = getCallRecord(FILED);
   assert.equal(before.next?.postUrl, lloyd.postUrl);
   const graded = { ...lloyd, status: "held-up", result: "Lloyd ran for 81 yards.", criterion: lloyd.criterion ?? "" };
-  const added = { date: "2026-10-25", game: "SEA at DEN", take: "New call.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/99", status: "pending" };
+  const added = { date: "2026-12-08", game: "SEA at DEN", take: "New call.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/99", status: "pending" };
   const invalid = { date: "nope", postUrl: "https://x.com/ChipAbsolute/status/98" };
-  const merged = mergeCalls(FILE_CALLS, [graded, added, invalid] as never);
-  assert.equal(merged.length, FILE_CALLS.length + 1);
+  const merged = mergeCalls(FILED, [graded, added, invalid] as never);
+  assert.equal(merged.length, FILED.length + 1);
   assert.equal(merged.filter((call) => call.postUrl === lloyd.postUrl).length, 1);
   const after = getCallRecord(merged);
   assert.equal(after.tally.hits, before.tally.hits + 1);
   assert.equal(after.tally.misses, before.tally.misses);
   assert.equal(after.next?.take, "New call.");
+  assert.equal(merged.find((call) => call.postUrl.endsWith("/99"))?.sport, "NFL", "admin calls saved without a sport read as NFL");
   assert.equal(after.latest?.postUrl, lloyd.postUrl);
   assert.equal(after.streak.kind, "none", "a hit after misses breaks the cold streak");
 });
