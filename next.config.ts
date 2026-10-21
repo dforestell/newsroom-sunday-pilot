@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        // Staff pages moved from /cast/<slug>. The pattern has no dot, so avatar
+        // images under /cast/*.png are still served.
+        source: "/cast/:slug([a-z0-9-]+)",
+        destination: "/staff/:slug",
+        permanent: true,
+      },
+      {
         source: "/demo",
         destination: "/games/sunday-pilot",
         permanent: true,

@@ -62,11 +62,15 @@ function source(relativePath: string) {
 test("public cast display names stay house voice", () => {
   const wes = CAST.find((voice) => voice.slug === "wes-process");
   assert.ok(wes);
-  assert.equal(wes.name, "Wes");
+  assert.equal(wes.name, "Wes Process");
   assert.notEqual(wes.title.toLowerCase(), "process");
   const strings: Array<[string, string]> = [];
   collect(CAST, "cast", strings);
-  assertClean("cast", strings, true);
+  // "Wes Process" is the character's full name (decision 2026-10-21). That exact name is
+  // the only allowed "Process"; every other cast string still bans the word.
+  const others = strings.filter(([path, text]) => !(path === "cast[1].name" && text === "Wes Process"));
+  assert.equal(others.length, strings.length - 1);
+  assertClean("cast", others, true);
 });
 
 test("shared archive banners stay unlabeled", () => {
@@ -118,7 +122,7 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   const stories = loadStories().map((story) => [story.title, story.dek, story.bylineDetail, story.dateLabel, story.body].filter(Boolean).join("\n")).join("\n").replaceAll("wes-process", "wes");
   const cast = source("lib/cast.ts");
   const castIndex = source("app/cast/page.tsx");
-  const castProfile = source("app/cast/[slug]/page.tsx");
+  const castProfile = source("app/staff/[slug]/page.tsx");
 
   assert.ok(staff);
   assert.equal(staff.dateLabel, "Filed Sep 17, 2026 · Corrected Sep 18, 2026 · Rookie picks added Oct 14, 2026");
@@ -186,10 +190,9 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
     ["chip-absolute", "wes-process", "layover-len", "boo-atlas", "chyron-carl"],
   );
 
-  const profile = source("app/cast/[slug]/page.tsx");
-  assert.match(profile, /voice\.publicLead/);
-  assert.match(profile, /Start here/);
-  assert.match(profile, /Follow Chip on X/);
+  // Staff pages follow the Designer's persona template (header, lists, switcher).
+  const profile = source("components/staff-view.tsx");
+  assert.match(profile, /theme\.bio/);
   assert.match(profile, /Fictional columnist\. Sports satire, not reporting\./);
   assert.equal(/Highmark/.test(profile), false);
   assert.equal(/One concrete absurdity/.test(profile), false);
@@ -209,7 +212,7 @@ test("call scoreboard copy stays house voice", () => {
   assert.match(calls, /Bryce Young over Jared Goff\./);
 
   const disclaimer = "Fictional columnist. Sports satire, not reporting.";
-  const page = [source("app/calls/page.tsx"), source("components/calls-list.tsx"), source("components/calls-record.tsx"), source("app/page.tsx"), source("app/cast/[slug]/page.tsx")]
+  const page = [source("app/calls/page.tsx"), source("components/calls-list.tsx"), source("components/calls-record.tsx"), source("app/page.tsx"), source("components/staff-view.tsx")]
     .join("\n")
     .replaceAll(disclaimer, "Fictional columnist.");
   const strings = [...page.matchAll(/["'`]([^"'`\\]|\\.)*["'`]/g)].map((match) => match[0]);
@@ -221,7 +224,7 @@ test("call scoreboard copy stays house voice", () => {
   }
   assert.match(source("components/calls-list.tsx"), /Fictional columnist\. Sports satire, not reporting\./);
   assert.match(source("app/calls/page.tsx"), /shareMetadata/);
-  assert.match(source("app/cast/[slug]/page.tsx"), /href="\/calls"/);
+  assert.match(source("components/staff-view.tsx"), /href="\/calls"/);
 });
 
 test("about, stories shelf, and site chrome drop DEMO/SATIRE words", () => {

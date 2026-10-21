@@ -17,7 +17,7 @@ Replace this paragraph with approved story copy. Do not repeat the title here.
 
 ## Optional section
 
-Use **bold**, *emphasis*, and [a cast link](/cast/poor-form-desk).
+Use **bold**, *emphasis*, and [a cast link](/staff/poor-form-desk).
 
 ![Replace with alt text](/brand/wordmark-bar.png "Optional caption")
 

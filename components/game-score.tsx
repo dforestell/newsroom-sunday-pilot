@@ -52,7 +52,7 @@ export function GameScore({
               Simulated
             </Badge>
           ) : demo ? (
-            <Badge className="bg-demo text-demo-foreground font-mono text-[10px] tracking-wide uppercase">
+            <Badge className="bg-demo text-ink font-mono text-[10px] tracking-wide uppercase">
               Archive
             </Badge>
           ) : (

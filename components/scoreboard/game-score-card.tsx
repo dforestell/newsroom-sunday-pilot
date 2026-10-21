@@ -17,7 +17,7 @@ export function GameScoreCard({ game, stale, featured = false, details = false }
         <p className="font-mono text-[10px] tracking-wide text-bar-foreground/70 uppercase">
           {game.seasonType === 1 ? "Preseason" : game.seasonType === 3 ? "Postseason" : "Regular season"} · Week {game.week}
         </p>
-        <span className={`rounded-full px-2 py-0.5 font-mono text-[10px] uppercase ${live ? "bg-live-green text-ink" : stale ? "bg-demo text-demo-foreground" : "border border-bar-foreground/30"}`}>
+        <span className={`rounded-full px-2 py-0.5 font-mono text-[10px] uppercase ${live ? "bg-live-green text-ink" : stale ? "bg-demo text-ink" : "border border-bar-foreground/30"}`}>
           {badge}
         </span>
       </div>
