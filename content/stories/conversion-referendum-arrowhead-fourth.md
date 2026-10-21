@@ -5,6 +5,7 @@ date: 2026-09-16
 voiceId: wes-process
 dek: Monday night column — the fourth-and-one handoff, sixty yards, and a ballot that counted itself.
 label: DEMO / SATIRE
+sport: NFL
 order: 4
 relatedGameHref: /games/demo-den-kc-mnf
 relatedGameLabel: Broncos–Chiefs MNF →

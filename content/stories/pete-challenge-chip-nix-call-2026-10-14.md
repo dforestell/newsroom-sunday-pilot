@@ -5,6 +5,7 @@ date: 2026-10-14
 voiceId: postcard-pete
 dek: Pete takes the other side of Chip's Nix call. The interception rate says Thursday is a closer call than Chip wants it to be.
 label: SATIRE
+sport: NFL
 order: 1
 ---
 

@@ -103,10 +103,18 @@ export function HomeCast() {
   );
 }
 
-export function HomeStories({ stories }: { stories: Story[] }) {
+export function HomeStories({ stories, filter }: { stories: Story[]; filter?: React.ReactNode }) {
   return (
     <section className="space-y-2">
       <SectionHead label="Poor Form Desk" title="Stories" href="/stories" linkLabel="All stories →" />
+      {filter ?? <StoryRows stories={stories} />}
+    </section>
+  );
+}
+
+export function StoryRows({ stories, empty = "No stories filed yet." }: { stories: Story[]; empty?: string }) {
+  if (stories.length === 0) return <p className="py-3 text-sm text-ink-soft">{empty}</p>;
+  return (
       <ul className="divide-y divide-ink/15">
         {stories.map((story) => {
           const voice = storyVoice(story);
@@ -131,6 +139,5 @@ export function HomeStories({ stories }: { stories: Story[] }) {
           );
         })}
       </ul>
-    </section>
   );
 }

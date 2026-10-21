@@ -5,6 +5,7 @@ date: 2026-09-17
 voiceId: chip-absolute
 dek: Buffalo opened the new house and collected rent. Chip picked Detroit, and here is exactly where that pick broke.
 label: SATIRE
+sport: NFL
 order: 0
 bylineDetail: with Desk segments
 ---

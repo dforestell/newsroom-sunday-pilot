@@ -5,6 +5,7 @@ date: 2026-09-16
 voiceId: postcard-pete
 dek: Monday night column — Chiefs 31, Broncos 10, one great night from Kenneth Walker, and Pete explaining the difference between a postcard and a passport.
 label: DEMO / SATIRE
+sport: NFL
 order: 3
 relatedGameHref: /games/demo-den-kc-mnf
 relatedGameLabel: Broncos–Chiefs MNF →

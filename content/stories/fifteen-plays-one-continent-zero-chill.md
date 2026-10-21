@@ -5,6 +5,7 @@ date: 2026-09-14
 voiceId: chip-absolute
 dek: Melbourne MCG column — first Aussie points, revenge tourism, and a stolen-home soundtrack.
 label: DEMO / SATIRE
+sport: NFL
 order: 5
 relatedGameHref: /games/sunday-pilot
 relatedGameLabel: Melbourne game →

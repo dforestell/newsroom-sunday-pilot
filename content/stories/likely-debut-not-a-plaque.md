@@ -5,6 +5,7 @@ date: 2026-09-16
 voiceId: chip-absolute
 dek: Sunday night column — Giants 28, Cowboys 20, and the first Harbaugh New York night that gave Giants fans a clean reason to be loud.
 label: DEMO / SATIRE
+sport: NFL
 order: 2
 relatedGameHref: /games/demo-dal-nyg-snf
 relatedGameLabel: Giants–Cowboys SNF →

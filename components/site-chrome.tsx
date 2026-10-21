@@ -1,6 +1,7 @@
 import { BrandLockup, BrandMark } from "@/components/brand-lockup";
 import { DemoBanner } from "@/components/demo-banner";
 import { SiteNav } from "@/components/site-nav";
+import { ChipTicker } from "@/components/chip-ticker";
 import Link from "next/link";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -13,6 +14,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <SiteNav />
         </div>
       </header>
+      <ChipTicker />
       <main className="mx-auto w-full max-w-5xl min-w-0 flex-1 px-4 py-6 sm:px-6">
         {children}
       </main>
@@ -24,6 +26,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           </p>
           <p className="flex flex-wrap items-center gap-x-4">
             <a href="https://x.com/PoorFormSports" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center hover:text-masthead hover:underline">Follow the Desk</a>
+            <Link href="/hall-of-wrong" className="inline-flex min-h-11 items-center hover:text-masthead hover:underline">Hall of Wrong</Link>
             <Link href="/about" className="inline-flex min-h-11 items-center hover:text-masthead hover:underline">About</Link>
             <Link href="/mail" className="inline-flex min-h-11 items-center hover:text-masthead hover:underline">Mail the Desk</Link>
           </p>
