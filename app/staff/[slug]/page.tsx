@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps<"/staff/[slug]">) {
   const { slug } = await params;
   const voice = getStaff(slug);
   if (!voice) return { title: "Staff" };
-  const share = shareMetadata(`${voice.name} · ${voice.title}`, `${voice.publicLead ?? voice.bio} Poor Form Sports.`);
+  const share = shareMetadata(voice.name, `${voice.publicLead ?? voice.bio} Poor Form Sports.`);
   // Relative canonical resolves against the layout's metadataBase (the public site URL).
   return { ...share, alternates: { canonical: staffPath(voice.slug) } };
 }

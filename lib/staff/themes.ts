@@ -6,9 +6,10 @@
 // Dropping in or changing a spec is a one-file change: edit PERSONA_THEMES below.
 // docs/staff-themes.md documents the shape.
 //
-// PENDING EDITOR REVIEW: every `bio` and `labels` string in PERSONA_THEMES is the
-// Designer's draft text, used verbatim from the spec. Keep the strings as written
-// until the Editor signs off. Do not add new voice lines here.
+// EDITOR-REVIEWED 2026-10-21 (staff-page-bio-review-2026-10-21): every `bio` is final.
+// Desk, Chip and Pete use the Designer's spec text; Wes, Len, Boo and Carl carry the
+// Editor's edits verbatim. Other `labels` strings are the Designer's spec text with the
+// Editor's empty-state edits applied. Do not add new voice lines here.
 import type { Voice } from "../cast.ts";
 
 export type StaffFontKey = "anton" | "barlow-condensed" | "bebas-neue" | "roboto-condensed" | "special-elite";
@@ -140,7 +141,7 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
       "--persona-motif": "linear-gradient(rgba(127,184,239,.10) 1px,transparent 1px) 0 0/16px 16px,linear-gradient(90deg,rgba(127,184,239,.10) 1px,transparent 1px) 0 0/16px 16px",
     },
     bio: "Fourth-and-short is a referendum on courage and math. Process over outcome — I respect the ballot even when the ball does not.",
-    labels: { kicker: "Conversion Referendum", section: "Referendums on file", empty: "No real decision to evaluate. Passing.", count: "{n} ballots counted", back: "← Back to the newsroom", backHref: NEWSROOM, sort: "Sort by: newest ballot" },
+    labels: { kicker: "Conversion Referendum", section: "Referendums on file", empty: "No fourth down worth a ballot. Default is skip.", count: "{n} ballots counted", back: "← Back to the newsroom", backHref: NEWSROOM, sort: "Sort by: newest ballot" },
   },
   "layover-len": {
     header: "signage",
@@ -156,7 +157,7 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
       "--persona-rule": "#d2e0d4",
       "--persona-motif": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='24'%3E%3Cpath d='M0 12H392' stroke='%236fcf8a' stroke-opacity='.25' stroke-width='1.5' stroke-dasharray='6 6'/%3E%3Ccircle cx='394' cy='12' r='3' fill='%236fcf8a' fill-opacity='.3'/%3E%3C/svg%3E\") left bottom/100% 24px no-repeat",
     },
-    bio: "Day-before arrivals are vibes. Week-early arrivals are violence. I argue clocks, never 'they're tired.'",
+    bio: "Day-before arrivals are vibes. Week-early arrivals are violence. I argue clocks, never bodies.",
     labels: { kicker: "Travel · Arrival ops", section: "Arrivals board", empty: "No logistics hook this week. Zero lines is a successful trip.", count: "{n} itineraries filed", back: "← Back to baggage claim (newsroom)", backHref: NEWSROOM },
   },
   "boo-atlas": {
@@ -172,7 +173,7 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
       "--persona-rule": "#ddd2e8",
       "--persona-motif": "repeating-radial-gradient(circle at 50% 120%,rgba(180,138,230,.10) 0 1px,transparent 1px 18px)",
     },
-    bio: "I read the house by sound. Neutral sites that aren't neutral — and I redraw the map when the building proves me wrong.",
+    bio: "I keep a list of 'home games' that sounded like road trips — and I redraw the map when the building proves me wrong.",
     labels: { kicker: "Crowd · Who owns the room", section: "Crowd maps", empty: "No sourced crowd moment. Silence beats invented jerseys.", count: "{n} buildings read", back: "← Back to the concourse (newsroom)", backHref: NEWSROOM, sort: "Newest map first" },
   },
   "chyron-carl": {
@@ -189,8 +190,8 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
       "--persona-rule": "#d3dadf",
       "--persona-motif": "repeating-linear-gradient(0deg,rgba(242,245,248,.04) 0 1px,transparent 1px 3px)",
     },
-    bio: "I roast how TV sells the night — not fake transcripts, not invented announcer quotes. Sometimes the intro works on me anyway.",
-    labels: { kicker: "Chyron of the Night", section: "Chyrons of the Night", empty: "No verified clip, no chyron. Dead air is the correct call.", count: "{n} segments aired", back: "← Back to the studio (newsroom)", backHref: NEWSROOM, sort: "Latest segment first" },
+    bio: "I watch the broadcast like a second game — usually the closer one. Sometimes the intro works on me anyway.",
+    labels: { kicker: "Chyron of the Night", section: "Chyrons of the Night", empty: "Nothing aired worth a chyron. Dead air is the correct call.", count: "{n} segments aired", back: "← Back to the studio (newsroom)", backHref: NEWSROOM, sort: "Latest segment first" },
   },
   "postcard-pete": {
     header: "postcard",

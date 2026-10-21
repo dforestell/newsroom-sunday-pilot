@@ -9,6 +9,12 @@ import { countLabel, staffThemeStyle, type StaffTheme } from "@/lib/staff/themes
 import type { Story } from "@/lib/stories";
 import { cn } from "@/lib/utils";
 
+// Public origin for absolute links (NEXT_PUBLIC_SITE_URL when set).
+const PUBLIC_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://poorformsports.com").replace(/\/+$/, "");
+// Cast titles (lib/cast.ts) are deliberately not shown on staff pages: several are
+// disputed and pending a decision. Keep this slot empty until they are settled.
+export const STAFF_TITLE_SLOT: string | null = null;
+
 const kicker = "font-mono text-[11px] font-medium tracking-[0.18em] uppercase";
 const countClass = "font-mono text-[11px] font-semibold tracking-[0.12em] uppercase";
 
@@ -62,7 +68,7 @@ function StaffHeader({ voice, theme, count, fontClass }: { voice: Voice; theme: 
         {voice.slug === LEAD_VOICE_ID ? (
           <>
             {" · "}
-            <Link href="/calls" className="underline underline-offset-4">Public record /calls</Link>
+            <a href={`${PUBLIC_SITE_URL}/calls`} className="underline underline-offset-4">Public record /calls</a>
           </>
         ) : null}
       </p>

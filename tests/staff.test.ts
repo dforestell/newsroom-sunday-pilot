@@ -141,8 +141,23 @@ test("DEMO chips use near-black text, not cream", () => {
   }
 });
 
-test("persona bios and labels are marked pending Editor review", () => {
-  assert.match(source("lib/staff/themes.ts"), /PENDING EDITOR REVIEW/);
+test("persona bios are the Editor-reviewed text", () => {
+  assert.match(source("lib/staff/themes.ts"), /EDITOR-REVIEWED 2026-10-21/);
+  const bio = (slug: string) => PERSONA_THEMES[slug].bio;
+  assert.equal(bio("layover-len"), "Day-before arrivals are vibes. Week-early arrivals are violence. I argue clocks, never bodies.");
+  assert.equal(bio("boo-atlas"), "I keep a list of 'home games' that sounded like road trips — and I redraw the map when the building proves me wrong.");
+  assert.equal(bio("chyron-carl"), "I watch the broadcast like a second game — usually the closer one. Sometimes the intro works on me anyway.");
+  assert.equal(PERSONA_THEMES["wes-process"].labels?.empty, "No fourth down worth a ballot. Default is skip.");
+  assert.equal(PERSONA_THEMES["chyron-carl"].labels?.empty, "Nothing aired worth a chyron. Dead air is the correct call.");
+});
+
+test("staff pages show no cast titles, and Chip's calls link is absolute", () => {
+  for (const voice of CAST) {
+    const html = view(voice.slug);
+    assert.equal(html.includes(`>${voice.title}<`), false, `${voice.slug} shows its title`);
+  }
+  assert.equal(/voice\.title/.test(source("components/staff-view.tsx") + source("app/staff/[slug]/page.tsx")), false);
+  assert.ok(view("chip-absolute").includes('href="https://poorformsports.com/calls"'));
 });
 
 test("bylines and names link to /staff/<slug> without nesting links", () => {

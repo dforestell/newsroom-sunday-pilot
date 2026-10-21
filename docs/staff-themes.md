@@ -52,5 +52,7 @@ Add the face to `lib/staff/fonts.ts`:
 
 - Accents stay out of the yellow-orange band (about hue 20°–60°) so they never read like the SATIRE or DEMO chips.
 - Motifs sit only behind the persona header. They're hidden under `forced-colors: active` and stay static.
-- `bio` and `labels` are public copy. The current strings are the Designer's draft and are **pending Editor review**. They must come from existing cast material. Don't invent voice lines.
+- `bio` and `labels` are public copy. Bios were Editor-reviewed on 2026-10-21. Desk, Chip and Pete use the Designer's spec text, and Wes, Len, Boo and Carl use the Editor's edits. They must come from existing cast material. Don't invent voice lines.
 - Tests (`tests/staff.test.ts`) check AA contrast for header text and links, that tokens are scoped to the persona, and that every cast slug has a theme or the fallback.
+
+- Cast titles from `lib/cast.ts` are not shown on staff pages (the `STAFF_TITLE_SLOT` in `components/staff-view.tsx` is empty) until the disputed titles are settled.
