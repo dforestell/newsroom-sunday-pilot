@@ -11,9 +11,7 @@ import { cn } from "@/lib/utils";
 
 // Public origin for absolute links (NEXT_PUBLIC_SITE_URL when set).
 const PUBLIC_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://poorformsports.com").replace(/\/+$/, "");
-// Cast titles (lib/cast.ts) are deliberately not shown on staff pages: several are
-// disputed and pending a decision. Keep this slot empty until they are settled.
-export const STAFF_TITLE_SLOT: string | null = null;
+// Names only: cast titles (lib/cast.ts) are never rendered on staff pages.
 
 const kicker = "font-mono text-[11px] font-medium tracking-[0.18em] uppercase";
 const countClass = "font-mono text-[11px] font-semibold tracking-[0.12em] uppercase";

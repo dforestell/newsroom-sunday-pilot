@@ -156,7 +156,12 @@ test("staff pages show no cast titles, and Chip's calls link is absolute", () =>
     const html = view(voice.slug);
     assert.equal(html.includes(`>${voice.title}<`), false, `${voice.slug} shows its title`);
   }
-  assert.equal(/voice\.title/.test(source("components/staff-view.tsx") + source("app/staff/[slug]/page.tsx")), false);
+  for (const file of ["components/staff-view.tsx", "app/staff/[slug]/page.tsx", "app/cast/page.tsx", "components/cast-strip.tsx", "components/home-sections.tsx", "app/stories/[slug]/page.tsx"]) {
+    assert.equal(/voice\.title/.test(source(file)), false, `${file} renders a cast title`);
+  }
+  assert.equal(/STAFF_TITLE_SLOT/.test(source("components/staff-view.tsx")), false);
+  assert.deepEqual(CAST.map((voice) => voice.name), ["Chip Absolute", "Wes Process", "Layover Len", "Boo Atlas", "Chyron Carl", "Postcard Pete", "Poor Form Desk"]);
+  for (const voice of CAST) assert.equal(voice.name.toLowerCase().replace(/ /g, "-"), voice.slug, `${voice.slug} name matches slug`);
   assert.ok(view("chip-absolute").includes('href="https://poorformsports.com/calls"'));
 });
 

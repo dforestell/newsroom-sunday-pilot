@@ -44,9 +44,6 @@ export function CastStrip() {
                 <p className="font-heading text-sm font-semibold leading-tight break-words">
                   {voice.name}
                 </p>
-                <p className="mt-1 font-mono text-xs tracking-wide text-ink-soft uppercase">
-                  {voice.title}
-                </p>
                 <p className="mt-1 line-clamp-2 text-[13px] leading-4 text-ink-soft">
                   {voice.lens}
                 </p>

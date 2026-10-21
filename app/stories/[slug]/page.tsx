@@ -131,9 +131,6 @@ export default async function StoryArticlePage({
                 <span className="block font-heading text-lg font-semibold">
                   {voice.name}
                 </span>
-                <span className="font-mono text-xs tracking-wide text-ink-soft uppercase">
-                  {voice.title}
-                </span>
               </span>
             </Link>
           ) : null}

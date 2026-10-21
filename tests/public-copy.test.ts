@@ -62,11 +62,15 @@ function source(relativePath: string) {
 test("public cast display names stay house voice", () => {
   const wes = CAST.find((voice) => voice.slug === "wes-process");
   assert.ok(wes);
-  assert.equal(wes.name, "Wes");
+  assert.equal(wes.name, "Wes Process");
   assert.notEqual(wes.title.toLowerCase(), "process");
   const strings: Array<[string, string]> = [];
   collect(CAST, "cast", strings);
-  assertClean("cast", strings, true);
+  // "Wes Process" is the character's full name (decision 2026-10-21). That exact name is
+  // the only allowed "Process"; every other cast string still bans the word.
+  const others = strings.filter(([path, text]) => !(path === "cast[1].name" && text === "Wes Process"));
+  assert.equal(others.length, strings.length - 1);
+  assertClean("cast", others, true);
 });
 
 test("shared archive banners stay unlabeled", () => {

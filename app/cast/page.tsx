@@ -34,7 +34,7 @@ export default function CastIndexPage() {
               </Link>
             </h2>
             <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
-              {voice.desk} · {voice.title}
+              {voice.desk}
             </p>
             <p className="text-sm leading-6 text-ink-soft">{voice.lens}</p>
             <p className="flex min-w-0 flex-wrap gap-x-4 text-sm">

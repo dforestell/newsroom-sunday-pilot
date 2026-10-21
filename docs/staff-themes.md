@@ -55,4 +55,4 @@ Add the face to `lib/staff/fonts.ts`:
 - `bio` and `labels` are public copy. Bios were Editor-reviewed on 2026-10-21. Desk, Chip and Pete use the Designer's spec text, and Wes, Len, Boo and Carl use the Editor's edits. They must come from existing cast material. Don't invent voice lines.
 - Tests (`tests/staff.test.ts`) check AA contrast for header text and links, that tokens are scoped to the persona, and that every cast slug has a theme or the fallback.
 
-- Cast titles from `lib/cast.ts` are not shown on staff pages (the `STAFF_TITLE_SLOT` in `components/staff-view.tsx` is empty) until the disputed titles are settled.
+- Names only: cast titles from `lib/cast.ts` are not rendered on staff pages, the cast switcher, the cast index or strip, the homepage cast list, or story pages. The title data stays in `lib/cast.ts`.

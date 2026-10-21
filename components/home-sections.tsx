@@ -94,7 +94,6 @@ export function HomeCast() {
               <VoiceAvatar voice={voice} size={32} className="size-8 shrink-0" />
               <span className="min-w-0">
                 <span className="block truncate font-heading text-sm font-semibold">{voice.name}</span>
-                <span className="block font-mono text-xs tracking-wide text-ink-soft uppercase">{voice.title}</span>
               </span>
             </Link>
           </li>
