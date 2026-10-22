@@ -2,8 +2,8 @@ import Link from "next/link";
 import { CallStatusTag } from "@/components/calls-record";
 import { SportChip } from "@/components/sport-chip";
 import { StoryLabel } from "@/components/story-label";
-import type { Call } from "@/lib/calls";
-import { CAST, LEAD_VOICE_ID, type Voice } from "@/lib/cast";
+import { getCallRecord, type Call } from "@/lib/calls";
+import { ACTIVE_CAST, LEAD_VOICE_ID, type Voice } from "@/lib/cast";
 import { staffPath } from "@/lib/staff";
 import { countLabel, staffThemeStyle, type StaffTheme } from "@/lib/staff/themes";
 import type { Story } from "@/lib/stories";
@@ -47,7 +47,7 @@ function NameLockup({ voice, theme, fontClass }: { voice: Voice; theme: StaffThe
   }
 }
 
-function StaffHeader({ voice, theme, count, fontClass }: { voice: Voice; theme: StaffTheme; count: number; fontClass?: string }) {
+function StaffHeader({ voice, theme, count, record, fontClass }: { voice: Voice; theme: StaffTheme; count: number; record: { hits: number; misses: number }; fontClass?: string }) {
   const countText = countLabel(theme.labels.count, count);
   const centered = theme.header === "centered";
   const bio = (
@@ -63,6 +63,11 @@ function StaffHeader({ voice, theme, count, fontClass }: { voice: Voice; theme: 
     ) : (
       <p className={cn(countClass, "staff-header__meta")}>
         {countText}
+        {theme.recordLabel ? (
+          <span data-persona-record className="block whitespace-nowrap">
+            {theme.recordLabel}: {record.hits}–{record.misses}
+          </span>
+        ) : null}
         {voice.slug === LEAD_VOICE_ID ? (
           <>
             {" · "}
@@ -142,7 +147,7 @@ function CastSwitcher({ current }: { current: string }) {
   return (
     <nav aria-label="Staff" className="staff-switcher">
       <ul className="flex h-11 items-center gap-4 overflow-x-auto font-mono text-[11px] tracking-[0.12em] whitespace-nowrap text-ink-soft uppercase">
-        {CAST.map((voice) => (
+        {ACTIVE_CAST.map((voice) => (
           <li key={voice.slug}>
             <Link
               href={staffPath(voice.slug)}
@@ -180,7 +185,7 @@ export function StaffView({
       style={staffThemeStyle(theme, font?.style.fontFamily)}
       className="space-y-6"
     >
-      <StaffHeader voice={voice} theme={theme} count={count} fontClass={font?.className} />
+      <StaffHeader voice={voice} theme={theme} count={count} record={getCallRecord(calls).tally} fontClass={font?.className} />
       {lead ? (
         <Section id="staff-calls" title={theme.labels.section} sort={theme.labels.sort} empty={theme.labels.empty} isEmpty={calls.length === 0}>
           <CallRows calls={calls} />

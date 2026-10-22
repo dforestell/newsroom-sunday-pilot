@@ -22,12 +22,20 @@ export type Voice = {
   startHere?: VoiceStartHere[];
   initials: string;
   mark: string;
-  avatar: string;
-  funFact: string;
-  favoriteCoworker: { slug: string; why: string };
-  leastFavoriteCoworker: { slug: string; why: string };
+  /** Avatar image path. Without one, the avatar renders the initials on `mark`. */
+  avatar?: string;
+  funFact?: string;
+  favoriteCoworker?: { slug: string; why: string };
+  leastFavoriteCoworker?: { slug: string; why: string };
   x: { handle: string; url: string } | null;
-  appearsWhen: string;
+  appearsWhen?: string;
+  /**
+   * Reversible: `false` hides this voice from every public listing (cast index, strip,
+   * nav, switcher) and its stories from story listings. /staff/<slug> and /cast/<slug>
+   * redirect (307) to /staff. Direct story URLs keep working with a plain-text byline.
+   * Nothing is deleted; flip back to true (or remove the line) to restore.
+   */
+  active?: boolean;
 };
 
 export const CAST: Voice[] = [
@@ -64,6 +72,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "wes-process",
+    active: false,
     name: "Wes Process",
     desk: "Poor Form Desk",
     title: "Downs",
@@ -82,6 +91,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "layover-len",
+    active: false,
     name: "Layover Len",
     desk: "Poor Form Desk",
     title: "Travel",
@@ -100,6 +110,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "boo-atlas",
+    active: false,
     name: "Boo Atlas",
     desk: "Poor Form Desk",
     title: "Crowd",
@@ -118,6 +129,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "chyron-carl",
+    active: false,
     name: "Chyron Carl",
     desk: "Poor Form Desk",
     title: "Graphics",
@@ -136,6 +148,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "postcard-pete",
+    active: false,
     name: "Postcard Pete",
     desk: "Poor Form Desk",
     title: "Place",
@@ -149,6 +162,28 @@ export const CAST: Voice[] = [
     leastFavoriteCoworker: { slug: "chip-absolute", why: "He coronates for sport and expects me to stamp it." },
     x: null,
     appearsWhen: "premature coronations — n=1, debut plaques, career-list rushes, or ‘real RB’ Day 1 energy. Public segment: Notarized Postcard.",
+  },
+  {
+    slug: "nora-median",
+    name: "Nora Median",
+    desk: "Poor Form Desk",
+    title: "Ledger",
+    lens: "Picks the same games Chip does and logs every result.",
+    bio: "I'm Nora Median. I pick the same games Chip does and log every result. My record is better. His replies are better. Both are on the ledger.",
+    initials: "NM",
+    mark: "#2b2d31",
+    x: null,
+  },
+  {
+    slug: "benny-faithful",
+    name: "Benny Faithful",
+    desk: "Poor Form Desk",
+    title: "Believer",
+    lens: "Tails every Chip call with total faith.",
+    bio: "I'm Benny Faithful. I tail every Chip call. The official record says 1-7. My record says we're building something.",
+    initials: "BF",
+    mark: "#1e2a4a",
+    x: null,
   },
   {
     slug: "poor-form-desk",
@@ -167,6 +202,16 @@ export const CAST: Voice[] = [
     appearsWhen: "house voice — never a seventh joke seat.",
   },
 ];
+
+export function isActiveVoice(voice: Pick<Voice, "active"> | undefined): boolean {
+  return Boolean(voice) && voice!.active !== false;
+}
+
+/** Voices shown publicly: cast index, strip, home cast list, nav and staff switcher. */
+export const ACTIVE_CAST: Voice[] = CAST.filter((voice) => voice.active !== false);
+
+/** Hidden voices (reversible). Their staff and cast URLs redirect to /staff. */
+export const INACTIVE_SLUGS: string[] = CAST.filter((voice) => voice.active === false).map((voice) => voice.slug);
 
 export function getVoice(slug: string): Voice | undefined {
   const id = slug === "lead-blogger" ? LEAD_VOICE_ID : slug;

@@ -28,9 +28,9 @@ const nav = [
     match: (path: string) => path.startsWith("/nba"),
   },
   {
-    href: "/cast",
+    href: "/staff",
     label: "Cast",
-    match: (path: string) => path === "/cast",
+    match: (path: string) => path === "/staff",
   },
   {
     href: "/mail",

@@ -3,7 +3,7 @@ import { StaffLink } from "@/components/staff-link";
 import Link from "next/link";
 import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
-import { CAST } from "@/lib/cast";
+import { ACTIVE_CAST } from "@/lib/cast";
 import { getCallRecord, type Call } from "@/lib/calls";
 import { storyVoice, type Story } from "@/lib/stories";
 
@@ -84,9 +84,9 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
 export function HomeCast() {
   return (
     <section className="space-y-2">
-      <SectionHead label="Poor Form Desk" title="Cast" href="/cast" linkLabel="Full cast →" />
+      <SectionHead label="Poor Form Desk" title="Cast" href="/staff" linkLabel="Full cast →" />
       <ul className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-4">
-        {CAST.map((voice) => (
+        {ACTIVE_CAST.map((voice) => (
           <li key={voice.slug}>
             <Link href={`/staff/${voice.slug}`} className="flex min-h-12 min-w-0 items-center gap-2 py-1 hover:underline">
               <VoiceAvatar voice={voice} size={32} className="size-8 shrink-0" />

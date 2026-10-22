@@ -121,7 +121,7 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   const staff = loadStories().find((story) => story.slug === "staff-picks-rest-of-2026");
   const stories = loadStories().map((story) => [story.title, story.dek, story.bylineDetail, story.dateLabel, story.body].filter(Boolean).join("\n")).join("\n").replaceAll("wes-process", "wes");
   const cast = source("lib/cast.ts");
-  const castIndex = source("app/cast/page.tsx");
+  const castIndex = source("app/staff/page.tsx");
   const castProfile = source("app/staff/[slug]/page.tsx");
 
   assert.ok(staff);

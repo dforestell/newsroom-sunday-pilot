@@ -16,7 +16,7 @@ test("homepage and header no longer feature the NFL scoreboard or game archives"
   const nav = source("components/site-nav.tsx");
   for (const href of ["/scores", "/games", "/archive"]) assert.equal(nav.includes(`href: "${href}`), false, href);
   assert.ok(nav.indexOf('href: "/stories"') < nav.indexOf('href: "/calls"'), "stories, then calls, lead the nav");
-  assert.ok(nav.indexOf('href: "/calls"') < nav.indexOf('href: "/cast"'));
+  assert.ok(nav.indexOf('href: "/calls"') < nav.indexOf('href: "/staff"'));
   assert.equal(/label: "Board"/.test(nav), false);
 });
 
