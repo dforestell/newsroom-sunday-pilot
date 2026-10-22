@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { StoryBody } from "@/components/story-body";
 import { notFound } from "next/navigation";
-import { StoryLabel } from "@/components/story-label";
+import { StoryLabel, visibleLabelParts } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { getPublicStory, listPublicStories, listStories, storyVoice } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
@@ -57,8 +57,12 @@ export default async function StoryArticlePage({
         data-story-kicker
         className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[13px] tracking-wide text-ink-soft uppercase"
       >
-        <StoryLabel label={story.label} />
-        <span aria-hidden="true">·</span>
+        {visibleLabelParts(story.label).length ? (
+          <>
+            <StoryLabel label={story.label} />
+            <span aria-hidden="true">·</span>
+          </>
+        ) : null}
         <time dateTime={story.date}>{story.dateLabel}</time>
       </p>
 

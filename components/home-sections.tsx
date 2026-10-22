@@ -1,7 +1,6 @@
 import { SportChip } from "@/components/sport-chip";
 import { StaffLink } from "@/components/staff-link";
 import Link from "next/link";
-import { DeskPill } from "@/components/desk-pill";
 import { StoryLabel } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
 import { CAST } from "@/lib/cast";
@@ -56,7 +55,6 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
       <div className="min-w-0 border-t border-ink/15 px-4 py-4 sm:px-5 lg:border-t-0 lg:border-l">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className={kicker}>Chip’s call{call?.status === "pending" ? "" : " · latest"}</p>
-          <DeskPill tone="satire">Satire</DeskPill>
         </div>
         {call ? (
           <figure className="mt-2">
