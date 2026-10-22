@@ -22,8 +22,8 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
   if (game.sport !== "NFL" && !piece && !call) notFound();
   return (
     <div className="space-y-8">
-      <GamePieceLead piece={piece} call={call} />
       {game.sport === "NFL" ? <LiveScoreboard gameId={id} /> : null}
+      <GamePieceLead piece={piece} call={call} />
     </div>
   );
 }

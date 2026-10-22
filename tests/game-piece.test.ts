@@ -48,3 +48,8 @@ test("piece copy is clean and the lead links to /calls", () => {
   assert.match(lead, /<StaffLink/);
   assert.doesNotMatch(lead, /SatireLabel|satire/i);
 });
+
+test("game page renders score details before the staff piece", () => {
+  const page = readFileSync(new URL("../app/scores/[id]/page.tsx", import.meta.url), "utf8");
+  assert.ok(page.indexOf("<LiveScoreboard") < page.indexOf("<GamePieceLead"));
+});

@@ -10,7 +10,7 @@ export function GamePieceLead({ piece, call }: { piece: GamePiece | null; call: 
   const author = piece?.author ?? DEFAULT_PIECE_AUTHOR;
   const name = getVoice(author)?.name ?? "Chip Absolute";
   return (
-    <article data-game-piece className="max-w-3xl space-y-4 border-b border-ink/15 pb-6">
+    <article data-game-piece className="max-w-3xl space-y-4 border-t border-ink/15 pt-6">
       {piece ? (
         <h1 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{piece.headline}</h1>
       ) : null}
