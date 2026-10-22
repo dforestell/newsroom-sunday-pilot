@@ -231,8 +231,8 @@ test("hidden voices: /staff/<slug>, /cast/<slug> and /cast 307 to /staff; nothin
 });
 
 test("new personas use the spec bios verbatim and names only", () => {
-  assert.equal(PERSONA_THEMES["nora-median"].bio, "I'm Nora Median. I pick the same games Chip does and log every result. My record is better. His replies are better. Both are on the ledger.");
-  assert.equal(PERSONA_THEMES["benny-faithful"].bio, "I'm Benny Faithful. I tail every Chip call. The official record says 1-7. My record says we're building something.");
+  assert.equal(PERSONA_THEMES["nora-median"].bio, "I'm Nora Median. I pick the same games Chip does. I'll let the ledger do the talking.");
+  assert.equal(PERSONA_THEMES["benny-faithful"].bio, "I'm Benny Faithful. I tail every Chip call. The official record and I disagree on several counts.");
   assert.equal(PERSONA_THEMES["nora-median"].font, "inter");
   assert.equal(PERSONA_THEMES["benny-faithful"].font, "bebas-neue");
 });

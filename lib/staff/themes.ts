@@ -231,7 +231,7 @@ PERSONA_THEMES["nora-median"] = {
     "--persona-rule": "#d9d7d0",
     "--persona-motif": "linear-gradient(rgba(43,45,49,.07) 1px,transparent 1px) 0 0/100% 16px, linear-gradient(90deg,rgba(43,45,49,.07) 1px,transparent 1px) 0 0/16px 100%",
   },
-  bio: "I'm Nora Median. I pick the same games Chip does and log every result. My record is better. His replies are better. Both are on the ledger.",
+  bio: "I'm Nora Median. I pick the same games Chip does. I'll let the ledger do the talking.",
 };
 
 PERSONA_THEMES["benny-faithful"] = {
@@ -249,7 +249,7 @@ PERSONA_THEMES["benny-faithful"] = {
     "--persona-rule": "#e3d6c4",
     "--persona-motif": "radial-gradient(circle,rgba(242,107,29,.35) 1.5px,transparent 2px) 0 0/22px 22px, radial-gradient(circle,rgba(255,210,63,.3) 1.5px,transparent 2px) 11px 11px/22px 22px",
   },
-  bio: "I'm Benny Faithful. I tail every Chip call. The official record says 1-7. My record says we're building something.",
+  bio: "I'm Benny Faithful. I tail every Chip call. The official record and I disagree on several counts.",
 };
 
 export function staffTheme(voice: Voice, themes: Record<string, PersonaTheme> = PERSONA_THEMES): StaffTheme {
