@@ -12,7 +12,7 @@
 // Editor's empty-state edits applied. Do not add new voice lines here.
 import type { Voice } from "../cast.ts";
 
-export type StaffFontKey = "anton" | "barlow-condensed" | "bebas-neue" | "roboto-condensed" | "special-elite";
+export type StaffFontKey = "anton" | "barlow-condensed" | "bebas-neue" | "inter" | "roboto-condensed" | "special-elite";
 
 export type StaffHeaderVariant = "default" | "lead" | "blueprint" | "signage" | "centered" | "lower-third" | "postcard";
 
@@ -48,6 +48,8 @@ export type PersonaTheme = {
   font?: StaffFontKey;
   header: StaffHeaderVariant;
   bio?: string;
+  /** Name of the persona's own running record (shown 0–0 until real calls are logged). */
+  recordLabel?: string;
   labels?: Partial<StaffLabels>;
   /** Display-name lockup is uppercase. */
   uppercaseName?: boolean;
@@ -62,6 +64,7 @@ export type StaffTheme = Required<Pick<PersonaTheme, "tokens" | "header">> & {
   labels: StaffLabels;
   uppercaseName: boolean;
   topBorder?: string;
+  recordLabel?: string;
   /** True when this persona has a Designer spec; false for the shared fallback. */
   specified: boolean;
 };
@@ -86,7 +89,7 @@ export function fallbackLabels(voice: Voice): StaffLabels {
     empty: "Nothing filed yet.",
     count: "{n} stories",
     back: "← All staff",
-    backHref: "/cast",
+    backHref: "/staff",
   };
 }
 
@@ -212,6 +215,43 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
   },
 };
 
+// New personas, from drafts/new-personas-v1.md (2026-10-21). Bios are the spec's in-voice
+// bios verbatim. The spec gives no kicker or empty-state copy, so labels use the generic fallback.
+PERSONA_THEMES["nora-median"] = {
+  header: "default",
+  font: "inter",
+  recordLabel: "The Median Ledger",
+  tokens: {
+    "--persona-header-bg": "#f7f6f2",
+    "--persona-header-fg": "#2b2d31",
+    "--persona-header-meta": "#2b2d31",
+    "--persona-accent": "#3e7c5a",
+    "--persona-link": "#2b2d31",
+    "--persona-link-hover": "#0c0908",
+    "--persona-rule": "#d9d7d0",
+    "--persona-motif": "linear-gradient(rgba(43,45,49,.07) 1px,transparent 1px) 0 0/100% 16px, linear-gradient(90deg,rgba(43,45,49,.07) 1px,transparent 1px) 0 0/16px 100%",
+  },
+  bio: "I'm Nora Median. I pick the same games Chip does. I'll let the ledger do the talking.",
+};
+
+PERSONA_THEMES["benny-faithful"] = {
+  header: "signage",
+  font: "bebas-neue",
+  uppercaseName: true,
+  recordLabel: "The Believer's Record",
+  tokens: {
+    "--persona-header-bg": "#1e2a4a",
+    "--persona-header-fg": "#ffd23f",
+    "--persona-header-meta": "#fff8ef",
+    "--persona-accent": "#f26b1d",
+    "--persona-link": "#1e2a4a",
+    "--persona-link-hover": "#0c0908",
+    "--persona-rule": "#e3d6c4",
+    "--persona-motif": "radial-gradient(circle,rgba(242,107,29,.35) 1.5px,transparent 2px) 0 0/22px 22px, radial-gradient(circle,rgba(255,210,63,.3) 1.5px,transparent 2px) 11px 11px/22px 22px",
+  },
+  bio: "I'm Benny Faithful. I tail every Chip call. The official record and I disagree on several counts.",
+};
+
 export function staffTheme(voice: Voice, themes: Record<string, PersonaTheme> = PERSONA_THEMES): StaffTheme {
   const spec = themes[voice.slug];
   return {
@@ -225,6 +265,7 @@ export function staffTheme(voice: Voice, themes: Record<string, PersonaTheme> = 
     labels: { ...fallbackLabels(voice), ...spec?.labels },
     uppercaseName: spec?.uppercaseName ?? false,
     topBorder: spec?.topBorder,
+    recordLabel: spec?.recordLabel,
   };
 }
 

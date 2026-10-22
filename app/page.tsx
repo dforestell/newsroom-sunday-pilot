@@ -1,4 +1,5 @@
-import { HomeCast, HomeFeatured, HomeStories } from "@/components/home-sections";
+import { HomeCast, HomeFeatured, HomeStories, StoryRows } from "@/components/home-sections";
+import { SportFilter } from "@/components/sport-filter";
 import { listPublicCalls } from "@/lib/calls";
 import { listPublicStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
@@ -30,7 +31,19 @@ export default async function HomePage() {
       </section>
 
       <HomeFeatured story={latest} calls={calls} />
-      <HomeStories stories={stories.slice(0, 3)} />
+      <HomeStories
+        stories={stories.slice(0, 3)}
+        filter={
+          <SportFilter
+            label="Filter stories by sport"
+            panels={{
+              All: <StoryRows stories={stories.slice(0, 3)} />,
+              NFL: <StoryRows stories={stories.filter((s) => s.sport === "NFL").slice(0, 3)} empty="No NFL stories yet." />,
+              NBA: <StoryRows stories={stories.filter((s) => s.sport === "NBA").slice(0, 3)} empty="No NBA stories yet." />,
+            }}
+          />
+        }
+      />
       <HomeCast />
     </div>
   );

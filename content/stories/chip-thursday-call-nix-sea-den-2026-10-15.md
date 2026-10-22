@@ -5,6 +5,7 @@ date: 2026-10-14
 voiceId: chip-absolute
 dek: Chip's Thursday Call for Seahawks at Broncos. One interception from Bo Nix, posted before kickoff, graded Friday.
 label: SATIRE
+sport: NFL
 order: 0
 ---
 

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { StoryBody } from "@/components/story-body";
 import { notFound } from "next/navigation";
-import { StoryLabel } from "@/components/story-label";
+import { StoryLabel, visibleLabelParts } from "@/components/story-label";
 import { VoiceAvatar } from "@/components/voice-avatar";
-import { getPublicStory, listPublicStories, listStories, storyVoice } from "@/lib/stories";
+import { getPublicStory, listAllPublicStories, listPublicStories, listStories, storyVoice } from "@/lib/stories";
+import { isActiveVoice } from "@/lib/cast";
 import { shareMetadata } from "@/lib/share";
 
 // Filed content is inlined at build time; admin content is read from Redis and refreshed
@@ -31,15 +32,18 @@ export default async function StoryArticlePage({
   params,
 }: PageProps<"/stories/[slug]">) {
   const { slug } = await params;
-  const all = await listPublicStories();
-  const story = all.find((item) => item.slug === slug);
+  // Direct URLs resolve every story (including hidden voices'); next/more use the listing set.
+  const [everything, all] = await Promise.all([listAllPublicStories(), listPublicStories()]);
+  const story = everything.find((item) => item.slug === slug);
   if (!story) {
     notFound();
   }
   const voice = storyVoice(story);
+  const voiceLinked = isActiveVoice(voice);
   const index = all.findIndex((item) => item.slug === story.slug);
   // Next newer story; the latest story points at the one before it instead of itself.
-  const next = index > 0 ? all[index - 1] : all[1];
+  // A hidden voice's story is not in the listing set, so it points at the latest listed story.
+  const next = index > 0 ? all[index - 1] : index === 0 ? all[1] : all[0];
   const nextVoice = next ? storyVoice(next) : undefined;
   const more = all.filter((item) => item.slug !== story.slug && item.slug !== next?.slug).slice(0, 3);
 
@@ -57,8 +61,12 @@ export default async function StoryArticlePage({
         data-story-kicker
         className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[13px] tracking-wide text-ink-soft uppercase"
       >
-        <StoryLabel label={story.label} />
-        <span aria-hidden="true">·</span>
+        {visibleLabelParts(story.label).length ? (
+          <>
+            <StoryLabel label={story.label} />
+            <span aria-hidden="true">·</span>
+          </>
+        ) : null}
         <time dateTime={story.date}>{story.dateLabel}</time>
       </p>
 
@@ -68,13 +76,20 @@ export default async function StoryArticlePage({
 
       {voice ? (
         <div className="flex flex-wrap items-center gap-3">
-          <Link
-            href={`/staff/${voice.slug}`}
-            className="inline-flex min-h-11 items-center gap-2"
-          >
-            <VoiceAvatar voice={voice} size={36} className="size-9" />
-            <span className="font-medium text-ink">{voice.name}</span>
-          </Link>
+          {voiceLinked ? (
+            <Link
+              href={`/staff/${voice.slug}`}
+              className="inline-flex min-h-11 items-center gap-2"
+            >
+              <VoiceAvatar voice={voice} size={36} className="size-9" />
+              <span className="font-medium text-ink">{voice.name}</span>
+            </Link>
+          ) : (
+            <span data-byline-plain className="inline-flex min-h-11 items-center gap-2">
+              <VoiceAvatar voice={voice} size={36} className="size-9" />
+              <span className="font-medium text-ink">{voice.name}</span>
+            </span>
+          )}
           {story.bylineDetail ? (
             <span className="text-sm text-ink-soft">{story.bylineDetail}</span>
           ) : null}
@@ -121,7 +136,7 @@ export default async function StoryArticlePage({
           <p className="mb-2 font-mono text-sm tracking-[0.18em] text-masthead uppercase">
             Related cast
           </p>
-          {voice ? (
+          {voice && voiceLinked ? (
             <Link
               href={`/staff/${voice.slug}`}
               className="flex h-full min-h-[4.5rem] items-center gap-3 border-2 border-border bg-card-loud px-4 py-3"
@@ -133,6 +148,11 @@ export default async function StoryArticlePage({
                 </span>
               </span>
             </Link>
+          ) : voice ? (
+            <span className="flex h-full min-h-[4.5rem] items-center gap-3 border-2 border-border bg-card-loud px-4 py-3">
+              <VoiceAvatar voice={voice} size={40} className="size-10" />
+              <span className="block font-heading text-lg font-semibold">{voice.name}</span>
+            </span>
           ) : null}
         </div>
         {story.relatedGameHref ? (

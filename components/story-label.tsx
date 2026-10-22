@@ -13,14 +13,21 @@ export function storyLabelParts(label: Story["label"]): Array<{ text: string; to
     .map((text) => ({ text, tone: text.toLowerCase() as LabelTone }));
 }
 
-/** Text chips (never color-only) showing the label a story actually carries. */
+/** Chips shown on article pages and cards. SATIRE is not shown as a chip; DEMO still is. */
+export function visibleLabelParts(label: Story["label"]) {
+  return storyLabelParts(label).filter((part) => part.tone !== "satire");
+}
+
+/** Text chips (never color-only) for the visible parts of a story's label. Renders nothing when none remain. */
 export function StoryLabel({ label, className }: { label: Story["label"]; className?: string }) {
+  const parts = visibleLabelParts(label);
+  if (parts.length === 0) return null;
   return (
     <span
       data-story-label={label}
       className={cn("inline-flex shrink-0 items-center gap-1 align-middle", className)}
     >
-      {storyLabelParts(label).map((part) => (
+      {parts.map((part) => (
         <DeskPill key={part.text} tone={part.tone} className="tracking-wide">
           {part.text}
         </DeskPill>

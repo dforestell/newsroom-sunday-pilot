@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { StaffView } from "../components/staff-view.tsx";
 import { StoryCard } from "../components/story-card.tsx";
 import { HomeFeatured, HomeStories } from "../components/home-sections.tsx";
-import { CAST, LEAD_VOICE_ID } from "../lib/cast.ts";
+import { ACTIVE_CAST, CAST, INACTIVE_SLUGS, LEAD_VOICE_ID, getVoice, isActiveVoice } from "../lib/cast.ts";
 import { FILE_CALLS, FILE_STORIES } from "../lib/generated/content.ts";
 import { STAFF_SLUGS, callsForStaff, getStaff, requireStaff, staffPath, storiesByStaff } from "../lib/staff.ts";
 import { FALLBACK_TOKENS, PERSONA_THEMES, countLabel, staffTheme, staffThemeStyle } from "../lib/staff/themes.ts";
@@ -21,7 +21,9 @@ const view = (slug: string) => {
 const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/'/g, "&#x27;").replace(/"/g, "&quot;");
 
 test("every cast slug is a staff slug, and lookup is exact", () => {
-  assert.deepEqual(STAFF_SLUGS, CAST.map((voice) => voice.slug));
+  assert.deepEqual(STAFF_SLUGS, ACTIVE_CAST.map((voice) => voice.slug));
+  assert.deepEqual(STAFF_SLUGS, ["chip-absolute", "nora-median", "benny-faithful", "poor-form-desk"]);
+  for (const slug of INACTIVE_SLUGS) assert.equal(getStaff(slug), undefined, `${slug} is hidden`);
   assert.match(source("app/staff/[slug]/page.tsx"), /STAFF_SLUGS\.map\(\(slug\) => \(\{ slug \}\)\)/);
   for (const slug of STAFF_SLUGS) assert.equal(getStaff(slug)?.slug, slug);
   assert.equal(getStaff("chip-absolute")?.name, "Chip Absolute");
@@ -35,7 +37,7 @@ test("story filter keeps only that author's stories", () => {
     assert.ok(mine.every((story) => story.voiceId === slug), slug);
   }
   const total = STAFF_SLUGS.reduce((sum, slug) => sum + storiesByStaff(FILE_STORIES, slug).length, 0);
-  assert.equal(total, FILE_STORIES.length, "every story belongs to exactly one staff page");
+  assert.equal(total, FILE_STORIES.filter((s) => isActiveVoice(getVoice(s.voiceId))).length, "every listed story belongs to exactly one staff page");
   const fake = [{ ...FILE_STORIES[0], slug: "a", voiceId: "wes-process" }, { ...FILE_STORIES[0], slug: "b", voiceId: "boo-atlas" }];
   assert.deepEqual(storiesByStaff(fake, "wes-process").map((story) => story.slug), ["a"]);
   assert.deepEqual(storiesByStaff(fake, "nobody"), []);
@@ -71,10 +73,13 @@ test("Chip's page lists his calls with sport chips and his stories; others list 
   assert.match(chip, /Christian McCaffrey runs for 100\+ yards/);
   assert.ok(chip.includes(`${FILE_CALLS.length} takes on the record`));
 
-  const wes = view("wes-process");
-  assert.match(wes, /id="staff-stories"[^>]*>Referendums on file</);
-  assert.equal(/id="staff-calls"/.test(wes), false);
-  for (const story of FILE_STORIES.filter((story) => story.voiceId !== "wes-process")) assert.equal(wes.includes(`href="/stories/${story.slug}"`), false);
+  for (const slug of ["nora-median", "benny-faithful"]) {
+    const html = view(slug);
+    assert.match(html, /id="staff-stories"[^>]*>Stories by /);
+    assert.equal(/id="staff-calls"/.test(html), false, "no calls are faked");
+    assert.match(html, /data-persona-record[^>]*>The (Median Ledger|Believer&#x27;s Record): 0–0</);
+    assert.ok(html.includes("Nothing filed yet."));
+  }
   for (const slug of STAFF_SLUGS) {
     const html = view(slug);
     const theme = staffTheme(getStaff(slug)!);
@@ -86,7 +91,7 @@ test("Chip's page lists his calls with sport chips and his stories; others list 
 });
 
 test("each persona maps to a repo slug; unknown cast members get the shared fallback", () => {
-  assert.deepEqual(Object.keys(PERSONA_THEMES).sort(), [...STAFF_SLUGS].sort(), "the spec's desk persona is poor-form-desk");
+  assert.deepEqual(Object.keys(PERSONA_THEMES).sort(), CAST.map((voice) => voice.slug).sort(), "every voice (hidden ones too) keeps its theme");
   const unknown = { ...CAST[0], slug: "special-teams-goblin", name: "Special Teams Goblin" };
   const fallback = staffTheme(unknown);
   assert.equal(fallback.specified, false);
@@ -106,7 +111,7 @@ test("persona tokens stay scoped: only --persona-* variables, one extra font at 
   const chip = staffThemeStyle(staffTheme(getStaff("chip-absolute")!), "'Anton'");
   assert.equal(chip["--persona-display-font"], "'Anton', var(--font-newsreader), serif");
   assert.equal(chip["--persona-header-bg"], "#7a0f0a");
-  const fonts = Object.values(PERSONA_THEMES).map((theme) => theme.font).filter(Boolean);
+  const fonts = STAFF_SLUGS.map((slug) => PERSONA_THEMES[slug].font).filter(Boolean);
   assert.equal(new Set(fonts).size, fonts.length);
   assert.match(source("lib/staff/fonts.ts"), /preload: false/);
   assert.equal(/staff\/fonts/.test(source("app/layout.tsx")), false, "persona fonts are not loaded site-wide");
@@ -152,21 +157,25 @@ test("persona bios are the Editor-reviewed text", () => {
 });
 
 test("staff pages show no cast titles, and Chip's calls link is absolute", () => {
-  for (const voice of CAST) {
+  for (const voice of ACTIVE_CAST) {
     const html = view(voice.slug);
     assert.equal(html.includes(`>${voice.title}<`), false, `${voice.slug} shows its title`);
   }
-  for (const file of ["components/staff-view.tsx", "app/staff/[slug]/page.tsx", "app/cast/page.tsx", "components/cast-strip.tsx", "components/home-sections.tsx", "app/stories/[slug]/page.tsx"]) {
+  for (const file of ["components/staff-view.tsx", "app/staff/[slug]/page.tsx", "app/staff/page.tsx", "components/cast-strip.tsx", "components/home-sections.tsx", "app/stories/[slug]/page.tsx"]) {
     assert.equal(/voice\.title/.test(source(file)), false, `${file} renders a cast title`);
   }
   assert.equal(/STAFF_TITLE_SLOT/.test(source("components/staff-view.tsx")), false);
-  assert.deepEqual(CAST.map((voice) => voice.name), ["Chip Absolute", "Wes Process", "Layover Len", "Boo Atlas", "Chyron Carl", "Postcard Pete", "Poor Form Desk"]);
+  assert.deepEqual(CAST.map((voice) => voice.name), ["Chip Absolute", "Wes Process", "Layover Len", "Boo Atlas", "Chyron Carl", "Postcard Pete", "Nora Median", "Benny Faithful", "Poor Form Desk"]);
   for (const voice of CAST) assert.equal(voice.name.toLowerCase().replace(/ /g, "-"), voice.slug, `${voice.slug} name matches slug`);
   assert.ok(view("chip-absolute").includes('href="https://poorformsports.com/calls"'));
 });
 
 test("bylines and names link to /staff/<slug> without nesting links", () => {
-  const story = FILE_STORIES.find((entry) => entry.voiceId === "postcard-pete") ?? FILE_STORIES[0];
+  const hidden = FILE_STORIES.find((entry) => entry.voiceId === "postcard-pete")!;
+  const plain = renderToStaticMarkup(createElement(StoryCard, { story: hidden }));
+  assert.equal(plain.includes('href="/staff/postcard-pete"'), false, "hidden voices keep a plain-text byline");
+  assert.ok(plain.includes("Postcard Pete"));
+  const story = FILE_STORIES.find((entry) => entry.voiceId === "chip-absolute")!;
   for (const html of [
     renderToStaticMarkup(createElement(StoryCard, { story })),
     renderToStaticMarkup(createElement(HomeStories, { stories: [story] })),
@@ -176,7 +185,7 @@ test("bylines and names link to /staff/<slug> without nesting links", () => {
     assert.ok(html.includes(`href="/stories/${story.slug}"`));
     assert.equal(/<a [^>]*>(?:(?!<\/a>)[\s\S])*<a /.test(html), false, "no nested links");
   }
-  for (const file of ["components/cast-strip.tsx", "components/game-view.tsx", "components/entry-list.tsx", "components/home-sections.tsx", "components/story-card.tsx", "components/site-nav.tsx", "components/calls-list.tsx", "app/cast/page.tsx", "app/stories/[slug]/page.tsx", "components/staff-view.tsx", "app/bloggers/[id]/page.tsx"]) {
+  for (const file of ["components/cast-strip.tsx", "components/game-view.tsx", "components/entry-list.tsx", "components/home-sections.tsx", "components/story-card.tsx", "components/site-nav.tsx", "components/calls-list.tsx", "app/staff/page.tsx", "app/stories/[slug]/page.tsx", "components/staff-view.tsx", "app/bloggers/[id]/page.tsx"]) {
     assert.equal(/["`]\/cast\/\$?\{?[a-z]/.test(source(file)), false, `${file} still links to /cast/<slug>`);
   }
 });
@@ -197,4 +206,33 @@ test("staff page copy stays public-safe and has no hard-coded preview host", () 
     const text = source(file).replace(/\/\/.*$/gm, "");
     for (const pattern of [/\bDillon\b/, /\bDEMO\b/, /\bGitHub\b/i, /\bCursor\b/, /vercel\.app/]) assert.equal(pattern.test(text), false, `${file} ${pattern}`);
   }
+});
+
+test("hidden voices: /staff/<slug>, /cast/<slug> and /cast 307 to /staff; nothing deleted", async () => {
+  assert.deepEqual(INACTIVE_SLUGS, ["wes-process", "layover-len", "boo-atlas", "chyron-carl", "postcard-pete"]);
+  const { default: config } = await import("../next.config.ts");
+  const rules = await config.redirects!();
+  const match = (path: string) => rules.find((r) => new RegExp(`^${r.source.replace(/:slug\(([^)]+)\)/, "($1)")}$`).test(path));
+  for (const slug of INACTIVE_SLUGS) {
+    for (const path of [`/staff/${slug}`, `/cast/${slug}`]) {
+      const rule = match(path);
+      assert.equal(rule?.destination, "/staff", path);
+      assert.equal(rule?.permanent, false, `${path} is temporary (307)`);
+    }
+    assert.ok(PERSONA_THEMES[slug], `${slug} theme kept`);
+    assert.ok(CAST.some((voice) => voice.slug === slug), `${slug} cast entry kept`);
+  }
+  assert.equal(match("/cast")?.destination, "/staff");
+  assert.equal(match("/cast")?.permanent, false);
+  assert.equal(match("/staff/nora-median"), undefined);
+  for (const file of ["components/cast-strip.tsx", "components/home-sections.tsx", "components/staff-view.tsx", "app/staff/page.tsx"]) {
+    assert.match(source(file), /ACTIVE_CAST\.map/, file);
+  }
+});
+
+test("new personas use the spec bios verbatim and names only", () => {
+  assert.equal(PERSONA_THEMES["nora-median"].bio, "I'm Nora Median. I pick the same games Chip does. I'll let the ledger do the talking.");
+  assert.equal(PERSONA_THEMES["benny-faithful"].bio, "I'm Benny Faithful. I tail every Chip call. The official record and I disagree on several counts.");
+  assert.equal(PERSONA_THEMES["nora-median"].font, "inter");
+  assert.equal(PERSONA_THEMES["benny-faithful"].font, "bebas-neue");
 });

@@ -5,6 +5,7 @@ date: 2026-09-14
 voiceId: wes-process
 dek: Week 1 column — Maye end-zone ballot, OT go-for-two, and stuffed two-point tries as conversion referendums.
 label: DEMO / SATIRE
+sport: NFL
 order: 6
 ---
 

@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 const source = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 
 test("cast list uses divider rows on mobile and keeps cards from sm up", () => {
-  const page = source("app/cast/page.tsx");
+  const page = source("app/staff/page.tsx");
   assert.match(page, /divide-y divide-border/);
   assert.match(page, /sm:border sm:border-border sm:bg-card/);
 });

@@ -5,6 +5,7 @@ date: 2026-09-17
 voiceId: poor-form-desk
 dek: Staff ballot. Week 2 is not a mandate. It is a dare.
 label: DEMO / SATIRE
+sport: NFL
 order: 1
 bylineDetail: with the whole newsroom
 dateLabel: "Filed Sep 17, 2026 · Corrected Sep 18, 2026 · Rookie picks added Oct 14, 2026"

@@ -18,9 +18,19 @@ const nav = [
     match: (path: string) => path.startsWith("/calls"),
   },
   {
-    href: "/cast",
+    href: "/nfl",
+    label: "NFL",
+    match: (path: string) => path.startsWith("/nfl"),
+  },
+  {
+    href: "/nba",
+    label: "NBA",
+    match: (path: string) => path.startsWith("/nba"),
+  },
+  {
+    href: "/staff",
     label: "Cast",
-    match: (path: string) => path === "/cast",
+    match: (path: string) => path === "/staff",
   },
   {
     href: "/mail",

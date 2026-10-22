@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { VoiceAvatar } from "@/components/voice-avatar";
-import { CAST, LEAD_VOICE_ID } from "@/lib/cast";
+import { ACTIVE_CAST, LEAD_VOICE_ID } from "@/lib/cast";
 import { cn } from "@/lib/utils";
 
 export function CastStrip() {
@@ -16,14 +16,14 @@ export function CastStrip() {
           </h2>
         </div>
         <Link
-          href="/cast"
+          href="/staff"
           className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-masthead uppercase underline-offset-4 hover:underline"
         >
           Full strip
         </Link>
       </div>
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-7">
-        {CAST.map((voice) => {
+        {ACTIVE_CAST.map((voice) => {
           const lead = voice.slug === LEAD_VOICE_ID;
           return (
             <li key={voice.slug}>
