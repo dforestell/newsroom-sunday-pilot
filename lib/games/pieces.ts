@@ -33,7 +33,7 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
   "nfl:2026:2:SF:ATL": {
     "headline": "A 6-0 team is a 2.5-point favorite. The line is the bad take.",
     "body": [
-      "San Francisco is 6-0 and the number at Atlanta is 2.5. The Falcons are 2-4 and have lost three straight, the last two to Baltimore in overtime and Chicago 31-23. Somebody out there is treating this like a coin flip.",
+      "San Francisco is 6-0 and the number at Atlanta is 2.5. The Falcons are 2-4 and have lost two straight, to Baltimore in overtime and Chicago 31-23. Somebody out there is treating this like a coin flip.",
       "Brock Purdy has 14 touchdown passes against 2 interceptions. Christian McCaffrey has 7 rushing touchdowns. Nick Bosa and Mike Evans are both listed questionable, which matters, but this roster has already won games without everything going right.",
       "Atlanta's whole case is Bijan Robinson, who has 641 rushing yards and is the real reason anyone thinks it's close. I'm taking San Francisco to get to 7-0, and I'll own it if Bijan makes me eat it."
     ]
@@ -58,7 +58,7 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
     "headline": "Miami had two weeks to fix it. The 'bounce-back spot' crowd is back too.",
     "body": [
       "The Dolphins are 0-5 and coming off a bye, so here comes the annual 'rested team, desperate team' take. Their last game was a 31-24 loss to Cincinnati. Malik Willis has 2 touchdown passes and 4 interceptions.",
-      "The Jets are 2-4 and lost 26-19 at New England last week, but Geno Smith has 7 touchdowns against 1 interception and Garrett Wilson has 418 receiving yards. David Bailey has 5 sacks. Breece Hall is listed questionable.",
+      "The Jets are 2-4 and lost 26-19 at New England last week, but Geno Smith has 7 touchdowns against 1 interception and Garrett Wilson has 418 receiving yards. David Bailey has 5 sacks.",
       "New York is a 4.5-point favorite at home and I'm taking the Jets. A bye week gives you rest. It doesn't give you a passing game."
     ]
   },
