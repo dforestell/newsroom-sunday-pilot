@@ -41,7 +41,7 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
   "nfl:2026:2:CLE:TEN": {
     "headline": "The lowest total on the board, and I'm all in on boring",
     "body": [
-      "Cleveland at Tennessee has a total of 37.5, the lowest of the noon games. The Browns just beat Baltimore 13-10. Nobody is buying a ticket for the offense here, and that's the point.",
+      "Cleveland at Tennessee has a total of 36.5, the lowest of the noon games. The Browns just beat Baltimore 13-10. Nobody is buying a ticket for the offense here, and that's the point.",
       "Cleveland is 4-2 and wins with defense. Mason Graham has 4 sacks, and Deshaun Watson has kept it to 7 touchdowns and 2 picks. Tennessee is 1-5, and its only win came last week, 26-20 at Indianapolis. Cam Ward has 4 touchdowns and 4 interceptions.",
       "I'm taking Cleveland. Jeffery Simmons, with 4 sacks of his own, will make it ugly, but one Titans win doesn't make them a streak."
     ]
