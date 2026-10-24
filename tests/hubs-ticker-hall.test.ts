@@ -41,5 +41,7 @@ test("hub links are in the nav and every filed story has a sport", () => {
   const nav = source("components/site-nav.tsx");
   assert.ok(nav.includes('href: "/nfl"') && nav.includes('href: "/nba"'));
   for (const story of loadStories()) assert.equal(story.sport, "NFL", story.slug);
-  assert.equal(loadCalls().some((call) => call.sport === "NBA"), false, "no NBA call without a real post");
+  for (const call of loadCalls().filter((c) => c.sport === "NBA")) {
+    assert.match(call.postUrl, /^https:\/\/x\.com\/ChipAbsolute\/status\/\d+$/, "NBA calls need a real Chip post");
+  }
 });

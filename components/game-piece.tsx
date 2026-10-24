@@ -2,7 +2,7 @@ import Link from "next/link";
 import { StaffLink } from "@/components/staff-link";
 import { getVoice } from "@/lib/cast";
 import type { Call } from "@/lib/calls";
-import { DEFAULT_PIECE_AUTHOR, type GamePiece } from "@/lib/games/pieces";
+import { DEFAULT_PIECE_AUTHOR, parseBodyLinks, type GamePiece } from "@/lib/games/pieces";
 
 /** Leads a game page: headline, byline, Chip's call (linked to /calls), short body. */
 export function GamePieceLead({ piece, call }: { piece: GamePiece | null; call: Call | null }) {
@@ -27,7 +27,17 @@ export function GamePieceLead({ piece, call }: { piece: GamePiece | null; call: 
       ) : null}
       {piece ? (
         <div className="space-y-3 text-base leading-relaxed">
-          {piece.body.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+          {piece.body.map((paragraph, i) => (
+            <p key={i}>
+              {parseBodyLinks(paragraph).map((seg, j) =>
+                seg.href ? (
+                  <Link key={j} href={seg.href} className="text-masthead underline underline-offset-4">{seg.text}</Link>
+                ) : (
+                  <span key={j}>{seg.text}</span>
+                ),
+              )}
+            </p>
+          ))}
         </div>
       ) : null}
     </article>

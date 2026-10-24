@@ -53,3 +53,24 @@ test("game page renders score details before the staff piece", () => {
   const page = readFileSync(new URL("../app/scores/[id]/page.tsx", import.meta.url), "utf8");
   assert.ok(page.indexOf("<LiveScoreboard") < page.indexOf("<GamePieceLead"));
 });
+
+test("piece body links: only poorformsports.com or relative, else plain text", async () => {
+  const { parseBodyLinks, safePieceHref } = await import("../lib/games/pieces.ts");
+  assert.deepEqual(parseBodyLinks("See [Chip's calls](https://poorformsports.com/calls) now"), [
+    { text: "See " }, { text: "Chip's calls", href: "/calls" }, { text: " now" },
+  ]);
+  assert.deepEqual(parseBodyLinks("[x](https://evil.com/calls)"), [{ text: "x" }]);
+  assert.equal(safePieceHref("//evil.com"), null);
+  assert.equal(safePieceHref("javascript:alert(1)"), null);
+  assert.equal(safePieceHref("https://poorformsports.com.evil.com/x"), null);
+  assert.equal(safePieceHref("/stories/x"), "/stories/x");
+  for (const p of Object.values(GAME_PIECES)) for (const para of p.body) {
+    for (const m of para.matchAll(/\]\(([^)]+)\)/g)) assert.ok(safePieceHref(m[1]), m[1]);
+  }
+});
+
+test("HOU at SAS NBA call matches the NBA game page id", () => {
+  const call = findGameCall("nba:2026:2:HOU:SAS", loadCalls());
+  assert.equal(call?.sport, "NBA");
+  assert.equal(call?.status, "pending");
+});

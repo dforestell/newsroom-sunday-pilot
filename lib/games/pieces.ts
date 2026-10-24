@@ -86,7 +86,67 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "Jameis Winston has 7 touchdowns and 5 interceptions, so the Giants will hand Houston chances. I'm taking Houston to win and the Giants to keep it inside double digits. Malik Nabers, with 494 receiving yards, is why."
     ]
   },
+  "nfl:2026:2:DEN:ARI": {
+    "headline": "Denver's defense keeps winning ugly. I'm not betting against ugly.",
+    "body": [
+      "The Broncos are 4-2 and their quarterback is the part everybody's worried about. Bo Nix has 1,049 yards, 6 touchdowns and 3 picks, and he threw for 107 yards in last week's 17-14 overtime win over Seattle. Denver won anyway, which is kind of the whole scouting report.",
+      "Arizona is 2-4 and just snapped a four-game skid with an 18-16 win at the Rams, with Chad Ryland kicking six field goals. The Cardinals haven't won at home in nine straight games. Jacoby Brissett has 9 touchdowns and 6 interceptions, and Trey McBride leads them with 361 receiving yards.",
+      "Denver is a 4.5-point favorite and I'm taking the Broncos. Zach Allen has 4.5 sacks, Pat Surtain II is listed questionable, and six field goals is a great Sunday that nobody repeats on purpose."
+    ]
+  },
+  "nfl:2026:2:GB:DET": {
+    "headline": "The highest total on the board, so of course I took the Packers receiver",
+    "body": [
+      "Green Bay at Detroit has a 53.5 total, the biggest of the week, and the Lions are 3-point favorites. Detroit is 3-2 after a 45-21 win in Arizona. Green Bay is 4-2 and has won three straight, the last one 23-13 over Dallas.",
+      "My call is already posted on [Chip's calls](https://poorformsports.com/calls): Christian Watson goes for 100 receiving yards. He has 538 yards and 6 touchdowns, and Detroit safeties Brian Branch and Kerby Joseph are both listed out. Josh Jacobs is expected to play his first game of the season, which helps a Packers run game that ranks last in rushing yards.",
+      "None of that means I'm picking against Detroit. Jared Goff has 12 touchdowns and zero picks, and Jahmyr Gibbs has 7 rushing touchdowns. I'm taking the Lions to win a shootout and Watson to cash his yards in the loss. Both can be true."
+    ]
+  },
+  "nfl:2026:2:LAR:LV": {
+    "headline": "The Rams are 2-4 and still the favorite. I'm fine with that.",
+    "body": [
+      "Los Angeles is 2-4 after an 18-16 loss to Arizona. The injury list is long: Myles Garrett and Kobie Turner are on IR, Nate Landman is out, and Puka Nacua and Trent McDuffie are listed questionable.",
+      "Las Vegas is 3-3 but has lost three straight, including 30-27 to Kansas City and 33-30 to Buffalo. Kirk Cousins has 14 touchdowns against 5 interceptions, and Brock Bowers leads them with 382 receiving yards.",
+      "I'm taking the Rams. Matthew Stafford has 1,794 yards and Davante Adams has 480 receiving yards with Nacua in question. The '2-4 means they're cooked' crowd is grading the record, not the roster."
+    ]
+  },
+  "nfl:2026:2:KC:SEA": {
+    "headline": "Kansas City is 5-0 and getting points. Kenneth Walker would like a word.",
+    "body": [
+      "The Chiefs are undefeated, and Seattle is a 3-point favorite at home. The Seahawks are 3-3 and have lost two straight, 32-29 to San Francisco and 17-14 in overtime at Denver. Somebody set this line off the stadium, not the standings.",
+      "Kenneth Walker III now leads the league at 133 rushing yards per game for Kansas City, with 665 yards and 6 rushing touchdowns. Patrick Mahomes has 9 touchdowns and 3 interceptions. Rashee Rice is out.",
+      "Seattle's best answer is Jaxon Smith-Njigba, who has 717 receiving yards and 7 touchdowns. Sam Darnold has 7 touchdowns and 7 interceptions, though, and that's the number I'm taking. Chiefs win and stay perfect."
+    ]
+  },
 };
+
+export type BodySegment = { text: string; href?: string };
+
+const SITE_ORIGIN = "https://poorformsports.com";
+
+/** Internal path for a piece link, or null. Only relative paths and https://poorformsports.com URLs. */
+export function safePieceHref(raw: string): string | null {
+  let href = raw.trim();
+  if (href === SITE_ORIGIN) href = "/";
+  else if (href.startsWith(SITE_ORIGIN + "/")) href = href.slice(SITE_ORIGIN.length);
+  if (!href.startsWith("/") || href.startsWith("//") || /[\\\s]/.test(href)) return null;
+  return href;
+}
+
+/** Splits a body paragraph on [label](url) links. Disallowed URLs render as plain label text. */
+export function parseBodyLinks(paragraph: string): BodySegment[] {
+  const out: BodySegment[] = [];
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+  let last = 0;
+  for (const m of paragraph.matchAll(re)) {
+    if (m.index > last) out.push({ text: paragraph.slice(last, m.index) });
+    const href = safePieceHref(m[2]);
+    out.push(href ? { text: m[1], href } : { text: m[1] });
+    last = m.index + m[0].length;
+  }
+  if (last < paragraph.length) out.push({ text: paragraph.slice(last) });
+  return out;
+}
 
 export type ParsedGameId = { sport: string; season: number; away: string; home: string };
 
