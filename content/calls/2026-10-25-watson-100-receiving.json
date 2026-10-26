@@ -4,5 +4,6 @@
   "take": "Christian Watson goes for 100+ receiving yards in Detroit.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2113637036313960593",
-  "status": "pending"
+  "status": "missed",
+  "result": "DET 20, GB 17: Christian Watson 5 catches for 57 yards, needed 100 (ESPN 401873020)"
 }
