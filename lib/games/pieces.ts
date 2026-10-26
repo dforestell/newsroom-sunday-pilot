@@ -124,7 +124,7 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "Dallas and Philadelphia are both 2-4, and the NFC East is somehow still wide open. The Eagles have lost four straight, most recently 25-14 to Carolina. The Cowboys have dropped two in a row, 24-16 to Tampa Bay and 23-13 at Green Bay. Dallas is a 4.5-point favorite on the road, with a 43.5 total.",
       "Tanner McKee makes his second straight start for Philadelphia with Jalen Hurts on injured reserve. DeVonta Smith and Dontayvion Wicks are both out, and so is Nolan Smith. Saquon Barkley is questionable after missing two games. The Eagles ran for 22 and 35 yards in the two games he sat.",
       "Dak Prescott has 1,639 yards, 10 touchdowns and 5 interceptions, CeeDee Lamb has 577 receiving yards, and Javonte Williams has 7 rushing touchdowns. DeMarvion Overshown and Cobie Durant are back for the defense. I'm taking the Cowboys. The 'never bet against Philly at home' take is grading a roster that isn't suiting up tonight.",
-      "My call tonight: CeeDee Lamb for 100 receiving yards. [Track it on /calls](https://poorformsports.com/calls)."
+      "My call tonight: CeeDee Lamb for 100+ receiving yards. [Track it on /calls](https://poorformsports.com/calls)."
     ]
   },
 };
