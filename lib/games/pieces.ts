@@ -118,6 +118,14 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "Seattle's best answer is Jaxon Smith-Njigba, who has 717 receiving yards and 7 touchdowns. Sam Darnold has 7 touchdowns and 7 interceptions, though, and that's the number I'm taking. Chiefs win and stay perfect."
     ]
   },
+  "nfl:2026:2:DAL:PHI": {
+    "headline": "Two 2-4 teams, one division nobody wants. I'll take the team with a quarterback.",
+    "body": [
+      "Dallas and Philadelphia are both 2-4, and the NFC East is somehow still wide open. The Eagles have lost four straight, most recently 25-14 to Carolina. The Cowboys have dropped two in a row, 24-16 to Tampa Bay and 23-13 at Green Bay. Dallas is a 4.5-point favorite on the road, with a 43.5 total.",
+      "Tanner McKee makes his second straight start for Philadelphia with Jalen Hurts on injured reserve. DeVonta Smith and Dontayvion Wicks are both out, and so is Nolan Smith. Saquon Barkley is questionable after missing two games. The Eagles ran for 22 and 35 yards in the two games he sat.",
+      "Dak Prescott has 1,639 yards, 10 touchdowns and 5 interceptions, CeeDee Lamb has 577 receiving yards, and Javonte Williams has 7 rushing touchdowns. DeMarvion Overshown and Cobie Durant are back for the defense. I'm taking the Cowboys. The 'never bet against Philly at home' take is grading a roster that isn't suiting up tonight."
+    ]
+  },
 };
 
 export type BodySegment = { text: string; href?: string };
