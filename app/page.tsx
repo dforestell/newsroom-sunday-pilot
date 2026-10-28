@@ -19,8 +19,15 @@ export const metadata = {
   twitter: { ...share.twitter, title: "Poor Form Sports" },
 };
 
+/** Still published on /stories; omit from the home lead + Stories shelf. */
+const HOME_STORY_SKIP = new Set([
+  "jacksonville-home-schedule-london-timeshare",
+  "notice-of-relocation-temporary-recurring-annual",
+]);
+
 export default async function HomePage() {
-  const [[latest, ...stories], calls] = await Promise.all([listPublicStories(), listPublicCalls()]);
+  const [allStories, calls] = await Promise.all([listPublicStories(), listPublicCalls()]);
+  const [latest, ...stories] = allStories.filter((story) => !HOME_STORY_SKIP.has(story.slug));
 
   return (
     <div className="space-y-6">
