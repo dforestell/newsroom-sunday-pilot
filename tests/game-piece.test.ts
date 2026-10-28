@@ -72,5 +72,5 @@ test("piece body links: only poorformsports.com or relative, else plain text", a
 test("HOU at SAS NBA call matches the NBA game page id", () => {
   const call = findGameCall("nba:2026:2:HOU:SAS", loadCalls());
   assert.equal(call?.sport, "NBA");
-  assert.equal(call?.status, "pending");
+  assert.equal(call?.status, "missed");
 });
