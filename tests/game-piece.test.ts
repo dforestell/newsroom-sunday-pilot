@@ -74,3 +74,10 @@ test("HOU at SAS NBA call matches the NBA game page id", () => {
   assert.equal(call?.sport, "NBA");
   assert.equal(call?.status, "missed");
 });
+test("game piece lead shows the call grade; past score pages fetch ESPN finals", () => {
+  const lead = readFileSync(new URL("../components/game-piece.tsx", import.meta.url), "utf8");
+  assert.match(lead, /CallStatusTag status=\{call\.status\}/);
+  assert.match(lead, /call\.result/);
+  const page = readFileSync(new URL("../app/scores/[id]/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /fetchPastFinal\(id, call\.date\)/);
+});

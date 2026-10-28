@@ -2,6 +2,7 @@ import Link from "next/link";
 import { StaffLink } from "@/components/staff-link";
 import { getVoice } from "@/lib/cast";
 import type { Call } from "@/lib/calls";
+import { CallStatusTag } from "@/components/calls-record";
 import { DEFAULT_PIECE_AUTHOR, parseBodyLinks, type GamePiece } from "@/lib/games/pieces";
 
 /** Leads a game page: headline, byline, Chip's call (linked to /calls), short body. */
@@ -23,7 +24,16 @@ export function GamePieceLead({ piece, call }: { piece: GamePiece | null; call: 
             Chip’s call
           </Link>
           <span className="block font-heading text-xl font-semibold">{call.take}</span>
+          {call.status !== "pending" ? (
+            <span data-game-call-grade className="mt-2 flex flex-wrap items-center gap-2 text-base text-ink-soft">
+              <CallStatusTag status={call.status} />
+              {call.result ? <span>{call.result}</span> : null}
+            </span>
+          ) : null}
         </p>
+      ) : null}
+      {piece && call && call.status !== "pending" ? (
+        <p className="font-mono text-xs tracking-wide text-ink-soft uppercase">Filed before kickoff</p>
       ) : null}
       {piece ? (
         <div className="space-y-3 text-base leading-relaxed">

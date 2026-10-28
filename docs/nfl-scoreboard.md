@@ -58,7 +58,7 @@ BALLDONTLIE endpoint: `https://api.balldontlie.io/nfl/v1/games`, with the key in
 
 The documented backup game response does not promise separate clock, quarter or possession fields. These become null on fallback; an old ESPN clock is never merged into a backup score. The source's textual status can still describe the period. ESPN and BALLDONTLIE may share underlying sources; this is API failover, not a guarantee of independently collected data.
 
-Game IDs use season, phase and canonical away/home team codes. Week and kickoff changes do not alter them. A persistent identity map retains both providers' IDs. Duplicate matchup identities within one phase are rejected for investigation rather than silently combined. Historical games outside the current scoreboard window show a clear out-of-window message; this feature is not a historical game archive.
+Game IDs use season, phase and canonical away/home team codes. Week and kickoff changes do not alter them. A persistent identity map retains both providers' IDs. Duplicate matchup identities within one phase are rejected for investigation rather than silently combined. Historical games outside the current scoreboard window show a clear out-of-window message; this feature is not a historical game archive. The narrow exception: a past game page with a matched Chip call fetches ESPN's dated scoreboard (call date, then ±1 day) server-side and shows the Final card only when ESPN reports it final; otherwise the out-of-window message stays.
 
 This implementation adds scores and status, not a play-by-play/news ingestion system. Raw provider content is not published as editorial copy. No third-party logos, betting odds or automatic blog publication are added.
 

@@ -37,7 +37,7 @@ function PilotBoardNotice({ gameId }: { gameId?: string }) {
   );
 }
 
-export function LiveScoreboard({ gameId, compact = false, initialData = null }: { gameId?: string; compact?: boolean; initialData?: ScoreboardResponse | null }) {
+export function LiveScoreboard({ gameId, compact = false, initialData = null, pastFinal = null }: { gameId?: string; compact?: boolean; initialData?: ScoreboardResponse | null; pastFinal?: NflGame | null }) {
   // Server-rendered last-known board, so the page never opens on an empty loader.
   const [data, setData] = useState<ScoreboardResponse | null>(initialData && isScoreboard(initialData) && initialData.availability !== "unavailable" ? initialData : null);
   const [failed, setFailed] = useState(false);
@@ -103,6 +103,8 @@ export function LiveScoreboard({ gameId, compact = false, initialData = null }: 
     const url = NFL_BLOG_LINKS[game.id];
     return { ...game, blogUrl: url?.startsWith("/") && !url.startsWith("//") ? url : null };
   });
+  // A finished game outside the live window, only when ESPN confirmed the final server-side.
+  if (gameId && games.length === 0 && pastFinal?.id === gameId && pastFinal.state === "final") games.push({ ...pastFinal, blogUrl: null });
   const featured = games.find(g => g.state === "in_progress") ?? games.find(g => g.state === "scheduled") ?? games.at(-1);
   const others = games.filter(g => g.id !== featured?.id);
 
