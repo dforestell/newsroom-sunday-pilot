@@ -71,8 +71,8 @@ test("newest dates sort first and a later post wins a same-day tie", () => {
       assert.deepEqual(tallyCalls(calls), { "held-up": 1, missed: 1, "still-arguing": 1, pending: 0, ungraded: 0 });
       const html = renderToStaticMarkup(createElement(CallsList, { calls }));
       assert.match(html, /bg-live-green[\s\S]*Held up/);
-      assert.match(html, /bg-warn[\s\S]*Missed/);
-      assert.match(html, /bg-satire[\s\S]*Still arguing/);
+      assert.match(html, /bg-masthead[\s\S]*Missed/);
+      assert.match(html, /bg-demo[\s\S]*Still arguing/);
     },
   );
 });
@@ -122,7 +122,7 @@ test("both seed entries render with their posts, results and status", () => {
   assert.match(html, /Pending/);
   assert.match(html, /Ungraded/);
   assert.match(html, /Posted after the final, not counted\./);
-  assert.match(html, /border border-ink-soft bg-transparent text-ink-soft/);
+  assert.match(html, /border border-ink bg-transparent text-ink/);
   assert.match(html, /Chip’s record/);
   // Live record state changes as calls are filed and graded; assert against computed values, not today's data.
   const liveRecord = getCallRecord(calls);
@@ -132,7 +132,7 @@ test("both seed entries render with their posts, results and status", () => {
   else assert.match(html, /Next call drops soon\./);
   assert.match(html, /Latest call/);
   assert.match(html, /bg-live-green/);
-  assert.match(html, /bg-satire/);
+  assert.match(html, /bg-demo/);
   const tally = tallyCalls(calls);
   assert.match(html, new RegExp(`>${tally["held-up"]}<`));
   assert.match(html, new RegExp(`>${tally.missed}<`));

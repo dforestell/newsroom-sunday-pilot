@@ -24,7 +24,9 @@ function Sources({ sources }: { sources: HallSource[] }) {
 }
 
 export default async function HallOfWrong() {
-  const missed = (await listPublicCalls())
+  const all = await listPublicCalls();
+  const held = all.filter((call) => call.status === "held-up").sort((a, b) => b.date.localeCompare(a.date) || b.postUrl.localeCompare(a.postUrl));
+  const missed = all
     .filter((call) => call.status === "missed")
     .sort((a, b) => b.date.localeCompare(a.date) || b.postUrl.localeCompare(a.postUrl));
   return (
@@ -75,6 +77,25 @@ export default async function HallOfWrong() {
             ))}
           </ol>
         )}
+        {held.length > 0 ? (
+          <details data-hall-also-hit className="border-t border-ink/15 pt-2">
+            <summary className="inline-flex min-h-11 cursor-pointer items-center font-mono text-sm tracking-wide text-ink-soft uppercase">Also hit ({held.length})</summary>
+            <ol className="divide-y divide-ink/15">
+              {held.map((call) => (
+                <li key={call.postUrl} className="grid gap-x-4 py-3 sm:grid-cols-[1fr_auto] sm:items-start">
+                  <div className="min-w-0">
+                    <p className="font-mono text-[13px] tracking-wide text-ink-soft uppercase">
+                      {call.sport} · <time dateTime={call.date}>{call.dateLabel}</time> · {call.game}
+                    </p>
+                    <p className="font-heading text-base leading-snug font-semibold break-words">{call.take}</p>
+                    <Sources sources={[{ label: "The X post", url: call.postUrl }]} />
+                  </div>
+                  <div className="sm:text-right"><CallStatusTag status={call.status} /></div>
+                </li>
+              ))}
+            </ol>
+          </details>
+        ) : null}
       </section>
     </div>
   );

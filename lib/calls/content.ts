@@ -107,11 +107,11 @@ export const UNGRADED_NOTE = "Posted after the final, not counted.";
 
 export const CALL_STATUS_TONE = {
   "held-up": "live",
-  missed: "warn",
-  "still-arguing": "satire",
-  pending: "outline",
+  missed: "lead",
+  "still-arguing": "arguing",
+  pending: "ungraded",
   ungraded: "ungraded",
-} as const satisfies Record<CallStatus, "live" | "warn" | "satire" | "outline" | "ungraded">;
+} as const satisfies Record<CallStatus, "live" | "lead" | "arguing" | "ungraded">;
 
 export class CallFilingError extends Error {
   constructor(public issues: string[]) {

@@ -27,11 +27,11 @@ function assertLabel(html: string, label: string) {
   assert.equal(/bg-satire/.test(html), false, "no SATIRE chip on article pages or cards");
 }
 
-test("SATIRE is never a visible chip; label parts follow the story's real label, DEMO before SATIRE", () => {
+test("no label chip is visible; label parts still follow the story's real label", () => {
   assert.deepEqual(storyLabelParts("SATIRE"), [{ text: "SATIRE", tone: "satire" }]);
   assert.deepEqual(storyLabelParts("DEMO / SATIRE"), [{ text: "DEMO", tone: "demo" }, { text: "SATIRE", tone: "satire" }]);
   assert.deepEqual(visibleLabelParts("SATIRE"), []);
-  assert.deepEqual(visibleLabelParts("DEMO / SATIRE").map((p) => p.text), ["DEMO"]);
+  assert.deepEqual(visibleLabelParts("DEMO / SATIRE"), []);
   assert.ok(stories.some((s) => s.label === "SATIRE"));
   assert.ok(stories.some((s) => s.label === "DEMO / SATIRE"));
 });
