@@ -150,7 +150,7 @@ test("Option A public corrections land in live staff-picks and cast copy", () =>
   assert.match(stories, /## Lions defense, second-half edition/);
   assert.match(stories, /Ceremony is allowed to be loud\. Spoilers are allowed to be louder\. Nobody hangs a banner before the first snap\./);
 
-  assert.match(cast, /Loud picks\. His name stays on them\./);
+  assert.match(cast, /Writes the call down before tip and keeps every receipt, including the ones he'd rather lose\./);
   assert.match(cast, /He believes indoor voices are for people who haven’t made a pick yet\./);
   assert.match(cast, /A great night can earn a stamp\. A career takes longer\./);
   assert.match(cast, /He can stamp a night worth keeping\. He will not turn it into a career verdict\./);

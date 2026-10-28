@@ -160,6 +160,7 @@ function NoraLedger() {
           </tr>
         </tbody>
       </table>
+      <p data-first-entry className="text-base leading-7">The Median Ledger is open. My first call goes on the same game as Chip&apos;s next one, same format. Record: 0-0. Replies: none yet. Both columns get filled either way.</p>
     </section>
   );
 }
@@ -178,8 +179,10 @@ function BennyBoard({ chipCalls }: { chipCalls: Call[] }) {
         <div data-believer-record className="border-2 border-[var(--persona-accent)] px-4 py-4">
           <p className="staff-header__name text-lg">The Believer&apos;s Record</p>
           <p className="font-heading text-4xl font-semibold tabular-nums">0–0</p>
+          <p data-empty-state className="mt-1 text-sm leading-6">Official record lives on <a href={`${PUBLIC_SITE_URL}/calls`} className="underline">poorformsports.com/calls</a>. Believer&apos;s Record: 0-0. We&apos;re building something!</p>
         </div>
       </div>
+      <p data-first-entry className="text-base leading-7">I&apos;m on Chip&apos;s next call before he even posts it. The official record is up top, where it belongs. Mine starts at 0-0 and I already believe in it.</p>
       <div data-corkboard className="relative border-4 border-[#8a5a2b] bg-[#c8a170] p-4">
         {pins.length === 0 ? (
           <p className="text-center font-mono text-[13px] text-[#1a120f]">Pins land after Chip’s next graded call.</p>

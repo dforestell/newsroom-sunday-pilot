@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { HALL_RESEARCH } from "../lib/hall/research.ts";
-import { HOU_SAS_GAME, HOU_SAS_HOOKS } from "../lib/nba/hou-sas-2026-10-23.ts";
 import { loadCalls } from "../lib/calls/files.ts";
 import { loadStories } from "../lib/stories/files.ts";
 
@@ -30,17 +29,15 @@ test("hall entries each carry an https source and clean copy", () => {
   assert.match(source("components/site-chrome.tsx"), /href="\/hall-of-wrong"/);
 });
 
-test("NBA hooks are sourced and the game details match the Friday pack", () => {
-  assert.ok(HOU_SAS_HOOKS.length >= 2 && HOU_SAS_HOOKS.length <= 3);
-  for (const hook of HOU_SAS_HOOKS) assert.match(hook.source.url, /^https:\/\//);
-  assert.equal(HOU_SAS_GAME.when, "Fri Oct 23 · 8:30 PM CT");
-  assert.equal(HOU_SAS_GAME.tv, "Prime Video");
+test("NBA hub no longer advertises the finished Oct 23 game", () => {
+  const nba = source("app/nba/page.tsx");
+  assert.equal(/HOU_SAS|hou-sas-2026-10-23|Game hooks/.test(nba), false);
 });
 
 test("hub links are in the nav and every filed story has a sport", () => {
   const nav = source("components/site-nav.tsx");
   assert.ok(nav.includes('href: "/nfl"') && nav.includes('href: "/nba"'));
-  for (const story of loadStories()) assert.equal(story.sport, "NFL", story.slug);
+  for (const story of loadStories()) assert.ok(story.sport === "NFL" || story.sport === "NBA", story.slug);
   for (const call of loadCalls().filter((c) => c.sport === "NBA")) {
     assert.match(call.postUrl, /^https:\/\/x\.com\/ChipAbsolute\/status\/\d+$/, "NBA calls need a real Chip post");
   }
