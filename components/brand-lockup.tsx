@@ -13,7 +13,7 @@ export function BrandLockup() {
         priority
       />
       <span className="flex min-w-0 items-center gap-3">
-        <span className="order-last hidden font-mono text-sm leading-snug tracking-[0.22em] text-masthead uppercase xl:inline">
+        <span className="order-last hidden min-w-0 truncate whitespace-nowrap font-mono text-[11px] leading-snug tracking-[0.06em] text-masthead uppercase xl:block">
           Poor Form Sports · Bad takes, kept on the record
         </span>
         <Image

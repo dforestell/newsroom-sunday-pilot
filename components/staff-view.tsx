@@ -203,7 +203,7 @@ function BennyBoard({ chipCalls }: { chipCalls: Call[] }) {
 function CastSwitcher({ current }: { current: string }) {
   return (
     <nav aria-label="Staff" className="staff-switcher">
-      <ul className="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-0 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap text-ink-soft uppercase sm:gap-x-4 sm:tracking-[0.12em]">
+      <ul className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-0 font-mono text-[10px] tracking-normal sm:text-[11px] whitespace-nowrap text-ink-soft uppercase sm:gap-x-4 sm:tracking-[0.12em]">
         {ACTIVE_CAST.map((voice) => (
           <li key={voice.slug}>
             <Link

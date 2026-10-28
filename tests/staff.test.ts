@@ -195,7 +195,9 @@ test("/cast/<slug> 308s to /staff/<slug> but avatar images still load", async ()
   const rule = (await config.redirects!()).find((entry) => entry.destination === "/staff/:slug");
   assert.ok(rule);
   assert.equal(rule.permanent, true);
-  assert.equal(rule.source, "/cast/:slug([a-z0-9-]+)");
+  assert.equal(rule.source, `/cast/:slug(${ACTIVE_CAST.map((v) => v.slug).join("|")})`);
+  const fallback = (await config.redirects!()).find((entry) => entry.source === "/cast/:slug([a-z0-9-]+)");
+  assert.equal(fallback?.destination, "/staff", "unknown /cast/<slug> lands on the staff index, never a dead /staff/<slug>");
   const pattern = /^\/cast\/([a-z0-9-]+)$/;
   assert.ok(pattern.test("/cast/chip-absolute"));
   assert.equal(pattern.test("/cast/chip-absolute.png"), false);
