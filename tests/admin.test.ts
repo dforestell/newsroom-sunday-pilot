@@ -6,6 +6,7 @@ import { createSession, envDirectory, missingAuthSettings, readSession } from ".
 import { validateAdminCall } from "../lib/admin/calls.ts";
 import { readWithFallback } from "../lib/admin/content.ts";
 import { mergeCalls, mergeStories } from "../lib/admin/merge.ts";
+import { getVoice, isActiveVoice } from "../lib/cast.ts";
 import { redisConfig, RedisError } from "../lib/admin/redis.ts";
 import { EMPTY_ADMIN_CONTENT, fetchAdminContent } from "../lib/admin/store.ts";
 import { validateAdminStory, type AdminStoryRecord } from "../lib/admin/stories.ts";
@@ -195,14 +196,14 @@ test("public lists fall back to the filed content when Redis is not configured o
   try {
     delete process.env.UPSTASH_REDIS_REST_URL;
     delete process.env.UPSTASH_REDIS_REST_TOKEN;
-    assert.deepEqual((await listPublicStories()).map((s) => s.slug), FILE_STORIES.map((s) => s.slug));
+    assert.deepEqual((await listPublicStories()).map((s) => s.slug), FILE_STORIES.filter((s) => isActiveVoice(getVoice(s.voiceId))).map((s) => s.slug));
     assert.equal((await listPublicCalls()).length, FILE_CALLS.length);
     process.env.UPSTASH_REDIS_REST_URL = "https://bogus.invalid";
     process.env.UPSTASH_REDIS_REST_TOKEN = "bogus";
     const warn = console.warn;
     console.warn = () => {};
     try {
-      assert.deepEqual((await listPublicStories()).map((s) => s.slug), FILE_STORIES.map((s) => s.slug));
+      assert.deepEqual((await listPublicStories()).map((s) => s.slug), FILE_STORIES.filter((s) => isActiveVoice(getVoice(s.voiceId))).map((s) => s.slug));
       assert.equal((await listPublicCalls()).length, FILE_CALLS.length);
     } finally {
       console.warn = warn;

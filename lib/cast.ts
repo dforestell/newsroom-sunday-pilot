@@ -22,12 +22,20 @@ export type Voice = {
   startHere?: VoiceStartHere[];
   initials: string;
   mark: string;
-  avatar: string;
-  funFact: string;
-  favoriteCoworker: { slug: string; why: string };
-  leastFavoriteCoworker: { slug: string; why: string };
+  /** Avatar image path. Without one, the avatar renders the initials on `mark`. */
+  avatar?: string;
+  funFact?: string;
+  favoriteCoworker?: { slug: string; why: string };
+  leastFavoriteCoworker?: { slug: string; why: string };
   x: { handle: string; url: string } | null;
-  appearsWhen: string;
+  appearsWhen?: string;
+  /**
+   * Reversible: `false` hides this voice from every public listing (cast index, strip,
+   * nav, switcher) and its stories from story listings. /staff/<slug> and /cast/<slug>
+   * redirect (307) to /staff. Direct story URLs keep working with a plain-text byline.
+   * Nothing is deleted; flip back to true (or remove the line) to restore.
+   */
+  active?: boolean;
 };
 
 export const CAST: Voice[] = [
@@ -64,6 +72,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "wes-process",
+    active: false,
     name: "Wes Process",
     desk: "Poor Form Desk",
     title: "Downs",
@@ -82,13 +91,14 @@ export const CAST: Voice[] = [
   },
   {
     slug: "layover-len",
+    active: false,
     name: "Layover Len",
     desk: "Poor Form Desk",
     title: "Travel",
     lens: "Who packed when. Time zones as a matchup.",
-    bio: "Layover Len argues arrival timing as competitive ops. Day-before is vibes. Week-early is violence. He never jokes that someone’s ‘tired’ in a medical way — clocks only.",
+    bio: "Layover Len argues arrival timing as competitive ops. Day-before is vibes. Week-early is violence. He argues clocks, never bodies.",
     publicLead: "Layover Len believes the game starts at the gate. Who flew when, who adjusted, and who showed up still on home time.",
-    publicDek: "He reads itineraries the way other people read injury reports, except his only diagnosis is ‘bad planning.’ Clocks, flights, and arrival days. Never bodies.",
+    publicDek: "He reads itineraries the way other people read depth charts, and his only verdict is ‘bad planning.’ Clocks, flights, and arrival days. Never bodies.",
     initials: "LL",
     mark: "#2a4a6e",
     avatar: "/cast/layover-len.png",
@@ -100,6 +110,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "boo-atlas",
+    active: false,
     name: "Boo Atlas",
     desk: "Poor Form Desk",
     title: "Crowd",
@@ -118,6 +129,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "chyron-carl",
+    active: false,
     name: "Chyron Carl",
     desk: "Poor Form Desk",
     title: "Graphics",
@@ -136,6 +148,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "postcard-pete",
+    active: false,
     name: "Postcard Pete",
     desk: "Poor Form Desk",
     title: "Place",
@@ -149,6 +162,32 @@ export const CAST: Voice[] = [
     leastFavoriteCoworker: { slug: "chip-absolute", why: "He coronates for sport and expects me to stamp it." },
     x: null,
     appearsWhen: "premature coronations — n=1, debut plaques, career-list rushes, or ‘real RB’ Day 1 energy. Public segment: Notarized Postcard.",
+  },
+  {
+    slug: "nora-median",
+    name: "Nora Median",
+    desk: "Poor Form Desk",
+    title: "Ledger",
+    lens: "Same games as Chip. Same format. Logged either way.",
+    bio: "I'm Nora Median. I pick the same games Chip does, in his format, and log every result. My record starts at 0-0. Both columns are on the ledger.",
+    publicLead: "She picks the same games Chip picks and logs the result either way.",
+    publicDek: "One call, one number, no hype. Her ledger keeps two columns, record and replies, and she reports both in the same flat tone.",
+    initials: "NM",
+    mark: "#2b2d31",
+    x: null,
+  },
+  {
+    slug: "benny-faithful",
+    name: "Benny Faithful",
+    desk: "Poor Form Desk",
+    title: "Believer",
+    lens: "Tails every Chip call. Finds a reason it counted.",
+    bio: "I'm Benny Faithful. I tail every Chip call. The official record is on the calls page. My record says we're building something!",
+    publicLead: "He tails every Chip call and finds a reason every miss actually counted.",
+    publicDek: "His team is Chip's call that week. He reads box scores backward until they agree, and Chip overrules him every time. The official record always sits next to his.",
+    initials: "BF",
+    mark: "#1e2a4a",
+    x: null,
   },
   {
     slug: "poor-form-desk",
@@ -167,6 +206,16 @@ export const CAST: Voice[] = [
     appearsWhen: "house voice — never a seventh joke seat.",
   },
 ];
+
+export function isActiveVoice(voice: Pick<Voice, "active"> | undefined): boolean {
+  return Boolean(voice) && voice!.active !== false;
+}
+
+/** Voices shown publicly: cast index, strip, home cast list, nav and staff switcher. */
+export const ACTIVE_CAST: Voice[] = CAST.filter((voice) => voice.active !== false);
+
+/** Hidden voices (reversible). Their staff and cast URLs redirect to /staff. */
+export const INACTIVE_SLUGS: string[] = CAST.filter((voice) => voice.active === false).map((voice) => voice.slug);
 
 export function getVoice(slug: string): Voice | undefined {
   const id = slug === "lead-blogger" ? LEAD_VOICE_ID : slug;

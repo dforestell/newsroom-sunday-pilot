@@ -37,8 +37,9 @@ function PilotBoardNotice({ gameId }: { gameId?: string }) {
   );
 }
 
-export function LiveScoreboard({ gameId, compact = false }: { gameId?: string; compact?: boolean }) {
-  const [data, setData] = useState<ScoreboardResponse | null>(null);
+export function LiveScoreboard({ gameId, compact = false, initialData = null }: { gameId?: string; compact?: boolean; initialData?: ScoreboardResponse | null }) {
+  // Server-rendered last-known board, so the page never opens on an empty loader.
+  const [data, setData] = useState<ScoreboardResponse | null>(initialData && isScoreboard(initialData) && initialData.availability !== "unavailable" ? initialData : null);
   const [failed, setFailed] = useState(false);
   const [now, setNow] = useState<number | null>(null);
 

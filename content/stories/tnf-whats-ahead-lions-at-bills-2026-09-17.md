@@ -5,6 +5,7 @@ date: 2026-09-17
 voiceId: poor-form-desk
 dek: Buffalo wants a housewarming party. Detroit was invited mostly to hold the door. Chip Absolute is bringing a visitor’s chair and no gift.
 label: SATIRE
+sport: NFL
 order: 1
 bylineDetail: Chip Absolute in the room
 ---

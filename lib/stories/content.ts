@@ -2,6 +2,7 @@ import { parseDocument } from "yaml";
 import { z } from "zod";
 import { visit } from "unist-util-visit";
 import { CAST } from "../cast.ts";
+import { SPORTS } from "../calls/sports.ts";
 import { parseMarkdown, renderMarkdown } from "./markdown.ts";
 
 const requiredText = z.string().trim().min(1, "Add a non-empty value.");
@@ -20,6 +21,8 @@ const schema = z.object({
   relatedGameLabel: requiredText.optional(),
   dateLabel: requiredText.optional(),
   order: z.number().int().nonnegative().default(0),
+  /** Optional sport label for the /nfl and /nba hubs. Untagged stories show only under All. */
+  sport: z.enum(SPORTS, { error: `Choose sport: ${SPORTS.join(", ")}.` }).optional(),
 }).strict();
 
 export type Story = z.infer<typeof schema> & {

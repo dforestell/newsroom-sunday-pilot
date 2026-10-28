@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { CAST, LEAD_VOICE_ID, type Voice } from "./cast.ts";
+import { ACTIVE_CAST, LEAD_VOICE_ID, type Voice } from "./cast.ts";
 import type { Call } from "./calls/content.ts";
 import type { Story } from "./stories/content.ts";
 
-export const STAFF_SLUGS = CAST.map((voice) => voice.slug);
+/** Active voices only. Hidden voices redirect (next.config.ts). */
+export const STAFF_SLUGS = ACTIVE_CAST.map((voice) => voice.slug);
 
 export function staffPath(slug: string) {
   return `/staff/${slug}`;
@@ -11,7 +12,7 @@ export function staffPath(slug: string) {
 
 /** Exact, case-sensitive slug lookup. Unknown slugs return undefined (the page 404s). */
 export function getStaff(slug: string): Voice | undefined {
-  return CAST.find((voice) => voice.slug === slug);
+  return ACTIVE_CAST.find((voice) => voice.slug === slug);
 }
 
 export function storiesByStaff(stories: Story[], slug: string): Story[] {

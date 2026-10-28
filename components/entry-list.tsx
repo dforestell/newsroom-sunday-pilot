@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { StaffLink } from "@/components/staff-link";
 import { DeskPill } from "@/components/desk-pill";
 import { ThisLineReaction } from "@/components/this-line-reaction";
 import { voiceDisplayName } from "@/lib/cast";
@@ -80,12 +80,12 @@ export function EntryList({
                       className="border-l-4 border-satire-fill bg-satire-fill/15 px-3 py-2"
                     >
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <Link
-                          href={`/staff/${line.voiceId}`}
-                          className="font-mono text-[11px] tracking-wide text-ink uppercase underline-offset-4 hover:underline"
+                        <StaffLink
+                          slug={line.voiceId}
+                          className="font-mono text-[11px] tracking-wide text-ink uppercase"
                         >
                           {voiceDisplayName(line.voiceId, line.voiceName)}
-                        </Link>
+                        </StaffLink>
                       </div>
                       <p className="mt-1 font-heading text-[17px] leading-7 text-ink italic">
                         {line.line}

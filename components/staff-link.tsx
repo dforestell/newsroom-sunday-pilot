@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { staffPath } from "@/lib/staff";
+import { getVoice, isActiveVoice } from "@/lib/cast";
 
 /**
  * A byline or name that links to /staff/<slug>. Inside a card that is itself a link,
@@ -17,6 +18,8 @@ export function StaffLink({
   className?: string;
   raised?: boolean;
 }) {
+  // Hidden (inactive) voices keep their byline as plain text: no link to a redirected page.
+  if (!isActiveVoice(getVoice(slug))) return <span className={className}>{children}</span>;
   return (
     <Link
       href={staffPath(slug)}
