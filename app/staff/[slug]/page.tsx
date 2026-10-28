@@ -1,4 +1,5 @@
 import { StaffView } from "@/components/staff-view";
+import { LEAD_VOICE_ID } from "@/lib/cast";
 import { listPublicCalls, sortCalls } from "@/lib/calls";
 import { shareMetadata } from "@/lib/share";
 import { STAFF_SLUGS, callsForStaff, getStaff, requireStaff, staffPath, storiesByStaff } from "@/lib/staff";
@@ -34,6 +35,7 @@ export default async function StaffPage({ params }: PageProps<"/staff/[slug]">) 
       theme={theme}
       stories={storiesByStaff(stories, voice.slug)}
       calls={sortCalls(callsForStaff(calls, voice.slug))}
+      chipCalls={sortCalls(callsForStaff(calls, LEAD_VOICE_ID))}
       font={theme.font ? STAFF_FONTS[theme.font] : undefined}
     />
   );

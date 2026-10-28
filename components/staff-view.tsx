@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 const PUBLIC_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://poorformsports.com").replace(/\/+$/, "");
 // Names only: cast titles (lib/cast.ts) are never rendered on staff pages.
 
-const kicker = "font-mono text-[11px] font-medium tracking-[0.18em] uppercase";
 const countClass = "font-mono text-[11px] font-semibold tracking-[0.12em] uppercase";
 
 function NameLockup({ voice, theme, fontClass }: { voice: Voice; theme: StaffTheme; fontClass?: string }) {
@@ -80,7 +79,6 @@ function StaffHeader({ voice, theme, count, record, fontClass }: { voice: Voice;
     <header data-header={theme.header} className="staff-header px-4 py-4 sm:px-6 sm:py-5">
       <div className={cn("relative z-[1] flex gap-2 sm:gap-4", centered ? "flex-col items-center text-center" : "flex-col sm:flex-row sm:items-end sm:justify-between")}>
         <div className={cn("min-w-0 space-y-1.5", centered && "flex flex-col items-center")}>
-          <p className={cn(kicker, "staff-header__meta")}>{theme.labels.kicker}</p>
           <NameLockup voice={voice} theme={theme} fontClass={fontClass} />
           {bio}
         </div>
@@ -143,10 +141,69 @@ function Section({ id, title, sort, empty, children, isEmpty }: { id: string; ti
   );
 }
 
+function NoraLedger() {
+  return (
+    <section aria-labelledby="nora-ledger" data-nora-ledger className="space-y-2">
+      <h2 id="nora-ledger" className="font-heading text-2xl font-semibold">The Median Ledger</h2>
+      <table className="w-full border-collapse font-mono text-[13px] tabular-nums">
+        <thead>
+          <tr className="border-b border-[var(--persona-accent)] text-left text-[11px] tracking-[0.12em] text-ink-soft uppercase">
+            <th scope="col" className="py-2 pr-3 font-medium">Week</th>
+            <th scope="col" className="py-2 pr-3 font-medium">Nora</th>
+            <th scope="col" className="py-2 pr-3 font-medium">Chip</th>
+            <th scope="col" className="py-2 font-medium">Replies</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="border-b border-border">
+            <td colSpan={4} className="py-6 text-center text-base">0-0. Logged.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
+function BennyBoard({ chipCalls }: { chipCalls: Call[] }) {
+  const official = getCallRecord(chipCalls).tally;
+  const pins = chipCalls.filter((call) => call.status === "held-up" || call.status === "missed").slice(0, 6);
+  return (
+    <section aria-label="Records" data-benny-board className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <a href={`${PUBLIC_SITE_URL}/calls`} data-official-record className="block border-2 border-ink bg-card px-4 py-4 hover:underline">
+          <p className="font-mono text-[11px] tracking-[0.12em] text-ink-soft uppercase">Official record · Chip</p>
+          <p className="font-heading text-4xl font-semibold tabular-nums sm:text-5xl">{official.hits}–{official.misses}</p>
+          <p className="font-mono text-[11px] tracking-wide text-ink-soft uppercase">{official.stillArguing} still arguing · {official.pending} pending</p>
+        </a>
+        <div data-believer-record className="border-2 border-[var(--persona-accent)] px-4 py-4">
+          <p className="staff-header__name text-lg">The Believer&apos;s Record</p>
+          <p className="font-heading text-4xl font-semibold tabular-nums">0–0</p>
+        </div>
+      </div>
+      <div data-corkboard className="relative border-4 border-[#8a5a2b] bg-[#c8a170] p-4">
+        {pins.length === 0 ? (
+          <p className="text-center font-mono text-[13px] text-[#1a120f]">Pins land after Chip’s next graded call.</p>
+        ) : (
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {pins.map((call, i) => (
+              <li key={call.postUrl} className={cn("relative border-2 border-[#1a120f] bg-[#fff8ef] px-3 pt-4 pb-3 text-[#1a120f] shadow", i % 2 ? "rotate-1" : "-rotate-1")}>
+                <span aria-hidden="true" className="absolute -top-2 left-1/2 size-4 -translate-x-1/2 rounded-full bg-masthead shadow" />
+                <p className="font-mono text-[11px] tracking-wide uppercase">{call.game}</p>
+                <p className="font-heading text-sm font-semibold">{call.take}</p>
+                <p className="mt-1"><CallStatusTag status={call.status} /></p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function CastSwitcher({ current }: { current: string }) {
   return (
     <nav aria-label="Staff" className="staff-switcher">
-      <ul className="flex h-11 items-center gap-4 overflow-x-auto font-mono text-[11px] tracking-[0.12em] whitespace-nowrap text-ink-soft uppercase">
+      <ul className="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-0 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap text-ink-soft uppercase sm:gap-x-4 sm:tracking-[0.12em]">
         {ACTIVE_CAST.map((voice) => (
           <li key={voice.slug}>
             <Link
@@ -168,12 +225,14 @@ export function StaffView({
   theme,
   stories,
   calls,
+  chipCalls = [],
   font,
 }: {
   voice: Voice;
   theme: StaffTheme;
   stories: Story[];
   calls: Call[];
+  chipCalls?: Call[];
   font?: { className: string; style: { fontFamily: string } };
 }) {
   const lead = voice.slug === LEAD_VOICE_ID;
@@ -186,6 +245,8 @@ export function StaffView({
       className="space-y-6"
     >
       <StaffHeader voice={voice} theme={theme} count={count} record={getCallRecord(calls).tally} fontClass={font?.className} />
+      {voice.slug === "nora-median" ? <NoraLedger /> : null}
+      {voice.slug === "benny-faithful" ? <BennyBoard chipCalls={chipCalls} /> : null}
       {lead ? (
         <Section id="staff-calls" title={theme.labels.section} sort={theme.labels.sort} empty={theme.labels.empty} isEmpty={calls.length === 0}>
           <CallRows calls={calls} />

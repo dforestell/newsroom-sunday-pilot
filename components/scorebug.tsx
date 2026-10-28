@@ -13,7 +13,7 @@ export function HeroScorebug({ game }: { game: Game }) {
       className="block min-w-0 rounded-none bg-bar text-bar-foreground no-underline"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 sm:px-4">
-        <p className="font-mono text-[10px] tracking-[0.16em] text-bar-foreground/70 uppercase">
+        <p className="font-mono text-[10px] tracking-[0.16em] text-demo uppercase">
           {game.windowLabel} · {game.status === "final" ? "Final" : game.status} ·{" "}
           {game.demo ? "Archive" : game.liveBlogEnabled ? "Blog on" : "Blog off"}
         </p>
@@ -65,7 +65,7 @@ export function HeroScorebug({ game }: { game: Game }) {
         </div>
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-bar-foreground/10 px-3 py-2 sm:px-4">
-        <p className="font-mono text-[10px] tracking-[0.14em] text-bar-foreground/65 uppercase">
+        <p className="font-mono text-[10px] tracking-[0.14em] text-demo uppercase">
           Open {game.windowLabel} {game.demo ? "archive" : "timeline"} →
         </p>
         <span className="inline-flex h-7 items-center rounded-full bg-demo px-3 font-mono text-[10px] tracking-wide text-ink uppercase">
@@ -123,7 +123,7 @@ export function MiniScorebug({
     >
       <Link
         href="/"
-        className="inline-flex min-h-11 shrink-0 items-center font-mono text-[11px] tracking-[0.14em] text-bar-foreground/70 uppercase hover:text-bar-foreground"
+        className="inline-flex min-h-11 shrink-0 items-center font-mono text-[11px] tracking-[0.14em] text-demo uppercase hover:text-bar-foreground"
       >
         ← Board
       </Link>
@@ -149,7 +149,7 @@ export function AssignedScorebug({ game }: { game: Game }) {
   return (
     <Link href={`/games/${game.id}`} className="block rounded-none bg-bar text-bar-foreground">
       <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 sm:px-4">
-        <p className="font-mono text-[10px] tracking-[0.16em] text-bar-foreground/70 uppercase">
+        <p className="font-mono text-[10px] tracking-[0.16em] text-demo uppercase">
           {game.windowLabel} · Final · {game.demo ? "Archive" : "Blog on"}
         </p>
         <div className="flex gap-1.5">
@@ -173,7 +173,7 @@ export function AssignedScorebug({ game }: { game: Game }) {
         </p>
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-bar-foreground/10 px-3 py-2 sm:px-4">
-        <p className="font-mono text-[10px] tracking-[0.14em] text-bar-foreground/65 uppercase">
+        <p className="font-mono text-[10px] tracking-[0.14em] text-demo uppercase">
           Open {game.windowLabel} timeline →
         </p>
         <span className="inline-flex h-7 items-center rounded-full bg-demo px-3 font-mono text-[10px] tracking-wide text-ink uppercase">

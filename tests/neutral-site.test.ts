@@ -9,9 +9,9 @@ import { metadata as homeMetadata } from "../app/page.tsx";
 
 const source = (file: string) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 
-test("homepage and header no longer feature the NFL scoreboard or game archives", () => {
+test("homepage carries a compact scoreboard but no game archives", () => {
   const home = source("app/page.tsx");
-  assert.equal(/LiveScoreboard|scoreboard/i.test(home), false);
+  assert.match(home, /<LiveScoreboard compact /);
   assert.equal(/HomeArchive|\/games\//.test(home), false);
   const nav = source("components/site-nav.tsx");
   for (const href of ["/scores", "/games", "/archive"]) assert.equal(nav.includes(`href: "${href}`), false, href);
@@ -37,7 +37,6 @@ test("homepage title and metadata are sport-neutral", () => {
 
 test("site-wide chrome and shared copy drop football-only wording", () => {
   const files = [
-    "app/page.tsx",
     "app/layout.tsx",
     "app/not-found.tsx",
     "app/about/page.tsx",

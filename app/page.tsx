@@ -1,5 +1,7 @@
 import { HomeCast, HomeFeatured, HomeStories, StoryRows } from "@/components/home-sections";
 import { SportFilter } from "@/components/sport-filter";
+import { LiveScoreboard } from "@/components/scoreboard/live-scoreboard";
+import { getInitialScoreboard } from "@/lib/nfl/initial-scoreboard";
 import { listPublicCalls } from "@/lib/calls";
 import { listPublicStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
@@ -20,7 +22,7 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const [[latest, ...stories], calls] = await Promise.all([listPublicStories(), listPublicCalls()]);
+  const [[latest, ...stories], calls, scoreboard] = await Promise.all([listPublicStories(), listPublicCalls(), getInitialScoreboard()]);
 
   return (
     <div className="space-y-6">
@@ -30,6 +32,7 @@ export default async function HomePage() {
         </h1>
       </section>
 
+      <LiveScoreboard compact initialData={scoreboard} />
       <HomeFeatured story={latest} calls={calls} />
       <HomeStories
         stories={stories.slice(0, 3)}

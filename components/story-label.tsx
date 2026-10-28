@@ -13,9 +13,9 @@ export function storyLabelParts(label: Story["label"]): Array<{ text: string; to
     .map((text) => ({ text, tone: text.toLowerCase() as LabelTone }));
 }
 
-/** Chips shown on article pages and cards. SATIRE is not shown as a chip; DEMO still is. */
-export function visibleLabelParts(label: Story["label"]) {
-  return storyLabelParts(label).filter((part) => part.tone !== "satire");
+/** Chips shown on article pages and cards. None: SATIRE and DEMO chips are stripped; one quiet disclaimer stays in copy. */
+export function visibleLabelParts(label: Story["label"]): Array<{ text: string; tone: LabelTone }> {
+  return storyLabelParts(label).filter(() => false);
 }
 
 /** Text chips (never color-only) for the visible parts of a story's label. Renders nothing when none remain. */

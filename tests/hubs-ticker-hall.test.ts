@@ -14,7 +14,7 @@ test("ticker reads the same calls data and record function as /calls, links via 
   assert.match(ticker, /listPublicCalls\(\)/);
   assert.match(ticker, /getCallRecord\(/);
   assert.match(ticker, /\$\{SITE_URL\}\/calls/);
-  assert.match(ticker, /PERSONA_THEMES\["chip-absolute"\]/);
+  assert.match(ticker, /bg-bar text-bar-foreground/);
   assert.doesNotMatch(ticker, /\b(NFL|NBA)\b/);
   assert.match(source("app/calls/page.tsx"), /listPublicCalls\(\)/);
   assert.match(source("components/site-chrome.tsx"), /<ChipTicker \/>/);

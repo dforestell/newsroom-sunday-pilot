@@ -26,7 +26,7 @@ export function SportHub({
   return (
     <div className="space-y-6">
       <section className="max-w-3xl space-y-2">
-        <p className={kicker}>Poor Form Desk</p>
+        <p className={kicker}>{sport} Board</p>
         <h1 className="font-heading text-3xl font-semibold tracking-tight">{sport}</h1>
         <p className="text-sm leading-6 text-ink-soft sm:text-base">{intro}</p>
       </section>
