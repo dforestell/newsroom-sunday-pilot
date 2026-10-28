@@ -13,6 +13,9 @@ test("homepage leads with the featured story, not a scoreboard, and has no game 
   const home = source("app/page.tsx");
   assert.equal(/LiveScoreboard|getInitialScoreboard/.test(home), false);
   assert.equal(/HomeArchive|\/games\//.test(home), false);
+  assert.match(home, /jacksonville-home-schedule-london-timeshare/);
+  assert.match(home, /notice-of-relocation-temporary-recurring-annual/);
+  assert.match(home, /HOME_STORY_SKIP/);
   const nav = source("components/site-nav.tsx");
   for (const href of ["/scores", "/games", "/archive"]) assert.equal(nav.includes(`href: "${href}`), false, href);
   assert.ok(nav.indexOf('href: "/stories"') < nav.indexOf('href: "/calls"'), "stories, then calls, lead the nav");
