@@ -60,7 +60,7 @@ const draft = {
   dek: "Three things from Sunday.",
   body: `## What happened\n\nChip was wrong again. See [the Nix call](/stories/${fileSlugs[0]}) and [the cast](/cast/chip-absolute).`,
   voiceId: "chip-absolute",
-  date: "2026-10-28",
+  date: "2026-10-29",
 };
 const record = (overrides: Partial<AdminStoryRecord> = {}): AdminStoryRecord => ({
   ...draft, status: "published", updatedAt: "2026-10-18T00:00:00Z", updatedBy: "email:desk@example.com", ...overrides,
