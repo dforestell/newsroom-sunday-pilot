@@ -1,5 +1,4 @@
-import { HomeArchive, HomeCast, HomeFeatured, HomeStories } from "@/components/home-sections";
-import { LiveScoreboard } from "@/components/scoreboard/live-scoreboard";
+import { HomeCast, HomeFeatured, HomeStories } from "@/components/home-sections";
 import { listPublicCalls } from "@/lib/calls";
 import { listPublicStories } from "@/lib/stories";
 import { shareMetadata } from "@/lib/share";
@@ -8,10 +7,16 @@ import { shareMetadata } from "@/lib/share";
 // every 30 seconds (or immediately after an admin save).
 export const revalidate = 30;
 
-export const metadata = shareMetadata(
-  "NFL board + desk",
-  "NFL scores and a desk with opinions from Poor Form Sports. Entertainment only. Not reporting. Not betting advice.",
-);
+const description =
+  "Stories and Chip Absolute’s calls from the Poor Form Desk. Entertainment only. Not reporting. Not betting advice.";
+const share = shareMetadata("Poor Form Sports", description);
+
+export const metadata = {
+  ...share,
+  title: { absolute: "Poor Form Sports" },
+  openGraph: { ...share.openGraph, title: "Poor Form Sports" },
+  twitter: { ...share.twitter, title: "Poor Form Sports" },
+};
 
 export default async function HomePage() {
   const [[latest, ...stories], calls] = await Promise.all([listPublicStories(), listPublicCalls()]);
@@ -20,15 +25,13 @@ export default async function HomePage() {
     <div className="space-y-6">
       <section className="max-w-3xl space-y-1">
         <h1 className="font-heading text-lg leading-snug font-normal text-balance text-ink-soft italic sm:text-2xl">
-          Football opinions worth arguing about, from a{"\u00a0"}cast whose bad takes stay on the record.
+          Sports opinions worth arguing about, from a{"\u00a0"}cast whose bad takes stay on the record.
         </h1>
       </section>
 
       <HomeFeatured story={latest} calls={calls} />
-      <LiveScoreboard compact />
-      <HomeCast />
       <HomeStories stories={stories.slice(0, 3)} />
-      <HomeArchive />
+      <HomeCast />
     </div>
   );
 }

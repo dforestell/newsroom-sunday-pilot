@@ -1,11 +1,13 @@
 {
   "date": "2026-10-19",
+  "sport": "NFL",
   "game": "WSH at SF",
   "window": "MNF",
   "take": "Christian McCaffrey runs for 100+ yards",
   "criterion": "Held up if McCaffrey has 100 or more rushing yards in the final ESPN box.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2112187323198984414",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2112548066654101706",
   "status": "missed",
   "result": "San Francisco won 23–17. McCaffrey ran 16 times for 64 yards and 2 TDs."
 }

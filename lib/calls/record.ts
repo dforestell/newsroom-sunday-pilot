@@ -1,4 +1,5 @@
 import type { Call } from "./content.ts";
+import { SPORTS, type Sport } from "./sports.ts";
 
 export type CallTally = {
   hits: number;
@@ -69,4 +70,19 @@ export function getCallRecord(calls: Call[]): CallRecord {
     latest: newest.find((call) => call.status !== "pending") ?? null,
     next: newest.find((call) => call.status === "pending") ?? null,
   };
+}
+
+export type SportRecord = { sport: Sport; hits: number; misses: number; calls: number };
+
+/** Held up–missed per sport, in SPORTS order, for sports with at least one call. */
+export function sportRecords(calls: Call[]): SportRecord[] {
+  return SPORTS.map((sport) => {
+    const mine = calls.filter((call) => call.sport === sport);
+    return {
+      sport,
+      calls: mine.length,
+      hits: mine.filter((call) => isHit(call.status)).length,
+      misses: mine.filter((call) => isMiss(call.status)).length,
+    };
+  }).filter((record) => record.calls > 0);
 }

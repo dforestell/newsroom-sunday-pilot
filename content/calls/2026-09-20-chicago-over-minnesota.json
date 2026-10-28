@@ -1,5 +1,6 @@
 {
   "date": "2026-09-20",
+  "sport": "NFL",
   "game": "MIN at CHI",
   "take": "Chicago beats Minnesota.",
   "criterion": "Held up if Chicago wins the game, per the final ESPN score.",

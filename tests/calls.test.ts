@@ -14,6 +14,7 @@ import { loadCalls } from "../lib/calls/files.ts";
 
 const valid = {
   date: "2026-10-05",
+  sport: "NFL",
   game: "ATL at NO",
   window: "MNF",
   take: "Atlanta should give Bijan Robinson 25 carries.",
@@ -190,6 +191,7 @@ test("duplicate postUrl names both files and the required correction", () => {
 
 function filed(overrides: Partial<Call> & Pick<Call, "date" | "status" | "postUrl">): Call {
   return {
+    sport: "NFL",
     game: "ATL at NO",
     take: "A take.",
     kind: overrides.status === "still-arguing" ? "argument" : "forecast",

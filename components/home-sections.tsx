@@ -1,3 +1,4 @@
+import { SportChip } from "@/components/sport-chip";
 import Link from "next/link";
 import { DeskPill } from "@/components/desk-pill";
 import { StoryLabel } from "@/components/story-label";
@@ -60,7 +61,12 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
               “{call.take}”
             </blockquote>
             <figcaption className="mt-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
-              {call.game} · <time dateTime={call.date}>{call.dateLabel}</time>
+              <span className="inline-flex flex-wrap items-center gap-2">
+                <SportChip sport={call.sport} />
+                <span>
+                  {call.game} · <time dateTime={call.date}>{call.dateLabel}</time>
+                </span>
+              </span>
             </figcaption>
           </figure>
         ) : (
@@ -118,17 +124,6 @@ export function HomeStories({ stories }: { stories: Story[] }) {
           );
         })}
       </ul>
-    </section>
-  );
-}
-
-export function HomeArchive() {
-  return (
-    <section className="flex flex-wrap items-center gap-x-4 border-t border-ink/15 pt-4 font-mono text-[11px] tracking-wide uppercase">
-      <span className="text-ink-soft">Filed archives</span>
-      <Link href="/games/sunday-pilot" className={sectionLink}>Melbourne</Link>
-      <Link href="/games/demo-dal-nyg-snf" className={sectionLink}>SNF</Link>
-      <Link href="/games/demo-den-kc-mnf" className={sectionLink}>MNF</Link>
     </section>
   );
 }

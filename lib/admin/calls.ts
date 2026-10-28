@@ -1,6 +1,6 @@
 import { CallFilingError, parseCall, type Call } from "../calls/content.ts";
 
-export const CALL_FIELDS = ["date", "game", "window", "take", "criterion", "kind", "postUrl", "result", "status", "note"] as const;
+export const CALL_FIELDS = ["date", "sport", "game", "window", "take", "criterion", "kind", "postUrl", "receiptUrl", "result", "status", "note"] as const;
 export type AdminCallRecord = Partial<Record<(typeof CALL_FIELDS)[number], string>> & { updatedAt?: string; updatedBy?: string };
 
 /** Drops empty optional fields so the record matches the filed-call JSON format exactly. */

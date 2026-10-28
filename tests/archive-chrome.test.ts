@@ -77,13 +77,13 @@ test("real live scoreboard delay copy stays on the live path", () => {
   assert.match(source("components/scoreboard/live-scoreboard.tsx"), /export function LiveScoreboard/);
 });
 
-test("archive index lists filed games and the nav points at it", () => {
+test("archive index lists filed games but stays out of the nav", () => {
   const page = source("app/archive/page.tsx");
   const nav = source("components/site-nav.tsx");
   assert.match(page, /listPublicGames\(\)\.filter\(\(game\) => game\.demo\)/);
   assert.match(page, /await listPublicStories\(\)/);
   assert.match(page, /never live scores/);
-  assert.match(nav, /href: "\/archive",\n    label: "Archive"/);
+  assert.equal(/href: "\/archive"/.test(nav), false);
   assert.equal(/\/games\/sunday-pilot/.test(nav), false);
 });
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { SPORTS } from "@/lib/calls/sports";
 import { createUserAction, loginAction, resetPasswordAction, saveCallAction, saveStoryAction, type FormState } from "./actions";
 
 const input = "w-full border border-border bg-paper px-3 py-2 text-base";
@@ -85,9 +86,16 @@ export function CallForm({ initial, editing }: { initial: Record<string, string>
       <input type="hidden" name="originalPostUrl" value={editing ? initial.postUrl : ""} />
       <div className="grid gap-4 sm:grid-cols-2">
         <label className={label}>Date<input name="date" type="date" required defaultValue={v.date} className={input} /></label>
-        <label className={label}>Window (optional, e.g. SNF)<input name="window" defaultValue={v.window} className={input} /></label>
+        <label className={label}>Window (optional, e.g. SNF or NBA Cup)<input name="window" defaultValue={v.window} className={input} /></label>
       </div>
-      <label className={label}>Game (e.g. DAL at GB)<input name="game" required defaultValue={v.game} className={input} /></label>
+      <div className="grid gap-4 sm:grid-cols-[10rem_1fr]">
+        <label className={label}>Sport
+          <select name="sport" required defaultValue={v.sport || "NFL"} className={input}>
+            {SPORTS.map((sport) => <option key={sport} value={sport}>{sport}</option>)}
+          </select>
+        </label>
+        <label className={label}>Game (away team first, e.g. DAL at GB or BOS at NYK)<input name="game" required defaultValue={v.game} className={input} /></label>
+      </div>
       <label className={label}>Take<input name="take" required defaultValue={v.take} className={input} /></label>
       <label className={label}>Post URL (https://x.com/ChipAbsolute/status/…{editing ? "; cannot change" : ""})
         <input name="postUrl" required readOnly={editing} defaultValue={v.postUrl} className={input} />
@@ -112,6 +120,9 @@ export function CallForm({ initial, editing }: { initial: Record<string, string>
       <label className={label}>Criterion (optional, one line)<input name="criterion" defaultValue={v.criterion} className={input} /></label>
       <label className={label}>Result (verified, one line; leave empty while pending)<input name="result" defaultValue={v.result} className={input} /></label>
       <label className={label}>Note (optional, one line)<input name="note" defaultValue={v.note} className={input} /></label>
+      <label className={label}>Receipt URL (optional, Chip’s follow-up post once graded: https://x.com/ChipAbsolute/status/…)
+        <input name="receiptUrl" defaultValue={v.receiptUrl} className={input} />
+      </label>
       <button className={button} disabled={pending}>{pending ? "Saving…" : "Save call"}</button>
     </form>
   );
