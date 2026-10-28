@@ -155,17 +155,22 @@ test("story links open externally and Sources renders as its own section", () =>
   assert.match(html, /<li><a href="https:\/\/www\.espn\.com\/x" target="_blank" rel="noopener noreferrer">ESPN, recap, A@B<\/a><\/li>/);
 });
 
-test("the Nix call and Pete's challenge are the newest stories, call first", () => {
+test("the held-up Wemby story leads, then the Oct 23 receipt, then the Nix call and Pete's challenge", () => {
   const stories = loadStories();
-  assert.deepEqual(stories.slice(0, 2).map((story) => [story.slug, story.voiceId]), [
+  assert.deepEqual(stories.slice(0, 4).map((story) => [story.slug, story.voiceId]), [
+    ["chip-wemby-20-10-held-up-sac-sas-2026-10-27", "chip-absolute"],
+    ["chip-wemby-receipt-hou-sas-2026-10-23", "chip-absolute"],
     ["chip-thursday-call-nix-sea-den-2026-10-15", "chip-absolute"],
     ["pete-challenge-chip-nix-call-2026-10-14", "postcard-pete"],
   ]);
-  for (const story of stories.slice(0, 2)) assert.match(story.html, /<section class="story-sources" aria-label="Sources">/);
+  for (const story of stories.slice(2, 4)) assert.match(story.html, /<section class="story-sources" aria-label="Sources">/);
+  assert.match(stories[0].html, /1–1 in the NBA and 2–11 overall/);
 });
 
 test("only a call column's opening gets the call rail", () => {
-  const [chip, pete] = loadStories();
+  const stories = loadStories();
+  const chip = stories.find((s) => s.slug === "chip-thursday-call-nix-sea-den-2026-10-15")!;
+  const pete = stories.find((s) => s.slug === "pete-challenge-chip-nix-call-2026-10-14")!;
   assert.match(chip.html, /^<div class="story-call-rail"><p><strong>The call:<\/strong>[^]*?<\/p>\s*<p><strong>What counts as success:<\/strong>[^]*?<\/p>\s*<p><strong>Posted:<\/strong>[^]*?<\/p><\/div>/);
   assert.equal(pete.html.includes("story-call-rail"), false);
 });

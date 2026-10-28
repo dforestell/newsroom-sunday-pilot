@@ -9,9 +9,9 @@ import { metadata as homeMetadata } from "../app/page.tsx";
 
 const source = (file: string) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 
-test("homepage carries a compact scoreboard but no game archives", () => {
+test("homepage leads with the featured story, not a scoreboard, and has no game archives", () => {
   const home = source("app/page.tsx");
-  assert.match(home, /<LiveScoreboard compact /);
+  assert.equal(/LiveScoreboard|getInitialScoreboard/.test(home), false);
   assert.equal(/HomeArchive|\/games\//.test(home), false);
   const nav = source("components/site-nav.tsx");
   for (const href of ["/scores", "/games", "/archive"]) assert.equal(nav.includes(`href: "${href}`), false, href);
