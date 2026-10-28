@@ -74,7 +74,7 @@ test("every filed call is tagged with a listed sport, and the Nix and Lloyd rece
   const directory = join(process.cwd(), "content/calls");
   for (const name of readdirSync(directory).filter((file) => file.endsWith(".json"))) {
     const raw = JSON.parse(readFileSync(join(directory, name), "utf8"));
-    assert.ok(["NFL", "NBA"].includes(raw.sport), `${name} is tagged with a listed sport`);
+    assert.ok(isSport(raw.sport), `${name} is tagged with a listed sport`);
   }
   const receipt = (name: string) => FILE_CALLS.find((filed) => filed.take.includes(name))?.receiptUrl;
   assert.equal(receipt("Nix"), "https://x.com/ChipAbsolute/status/2111099294501445833");

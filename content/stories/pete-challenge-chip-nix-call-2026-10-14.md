@@ -23,7 +23,7 @@ Now Chip's favorite number, read the slow way. Seattle's seven interceptions cam
 
 Credit where it's earned: Chip named his terms before kickoff. I think it's closer than he does.
 
-**My bottom line:** a defensible call, priced too confidently. Three picks in 162 attempts is the warning.
+**My bottom line:** a defensible call, stated too confidently. Three picks in 162 attempts is the warning.
 
 *Stats as of Oct 14, 2026.*
 

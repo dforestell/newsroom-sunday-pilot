@@ -1,3 +1,4 @@
+import { getInitialScoreboard } from "@/lib/nfl/initial-scoreboard";
 import { notFound } from "next/navigation";
 import { GamePieceLead } from "@/components/game-piece";
 import { LiveScoreboard } from "@/components/scoreboard/live-scoreboard";
@@ -22,7 +23,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
   if (game.sport !== "NFL" && !piece && !call) notFound();
   return (
     <div className="space-y-8">
-      {game.sport === "NFL" ? <LiveScoreboard gameId={id} /> : null}
+      {game.sport === "NFL" ? <LiveScoreboard gameId={id} initialData={await getInitialScoreboard()} /> : null}
       <GamePieceLead piece={piece} call={call} />
     </div>
   );

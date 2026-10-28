@@ -187,7 +187,7 @@ test("Chip cast page leads with relationship copy, not the writer-process bio", 
   assert.equal(chip.startHere?.[1]?.title, "Chicago pick, owned after 9–3");
   assert.deepEqual(
     CAST.filter((voice) => voice.publicLead || voice.startHere).map((voice) => voice.slug),
-    ["chip-absolute", "wes-process", "layover-len", "boo-atlas", "chyron-carl"],
+    ["chip-absolute", "wes-process", "layover-len", "boo-atlas", "chyron-carl", "nora-median", "benny-faithful"],
   );
 
   // Staff pages follow the Designer's persona template (header, lists, switcher).

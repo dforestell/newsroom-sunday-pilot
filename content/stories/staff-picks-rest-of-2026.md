@@ -4,7 +4,7 @@ slug: staff-picks-rest-of-2026
 date: 2026-09-17
 voiceId: poor-form-desk
 dek: Staff ballot. Week 2 is not a mandate. It is a dare.
-label: DEMO / SATIRE
+label: SATIRE
 sport: NFL
 order: 1
 bylineDetail: with the whole newsroom
@@ -38,10 +38,10 @@ Week 2 is not a mandate. It is a dare. So every voice in the newsroom filed a re
 | Category | Pick | One-line why |
 | --- | --- | --- |
 | **MVP** | Lamar Jackson | Best remaining marriage of scheme leverage and forced-choice defense — math that survives contact. |
-| **Super Bowl** | Baltimore Ravens | Conversion equity + complementary football; Wes does not trust vibes when the ballot has better math. |
+| **Super Bowl** | Baltimore Ravens | Conversion math + complementary football; Wes does not trust vibes when the ballot has better math. |
 | **ROY** *(added Oct 14)* | Denzel Boston (CLE) | Ten of his first 13 catches went for a first down or a touchdown. That isn’t highlight luck. It’s a conversion rate. |
 | **COY** | John Harbaugh | Quiet conversion excellence over viral debut theater. |
-| **Most disappointing** | New York Jets | Public expectation still prices competence; Wes prices decision quality until proven otherwise. |
+| **Most disappointing** | New York Jets | Public expectation still assumes competence; Wes grades decision quality until proven otherwise. |
 
 ---
 
@@ -53,7 +53,7 @@ Week 2 is not a mandate. It is a dare. So every voice in the newsroom filed a re
 | **Super Bowl** | Detroit Lions | Will pick a real team — and will refuse every midseason “proves the conference” article until January. |
 | **ROY** | **Not yet** | Four good weeks is a nice postcard. Ask again after Thanksgiving. |
 | **COY** | Dan Campbell | A real yes from Pete: a culture that has already survived a blown-lead narrative earns his vote. |
-| **Most disappointing** | Kansas City Chiefs *(vs dynasty expectation)* | Public still prices rings as default. Pete prices sample size. One Walker night is not a dynasty renewal. |
+| **Most disappointing** | Kansas City Chiefs *(vs dynasty expectation)* | Public still assumes rings by default. Pete counts sample size. One Walker night is not a dynasty renewal. |
 
 ---
 
