@@ -127,8 +127,8 @@ export const PERSONA_THEMES: Record<string, PersonaTheme> = {
       "--persona-rule": "#ead2cc",
       "--persona-motif": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M0 12L12 0' stroke='%23ff4d6d' stroke-opacity='.10'/%3E%3C/svg%3E\")",
     },
-    bio: "Loud picks. My name stays on them — and I stay in the room when you come to collect.",
-    labels: { kicker: "Lead · Loud picks", section: "The Calls", empty: "No call on the board yet. I'll own the next one.", count: "{n} takes on the record", back: "← Back to the newsroom", backHref: NEWSROOM, sort: "Newest call first" },
+    bio: "Writes the call down before tip and keeps every receipt, including the ones he'd rather lose.",
+    labels: { kicker: "Lead", section: "The Calls", empty: "No call on the board yet. I'll own the next one.", count: "{n} takes on the record", back: "← Back to the newsroom", backHref: NEWSROOM, sort: "Newest call first" },
   },
   "wes-process": {
     header: "blueprint",
