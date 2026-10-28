@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { getCallRecord } from "../lib/calls.ts";
 import { StaffView } from "../components/staff-view.tsx";
 import { StoryCard } from "../components/story-card.tsx";
 import { HomeFeatured, HomeStories } from "../components/home-sections.tsx";
@@ -15,7 +16,7 @@ const source = (file: string) => readFileSync(new URL(`../${file}`, import.meta.
 const view = (slug: string) => {
   const voice = requireStaff(slug);
   return renderToStaticMarkup(
-    createElement(StaffView, { voice, theme: staffTheme(voice), stories: storiesByStaff(FILE_STORIES, slug), calls: callsForStaff(FILE_CALLS, slug) }),
+    createElement(StaffView, { voice, theme: staffTheme(voice), stories: storiesByStaff(FILE_STORIES, slug), calls: callsForStaff(FILE_CALLS, slug), chipCalls: callsForStaff(FILE_CALLS, "chip-absolute") }),
   );
 };
 const escape = (text: string) => text.replace(/&/g, "&amp;").replace(/'/g, "&#x27;").replace(/"/g, "&quot;");
@@ -73,7 +74,20 @@ test("Chip's page lists his calls with sport chips and his stories; others list 
   assert.match(chip, /Christian McCaffrey runs for 100\+ yards/);
   assert.ok(chip.includes(`${FILE_CALLS.length} takes on the record`));
 
-  for (const slug of ["nora-median", "benny-faithful"]) {
+  {
+    const html = view("nora-median");
+    const { hits, misses } = getCallRecord(callsForStaff(FILE_CALLS, "chip-absolute")).tally;
+    assert.match(html, /data-persona-record[^>]*>The Median Ledger: 0–0</);
+    assert.equal(/id="staff-stories"/.test(html), false, "no empty stories row on Nora launch");
+    assert.equal(html.includes("Nothing filed yet."), false);
+    assert.equal(html.includes("My first call goes"), false);
+    assert.ok(html.includes("Launch (Oct 28)"));
+    assert.ok(html.includes("Nora replies") && html.includes("Chip replies"));
+    assert.ok(html.includes(`data-chip-record="true">${hits}–${misses}<`) || html.includes(`data-chip-record="">${hits}–${misses}<`));
+    assert.ok(html.includes(`Chip&#x27;s is <!-- -->${hits}–${misses}`) || html.includes(`Chip&#x27;s is ${hits}–${misses}`));
+    assert.ok(html.includes("Two columns. Record and replies. Both get filled."));
+  }
+  for (const slug of ["benny-faithful"]) {
     const html = view(slug);
     assert.match(html, /id="staff-stories"[^>]*>Stories by /);
     assert.equal(/id="staff-calls"/.test(html), false, "no calls are faked");
@@ -84,7 +98,7 @@ test("Chip's page lists his calls with sport chips and his stories; others list 
     const html = view(slug);
     const theme = staffTheme(getStaff(slug)!);
     assert.ok(html.includes(escape(theme.bio)), `${slug} bio`);
-    if (slug !== LEAD_VOICE_ID && storiesByStaff(FILE_STORIES, slug).length === 0) assert.ok(html.includes(escape(theme.labels.empty)), `${slug} empty`);
+    if (slug !== LEAD_VOICE_ID && slug !== "nora-median" && storiesByStaff(FILE_STORIES, slug).length === 0) assert.ok(html.includes(escape(theme.labels.empty)), `${slug} empty`);
     assert.match(html, new RegExp(`<a [^>]*aria-current="page"[^>]*href="/staff/${slug}"|<a [^>]*href="/staff/${slug}"[^>]*aria-current="page"`));
     assert.equal(/class="[^"]*border-2[^"]*"[^>]*>\s*<a href="\/stories/.test(html), false, "stories are rows, not cards");
   }

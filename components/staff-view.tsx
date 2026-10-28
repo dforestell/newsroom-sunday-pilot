@@ -141,7 +141,9 @@ function Section({ id, title, sort, empty, children, isEmpty }: { id: string; ti
   );
 }
 
-function NoraLedger() {
+function NoraLedger({ chipCalls }: { chipCalls: Call[] }) {
+  const chip = getCallRecord(chipCalls).tally;
+  const chipRecord = `${chip.hits}–${chip.misses}`;
   return (
     <section aria-labelledby="nora-ledger" data-nora-ledger className="space-y-2">
       <h2 id="nora-ledger" className="font-heading text-2xl font-semibold">The Median Ledger</h2>
@@ -151,16 +153,26 @@ function NoraLedger() {
             <th scope="col" className="py-2 pr-3 font-medium">Week</th>
             <th scope="col" className="py-2 pr-3 font-medium">Nora</th>
             <th scope="col" className="py-2 pr-3 font-medium">Chip</th>
-            <th scope="col" className="py-2 font-medium">Replies</th>
+            <th scope="col" className="py-2 pr-3 font-medium">Nora replies</th>
+            <th scope="col" className="py-2 font-medium">Chip replies</th>
           </tr>
         </thead>
         <tbody>
           <tr className="border-b border-border">
-            <td colSpan={4} className="py-6 text-center text-base">0-0. Logged.</td>
+            <td className="py-2 pr-3">Launch (Oct 28)</td>
+            <td className="py-2 pr-3">0–0</td>
+            <td className="py-2 pr-3" data-chip-record>{chipRecord}</td>
+            <td className="py-2 pr-3">—</td>
+            <td className="py-2">—</td>
           </tr>
         </tbody>
       </table>
-      <p data-first-entry className="text-base leading-7">The Median Ledger is open. My first call goes on the same game as Chip&apos;s next one, same format. Record: 0-0. Replies: none yet. Both columns get filled either way.</p>
+      <div data-first-entry className="space-y-3 text-base leading-7">
+        <p>The Median Ledger is open.</p>
+        <p>I pick the same games Chip picks. Same format, same kind of line. I log the result either way.</p>
+        <p>My record is 0–0. Chip&apos;s is {chipRecord}. He posts every receipt, and that part is correct.</p>
+        <p>Two columns. Record and replies. Both get filled.</p>
+      </div>
     </section>
   );
 }
@@ -248,13 +260,14 @@ export function StaffView({
       className="space-y-6"
     >
       <StaffHeader voice={voice} theme={theme} count={count} record={getCallRecord(calls).tally} fontClass={font?.className} />
-      {voice.slug === "nora-median" ? <NoraLedger /> : null}
+      {voice.slug === "nora-median" ? <NoraLedger chipCalls={chipCalls} /> : null}
       {voice.slug === "benny-faithful" ? <BennyBoard chipCalls={chipCalls} /> : null}
       {lead ? (
         <Section id="staff-calls" title={theme.labels.section} sort={theme.labels.sort} empty={theme.labels.empty} isEmpty={calls.length === 0}>
           <CallRows calls={calls} />
         </Section>
       ) : null}
+      {voice.slug === "nora-median" && stories.length === 0 ? null : (
       <Section
         id="staff-stories"
         title={lead ? `Stories by ${voice.name}` : theme.labels.section}
@@ -264,6 +277,7 @@ export function StaffView({
       >
         <StoryRows stories={stories} />
       </Section>
+      )}
       <p className="font-mono text-[11px] tracking-wide uppercase">
         <Link href={theme.labels.backHref} className="inline-flex min-h-11 items-center text-ink-soft hover:text-ink hover:underline">
           {theme.labels.back}
