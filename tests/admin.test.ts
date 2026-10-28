@@ -101,7 +101,11 @@ test("merged story list: published admin stories join filed ones, newest first; 
 
 // ---------- calls ----------
 
-const lloyd = FILE_CALLS.find((call) => call.status === "pending")!;
+// Use the newest filed call as the pending one, so this test does not depend on
+// whether content/calls currently has an ungraded call.
+const newestFiled = [...FILE_CALLS].sort((a, b) => b.date.localeCompare(a.date))[0]!;
+const lloyd = { ...newestFiled, status: "pending", result: undefined } as typeof newestFiled;
+const BASE_CALLS = FILE_CALLS.map((call) => (call.postUrl === lloyd.postUrl ? lloyd : call));
 
 test("admin calls use the same validation as check:calls", () => {
   const bad = (fields: Record<string, string>) => {
@@ -118,13 +122,13 @@ test("admin calls use the same validation as check:calls", () => {
 });
 
 test("grading a filed call in admin replaces it by postUrl, and record, streak and next call use the merged set", () => {
-  const before = getCallRecord(FILE_CALLS);
+  const before = getCallRecord(BASE_CALLS);
   assert.equal(before.next?.postUrl, lloyd.postUrl);
   const graded = { ...lloyd, status: "held-up", result: "Lloyd ran for 81 yards.", criterion: lloyd.criterion ?? "" };
   const added = { date: "2026-10-25", game: "SEA at DEN", take: "New call.", kind: "forecast", postUrl: "https://x.com/ChipAbsolute/status/99", status: "pending" };
   const invalid = { date: "nope", postUrl: "https://x.com/ChipAbsolute/status/98" };
-  const merged = mergeCalls(FILE_CALLS, [graded, added, invalid] as never);
-  assert.equal(merged.length, FILE_CALLS.length + 1);
+  const merged = mergeCalls(BASE_CALLS, [graded, added, invalid] as never);
+  assert.equal(merged.length, BASE_CALLS.length + 1);
   assert.equal(merged.filter((call) => call.postUrl === lloyd.postUrl).length, 1);
   const after = getCallRecord(merged);
   assert.equal(after.tally.hits, before.tally.hits + 1);
