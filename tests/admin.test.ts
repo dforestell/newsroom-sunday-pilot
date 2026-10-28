@@ -150,7 +150,7 @@ test("grading a filed call in admin replaces it by postUrl, and record, streak a
   // Newest filed call is the pending under test. Grading it held-up after a recent hit
   // (or after misses) must clear cold; accept none or hot depending on filed history.
   assert.notEqual(after.streak.kind, "cold", "a hit cannot leave a cold streak");
-  assert.ok(after.streak.kind === "none" || after.streak.kind === "hot", after.streak);
+  assert.ok(after.streak.kind === "none" || after.streak.kind === "hot", after.streak.kind);
 });
 
 // ---------- Redis fallback ----------
