@@ -92,3 +92,9 @@ Override the gate with `REVIEW_PASSWORD` if you need a local secret. Default rem
 - Live blog is editorial (`liveBlogEnabled`). All three DEMO games are on.
 - Two jobs on a card: **Fact** is the official-shaped hook. **SATIRE** is character voice and is never a score source.
 - The public-live path does not load the simulated reel.
+
+## Canonical domain
+
+Every public link uses `https://poorformsports.com`, from `SITE_URL` in `lib/site.ts`. Set `NEXT_PUBLIC_SITE_URL` (origin only) to override it. Use it for `metadataBase`, per-page `alternates.canonical`, Open Graph/Twitter URLs and any absolute link.
+
+`proxy.ts` sends a 308 to the same path and query on `https://poorformsports.com` for GET/HEAD requests whose host is exactly `newsroom-sunday-pilot.vercel.app` or `www.poorformsports.com` (`lib/canonical-host.ts`). Preview and deployment hosts, localhost and non-GET/HEAD requests (server actions, form posts) pass through. Admin cookies are per host, so after the redirect you sign in again on poorformsports.com.

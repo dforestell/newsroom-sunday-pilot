@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { siteUrl } from "@/lib/site";
 
-export const metadata = { title: "About" };
+export const metadata = { title: "About", alternates: { canonical: siteUrl("/about") } };
 
 export default function AboutPage() {
   return (

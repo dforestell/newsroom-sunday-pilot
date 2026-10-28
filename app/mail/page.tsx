@@ -1,6 +1,7 @@
+import { siteUrl } from "@/lib/site";
 import { DeskMailForm } from "@/components/desk-mail-form";
 
-export const metadata = { title: "Mail the Desk" };
+export const metadata = { title: "Mail the Desk", alternates: { canonical: siteUrl("/mail") } };
 
 export default function MailPage() {
   return (
