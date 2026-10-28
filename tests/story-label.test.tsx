@@ -49,7 +49,7 @@ for (const story of stories) {
     assertLabel(`${kicker}</span>`, story.label);
     assert.equal(/bg-satire/.test(html), false);
     if (visibleLabelParts(story.label).length) assert.ok(kicker.indexOf("data-story-label") < kicker.indexOf(story.dateLabel), "label precedes date");
-    else assert.equal(kicker.includes("·"), false, "no dangling separator");
+    else assert.equal(kicker.replace(story.dateLabel, "").includes("·"), false, "no dangling separator");
     assert.ok(html.indexOf("data-story-kicker") < html.indexOf("<h1"), "kicker sits above the title");
     // Next story + More stories each carry their own story's label.
     const tail = html.slice(html.indexOf('aria-label="Next story"'));
