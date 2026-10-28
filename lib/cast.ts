@@ -64,7 +64,7 @@ export const CAST: Voice[] = [
   },
   {
     slug: "wes-process",
-    name: "Wes",
+    name: "Wes Process",
     desk: "Poor Form Desk",
     title: "Downs",
     lens: "Downs, bruises, results that are not luck.",

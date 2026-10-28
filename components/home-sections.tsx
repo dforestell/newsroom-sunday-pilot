@@ -1,4 +1,5 @@
 import { SportChip } from "@/components/sport-chip";
+import { StaffLink } from "@/components/staff-link";
 import Link from "next/link";
 import { DeskPill } from "@/components/desk-pill";
 import { StoryLabel } from "@/components/story-label";
@@ -32,23 +33,25 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
   return (
     <section aria-label="Featured" className="grid border-2 border-border bg-card-loud lg:grid-cols-[3fr_2fr]">
       {story ? (
-        <Link href={`/stories/${story.slug}`} className="block min-w-0 px-4 py-4 sm:px-5">
+        <div className="relative block min-w-0 px-4 py-4 sm:px-5">
           <p className={`${kicker} flex flex-wrap items-center gap-2`}>
             <StoryLabel label={story.label} />
             <span>Latest column · {story.dateLabel}</span>
           </p>
           <h2 className="mt-2 font-heading text-[28px] leading-tight font-semibold tracking-tight break-words">
+            <Link href={`/stories/${story.slug}`} className="after:absolute after:inset-0 after:content-['']">
             {story.title}
+            </Link>
           </h2>
           {story.dek ? <p className="mt-2 text-sm leading-6 text-ink-soft">{story.dek}</p> : null}
           {voice ? (
             <p className="mt-3 flex items-center gap-2 text-sm">
               <VoiceAvatar voice={voice} size={28} className="size-7" />
-              <span className="font-medium">{voice.name}</span>
+              <StaffLink slug={voice.slug} raised className="font-medium">{voice.name}</StaffLink>
               {story.bylineDetail ? <span className="text-ink-soft">· {story.bylineDetail}</span> : null}
             </p>
           ) : null}
-        </Link>
+        </div>
       ) : null}
       <div className="min-w-0 border-t border-ink/15 px-4 py-4 sm:px-5 lg:border-t-0 lg:border-l">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -87,11 +90,10 @@ export function HomeCast() {
       <ul className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-4">
         {CAST.map((voice) => (
           <li key={voice.slug}>
-            <Link href={`/cast/${voice.slug}`} className="flex min-h-12 min-w-0 items-center gap-2 py-1 hover:underline">
+            <Link href={`/staff/${voice.slug}`} className="flex min-h-12 min-w-0 items-center gap-2 py-1 hover:underline">
               <VoiceAvatar voice={voice} size={32} className="size-8 shrink-0" />
               <span className="min-w-0">
                 <span className="block truncate font-heading text-sm font-semibold">{voice.name}</span>
-                <span className="block font-mono text-xs tracking-wide text-ink-soft uppercase">{voice.title}</span>
               </span>
             </Link>
           </li>
@@ -110,16 +112,21 @@ export function HomeStories({ stories }: { stories: Story[] }) {
           const voice = storyVoice(story);
           return (
             <li key={story.slug}>
-              <Link href={`/stories/${story.slug}`} className="block py-3 hover:underline">
-                <span className="block font-heading text-lg leading-snug font-semibold">{story.title}</span>
+              <div className="relative py-3">
+                <Link href={`/stories/${story.slug}`} className="block font-heading text-lg leading-snug font-semibold hover:underline after:absolute after:inset-0 after:content-['']">{story.title}</Link>
                 <span className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[13px] tracking-wide text-ink-soft uppercase">
                   <StoryLabel label={story.label} />
                   <span>
-                    {voice ? `${voice.name} · ` : ""}
+                    {voice ? (
+                      <>
+                        <StaffLink slug={voice.slug} raised>{voice.name}</StaffLink>
+                        {" · "}
+                      </>
+                    ) : null}
                     {story.dateLabel}
                   </span>
                 </span>
-              </Link>
+              </div>
             </li>
           );
         })}

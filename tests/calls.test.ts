@@ -105,7 +105,7 @@ test("both seed entries render with their posts, results and status", () => {
   const html = renderToStaticMarkup(createElement(CallsList, { calls }));
   assert.match(html, /Chip’s calls/);
   assert.match(html, /His takes, and how each one held up\./);
-  assert.match(html, /href="\/cast\/chip-absolute"/);
+  assert.match(html, /href="\/staff\/chip-absolute"/);
   assert.match(html, /Atlanta should give Bijan Robinson 25 carries\./);
   assert.match(html, /Bryce Young over Jared Goff\./);
   assert.match(html, /ATL at NO/);

@@ -229,3 +229,19 @@
     outline-offset: 3px;
   }
 }
+
+/* Staff pages: persona accent layer (lib/staff/themes.ts). Only [data-persona] elements use
+   these variables; the site header, nav, footer and chips never read them. */
+.staff-header { position: relative; isolation: isolate; overflow: hidden; background: var(--persona-header-bg, #0e0c0b); color: var(--persona-header-fg, #fff8ef); border-bottom: 3px solid var(--persona-accent, #c41e12); border-top: 1px solid var(--persona-top-border, transparent); }
+.staff-header::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--persona-motif, none); }
+[data-persona="chip-absolute"] .staff-header::before { -webkit-mask-image: linear-gradient(90deg, transparent 60%, #000); mask-image: linear-gradient(90deg, transparent 60%, #000); }
+.staff-header__name { font-family: var(--persona-display-font, var(--font-newsreader), serif); }
+.staff-header__meta { color: var(--persona-header-meta, #d8cfc6); }
+.staff-header a:focus-visible { outline: 2px solid var(--persona-accent, #c41e12); outline-offset: 2px; }
+.staff-accent-underline { text-decoration: underline; text-decoration-color: var(--persona-accent, #c41e12); text-decoration-thickness: 4px; text-underline-offset: 6px; }
+.story-row { border-top: 1px solid var(--persona-rule, #d8cfc6); padding: 12px 0; }
+.story-row a.story-row__title { color: var(--persona-link, #c41e12); }
+.story-row a.story-row__title:hover, .story-row a.story-row__title:focus-visible { color: var(--persona-link-hover, #0c0908); text-decoration: underline 2px; }
+.staff-switcher a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--persona-accent, #c41e12); text-decoration-thickness: 2px; text-underline-offset: 6px; color: var(--ink); }
+.staff-stamp { border: 1px dashed var(--persona-accent, #7a5a9a); background: radial-gradient(circle at 70% 30%, transparent 18px, rgba(122, 90, 154, .18) 19px, transparent 20px), radial-gradient(circle at 70% 30%, transparent 24px, rgba(122, 90, 154, .18) 25px, transparent 26px); }
+@media (forced-colors: active) { .staff-header::before { display: none; } }

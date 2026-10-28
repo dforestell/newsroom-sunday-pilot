@@ -13,7 +13,7 @@ export function DeskPill({
     <span
       className={cn(
         "inline-flex h-5 items-center rounded-full px-2 font-mono text-[10px] font-medium tracking-wide uppercase",
-        tone === "demo" && "bg-demo text-demo-foreground",
+        tone === "demo" && "bg-demo text-ink",
         tone === "satire" && "bg-satire text-satire-fg",
         tone === "final" && "bg-bar text-bar-foreground",
         tone === "live" && "bg-live-green text-ink",
