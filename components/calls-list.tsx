@@ -51,6 +51,16 @@ function PostLinks({ call }: { call: Call }) {
   );
 }
 
+function chicagoToday(now: Date = new Date()): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+}
+
+export function nextCallKicker(next: Call | null | undefined, now: Date = new Date()): string {
+  if (!next) return "Next call";
+  const base = next.date === chicagoToday(now) ? "Tonight’s call" : "Next call";
+  return next.window ? `${base} · ${next.window}` : base;
+}
+
 export function CallsList({ calls }: { calls: Call[] }) {
   const record = getCallRecord(calls);
   const next = record.next;
@@ -85,7 +95,7 @@ export function CallsList({ calls }: { calls: Call[] }) {
 
       <section aria-label="Next call" className="border-2 border-border bg-card-loud px-4 py-4 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">Next call</p>
+          <p className="font-mono text-sm tracking-[0.18em] text-masthead uppercase">{nextCallKicker(next)}</p>
           {next ? <CallStatusTag status={next.status} /> : null}
         </div>
         {next ? (

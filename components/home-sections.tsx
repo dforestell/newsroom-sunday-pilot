@@ -1,3 +1,4 @@
+import { CallStatusTag } from "@/components/calls-record";
 import { SportChip } from "@/components/sport-chip";
 import { StaffLink } from "@/components/staff-link";
 import Link from "next/link";
@@ -52,9 +53,38 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
           ) : null}
         </div>
       ) : null}
+      {call?.status === "pending" ? (
+        <div data-tonight-call className="flex min-w-0 flex-col bg-bar px-4 py-4 text-bar-foreground sm:px-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="font-mono text-sm tracking-[0.18em] text-demo uppercase">Tonight · Chip’s call</p>
+            <span className="inline-flex items-center bg-demo px-2 py-0.5 font-mono text-xs tracking-wide text-demo-foreground uppercase">
+              Pending
+            </span>
+          </div>
+          <figure className="mt-2">
+            <blockquote className="font-heading text-xl leading-snug font-semibold italic break-words">“{call.take}”</blockquote>
+            <figcaption className="mt-2 font-mono text-[13px] tracking-wide uppercase">
+              {call.game}
+              {call.window ? ` · ${call.window}` : ""} · <time dateTime={call.date}>{call.dateLabel}</time> · <span className="sr-only">Sport: </span>{call.sport}
+            </figcaption>
+          </figure>
+          <p className="mt-1 font-mono text-[13px] tracking-wide uppercase">
+            Chip {record.tally.hits}–{record.tally.misses} · {record.tally.pending} pending
+          </p>
+          <p className="mt-auto flex flex-wrap gap-x-4 pt-2">
+            <a href={call.postUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-demo uppercase underline-offset-4 hover:underline">
+              The X post →
+            </a>
+            <Link href="/calls" className="inline-flex min-h-11 items-center font-mono text-sm tracking-wide text-bar-foreground uppercase underline-offset-4 hover:underline">
+              All calls →
+            </Link>
+          </p>
+        </div>
+      ) : (
       <div className="min-w-0 border-t border-ink/15 px-4 py-4 sm:px-5 lg:border-t-0 lg:border-l">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className={kicker}>Chip’s call{call?.status === "pending" ? "" : " · latest"}</p>
+          <p className={kicker}>Chip’s call · latest</p>
+          {call ? <CallStatusTag status={call.status} /> : null}
         </div>
         {call ? (
           <figure className="mt-2">
@@ -65,7 +95,8 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
               <span className="inline-flex flex-wrap items-center gap-2">
                 <SportChip sport={call.sport} />
                 <span>
-                  {call.game} · <time dateTime={call.date}>{call.dateLabel}</time>
+                  {call.game}
+                  {call.window ? ` · ${call.window}` : ""} · <time dateTime={call.date}>{call.dateLabel}</time>
                 </span>
               </span>
             </figcaption>
@@ -73,10 +104,18 @@ export function HomeFeatured({ story, calls }: { story: Story | undefined; calls
         ) : (
           <p className="mt-2 text-sm text-ink-soft">Next call drops soon.</p>
         )}
+        {call ? (
+          <p className="flex flex-wrap gap-x-4">
+            <a href={call.postUrl} target="_blank" rel="noopener noreferrer" className={sectionLink}>
+              The X post
+            </a>
+          </p>
+        ) : null}
         <Link href="/calls" className={sectionLink}>
           All calls →
         </Link>
       </div>
+      )}
     </section>
   );
 }
