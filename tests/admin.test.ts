@@ -54,13 +54,16 @@ test("admin stays off without all three settings and a long session secret", () 
 // ---------- stories ----------
 
 const fileSlugs = FILE_STORIES.map((story) => story.slug);
+// Always one UTC calendar day after the newest filed story, so new filings never collide with the draft.
+const newestFiledDate = FILE_STORIES.map((story) => story.date).sort().at(-1)!;
+const draftDate = new Date(Date.parse(`${newestFiledDate}T00:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
 const draft = {
   slug: "desk-notes-week-7",
   title: "Desk notes, Week 7",
   dek: "Three things from Sunday.",
   body: `## What happened\n\nChip was wrong again. See [the Nix call](/stories/${fileSlugs[0]}) and [the cast](/cast/chip-absolute).`,
   voiceId: "chip-absolute",
-  date: "2026-10-30",
+  date: draftDate,
 };
 const record = (overrides: Partial<AdminStoryRecord> = {}): AdminStoryRecord => ({
   ...draft, status: "published", updatedAt: "2026-10-18T00:00:00Z", updatedBy: "email:desk@example.com", ...overrides,
@@ -95,7 +98,7 @@ test("merged story list: published admin stories join filed ones, newest first; 
     record({ slug: fileSlugs[0], title: "Clash" }),
   ]);
   assert.equal(merged.length, FILE_STORIES.length + 1);
-  assert.equal(merged[0].slug, "desk-notes-week-7");
+  assert.equal(merged[0].slug, draft.slug);
   assert.equal(merged.find((story) => story.slug === fileSlugs[0])?.title, FILE_STORIES[0].title, "filed story wins a clash");
   assert.ok(!merged.some((story) => story.slug === "hidden-one" || story.slug === "broken-one"));
 });
