@@ -507,3 +507,22 @@ test("live record excludes the ungraded Bryce call", () => {
 test("an ungraded call may not carry its own note", () => {
   assert.throws(() => parseCall("2026-10-04-x.json", callFile({ date: "2026-10-04", status: "ungraded", kind: "argument", note: "Nope." }).replaceAll("2026-10-05", "2026-10-04")), /ungraded call/);
 });
+
+test("pending call is visible on home featured and /calls kicker", async () => {
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const { HomeFeatured } = await import("../components/home-sections.tsx");
+  const { nextCallKicker } = await import("../components/calls-list.tsx");
+  const base = loadCalls()[0];
+  const call = { ...base, status: "pending", window: "TNF", date: "2026-10-29", postUrl: "https://x.com/chip/status/1" } as typeof base;
+  const html = renderToStaticMarkup(createElement(HomeFeatured, { story: undefined, calls: [call] }));
+  assert.match(html, /data-tonight-call/);
+  assert.match(html, /Tonight · Chip’s call/);
+  assert.match(html, /bg-demo[^"]*text-demo-foreground[^"]*">\s*Pending/);
+  assert.equal(/satire/.test(html), false, "no satire chrome on tonight rail");
+  assert.match(html, /· TNF ·/);
+  assert.match(html, /href="https:\/\/x.com\/chip\/status\/1"[^>]*target="_blank"[^>]*>The X post →/);
+  assert.equal(html.includes("· latest"), false);
+  assert.equal(nextCallKicker(call, new Date("2026-10-29T20:00:00Z")), "Tonight’s call · TNF");
+  assert.equal(nextCallKicker(call, new Date("2026-10-31T20:00:00Z")), "Next call · TNF");
+  assert.equal(nextCallKicker({ ...call, window: undefined } as typeof base, new Date("2026-10-31T20:00:00Z")), "Next call");
+});
