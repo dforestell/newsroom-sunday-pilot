@@ -155,18 +155,34 @@ test("story links open externally and Sources renders as its own section", () =>
   assert.match(html, /<li><a href="https:\/\/www\.espn\.com\/x" target="_blank" rel="noopener noreferrer">ESPN, recap, A@B<\/a><\/li>/);
 });
 
-test("the Wemby sample-size funeral leads, then the never-pay-RBs hit, then the held-up Wemby story, then the Oct 23 receipt, then the Nix call and Pete's challenge", () => {
+test("the real corpus keeps the newest-first shelf invariant, and key stories render by slug", () => {
   const stories = loadStories();
-  assert.deepEqual(stories.slice(0, 6).map((story) => [story.slug, story.voiceId]), [
+  for (let i = 1; i < stories.length; i++) {
+    const [prev, next] = [stories[i - 1], stories[i]];
+    const pair = `${prev.slug} before ${next.slug}`;
+    assert.ok(prev.date >= next.date, `date non-increasing: ${pair}`);
+    if (prev.date === next.date) {
+      assert.ok(prev.order <= next.order, `order non-decreasing on same date: ${pair}`);
+      if (prev.order === next.order) assert.ok(prev.slug.localeCompare(next.slug) < 0, `slug ascending on full tie: ${pair}`);
+    }
+  }
+  const bySlug = (slug: string) => {
+    const story = stories.find((s) => s.slug === slug);
+    assert.ok(story, `missing story ${slug}`);
+    return story;
+  };
+  for (const [slug, voiceId] of [
     ["chip-wemby-sample-size-funeral-2026-10-29", "chip-absolute"],
     ["chip-never-pay-running-backs-2026-10-28", "chip-absolute"],
     ["chip-wemby-20-10-held-up-sac-sas-2026-10-27", "chip-absolute"],
     ["chip-wemby-receipt-hou-sas-2026-10-23", "chip-absolute"],
     ["chip-thursday-call-nix-sea-den-2026-10-15", "chip-absolute"],
     ["pete-challenge-chip-nix-call-2026-10-14", "postcard-pete"],
-  ]);
-  for (const story of stories.slice(4, 6)) assert.match(story.html, /<section class="story-sources" aria-label="Sources">/);
-  assert.match(stories[2].html, /1–1 in the NBA and 2–11 overall/);
+  ]) assert.equal(bySlug(slug).voiceId, voiceId, slug);
+  for (const slug of ["chip-thursday-call-nix-sea-den-2026-10-15", "pete-challenge-chip-nix-call-2026-10-14"]) {
+    assert.match(bySlug(slug).html, /<section class="story-sources" aria-label="Sources">/, slug);
+  }
+  assert.match(bySlug("chip-wemby-20-10-held-up-sac-sas-2026-10-27").html, /1–1 in the NBA and 2–11 overall/);
 });
 
 test("only a call column's opening gets the call rail", () => {
