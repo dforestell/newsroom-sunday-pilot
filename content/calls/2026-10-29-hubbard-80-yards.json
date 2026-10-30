@@ -6,5 +6,7 @@
   "take": "Chuba Hubbard runs for 80+ yards at Lambeau.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2115492652514689114",
-  "status": "pending"
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2116173012131274767",
+  "result": "Hubbard 22 carries, 81 rushing yards, 1 TD; GB 27, CAR 19 (ESPN 401873023)",
+  "status": "held-up"
 }
