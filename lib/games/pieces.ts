@@ -127,6 +127,72 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "My call tonight: CeeDee Lamb for 100+ receiving yards. [Track it on /calls](https://poorformsports.com/calls)."
     ]
   },
+  // Week 8 Friday Chip previews — Sunday Nov 1 2026 noon CT (preview until Dillon OK)
+
+  "nfl:2026:2:BAL:BUF": {
+    headline: "Lamar is questionable again. I already got burned once.",
+    body: [
+      "Last week I took Baltimore because Derrick Henry didn't need Lamar Jackson's status settled. Cincinnati won 35-13 in Baltimore. Lamar is listed questionable again, and his numbers haven't moved: 967 yards, 6 touchdowns, 1 interception.",
+      "Buffalo is 5-1 and has won two straight, 37-34 in overtime at the Rams and 33-30 at Las Vegas. Josh Allen has 1,504 yards and 9 touchdowns, and James Cook III has 627 rushing yards and 6 scores. Baltimore is 4-3 and has lost two straight. Roquan Smith and Kyle Hamilton are both listed questionable too.",
+      "Buffalo is a 3-point favorite with a 54.5 total, and I'm taking the Bills. Henry has 579 yards and 7 touchdowns, so he'll get his. I'm just done paying for the same take twice.",
+    ],
+  },
+  "nfl:2026:2:TEN:CIN": {
+    headline: "Twelve and a half is a lot. Cincinnati earned every bit of it.",
+    body: [
+      "Cincinnati just went to Baltimore and won 35-13. Joe Burrow has 15 touchdown passes against 3 interceptions, and Tee Higgins has 571 receiving yards. The Bengals are 4-2.",
+      "Tennessee is 1-6 and lost 27-24 to Cleveland last week. Cam Ward has 4 touchdowns and 5 interceptions. Tony Pollard, with 478 rushing yards, is the reliable part. Calvin Ridley, Carnell Tate and Tyjae Spears are all listed questionable, which thins out a group that was already thin.",
+      "I'm taking Cincinnati to win and cover. Anyone holding onto 'the Titans are scrappy' should know that scrappy is 1-6.",
+    ],
+  },
+  "nfl:2026:2:ARI:DAL": {
+    headline: "Dallas found its offense in Philadelphia. Arizona can't keep up with it.",
+    body: [
+      "The Cowboys went into Philadelphia on Monday and won 38-21. Dak Prescott has 1,851 yards and 13 touchdowns, CeeDee Lamb has 651 receiving yards, and Javonte Williams has 8 rushing touchdowns. Dallas is 3-4 and gets a short week at home.",
+      "Arizona is 2-5 and has lost four of its last five, most recently 30-16 to Denver. Jacoby Brissett has 10 touchdowns and 6 picks, and Trey McBride leads the team with 472 receiving yards. Jeremiyah Love, the leading rusher at 245 yards, is listed questionable.",
+      "Dallas is a 7-point favorite and I'm taking the Cowboys. Quinnen Williams and Caleb Downs are listed questionable for Dallas, so Brissett gets a window. It isn't big enough.",
+    ],
+  },
+  "nfl:2026:2:MIN:DET": {
+    headline: "Minnesota is 6-0 and a road underdog. I'm still riding Gibbs.",
+    body: [
+      "The Vikings are 6-0, and they've won by scores of 9-3, 15-10 and 16-10. Kyler Murray has 812 passing yards and 3 touchdowns. Detroit is a 3-point favorite anyway, and I don't hate the line.",
+      "The Lions are 4-2 and have won two straight, including 20-17 over Green Bay. Jared Goff has 14 touchdowns and no interceptions. Jahmyr Gibbs has 620 rushing yards and 7 touchdowns, which is about 103 a game, and Aaron Jones Sr. is listed questionable on the other side. Kerby Joseph is out for Detroit.",
+      "My call is on the record: Gibbs goes for 100-plus rushing yards, and it's on the board at [poorformsports.com/calls](https://poorformsports.com/calls). Dallas Turner has 6 sacks and will make Goff move. I'm taking Detroit to hand Minnesota its first loss, mostly by handing it to Gibbs.",
+    ],
+  },
+  "nfl:2026:2:LV:NYJ": {
+    headline: "I took the Jets last week. Miami took the Jets too.",
+    body: [
+      "Last Sunday I picked the Jets over a winless Miami team. Miami won 28-25. New York is 2-5 and has lost two straight, and the market is still making them a 1.5-point favorite.",
+      "Las Vegas is 3-4 but has lost four straight, the last one 35-21 to the Rams. Kirk Cousins has 16 touchdown passes, the most of anyone in this game, and Tre Tucker has 474 receiving yards. Geno Smith has 10 touchdowns and 2 picks, with Garrett Wilson at 444 yards.",
+      "The Jets have Breece Hall and David Bailey listed questionable and two defensive linemen listed doubtful. I'm taking Las Vegas. A losing streak is bad. Trusting the Jets twice in a row is worse.",
+    ],
+  },
+  "nfl:2026:2:CLE:PIT": {
+    headline: "Cleveland already beat Pittsburgh once. The line forgot.",
+    body: [
+      "Both teams are 5-2. Cleveland beat the Steelers 27-24 earlier this season and just won 27-24 again, at Tennessee. Pittsburgh is a 3.5-point favorite at home anyway.",
+      "The Steelers are coming off a 16-10 win over New Orleans in Paris. Jaylen Warren has 561 rushing yards, Aaron Rodgers has 13 touchdowns and 5 picks, and T.J. Watt has 5.5 sacks. Alex Highsmith is listed questionable. Deshaun Watson has 7 touchdowns and only 3 interceptions, and Mason Graham has 4 sacks.",
+      "The total is 39.5, the lowest of the noon games, and that's the Browns' kind of afternoon. I'm taking Cleveland to make it two.",
+    ],
+  },
+  "nfl:2026:2:ATL:TB": {
+    headline: "Both of these teams beat me last week. One of them has to lose now.",
+    body: [
+      "Last Sunday I took 6-0 San Francisco at Atlanta. The Falcons won 29-20. I also took Carolina over Tampa Bay, and the Bucs won 43-13. So I'm going to be careful with my words.",
+      "Atlanta is 3-4 and Bijan Robinson has 704 rushing yards, the most of anyone on the noon slate. Michael Penix Jr. has 9 touchdowns and 1 interception, and Drake London has 616 receiving yards. Tampa Bay is 2-5, and Baker Mayfield has played enough to throw for 679 yards and 3 touchdowns. Emeka Egbuka is listed questionable again.",
+      "Tampa Bay is a 2.5-point home favorite. I'm taking Atlanta, because Bijan is the best player on the field and I'm out of reasons to keep picking against him.",
+    ],
+  },
+  "nfl:2026:2:IND:JAX": {
+    headline: "Daniel Jones has more picks than touchdowns. The line is 10 for a reason.",
+    body: [
+      "Indianapolis is 2-5 and has lost three straight, most recently 16-10 at Minnesota. Daniel Jones has 4 touchdown passes and 7 interceptions. Jonathan Taylor has 587 rushing yards and 8 touchdowns, and he's doing almost all of it alone.",
+      "Jacksonville is 4-2 and lost a 34-31 shootout to Houston last week. Trevor Lawrence has 14 touchdowns against 4 interceptions, and Parker Washington leads the team with 416 receiving yards. Jakobi Meyers is listed questionable.",
+      "Jacksonville is a 10-point favorite and I'm taking the Jaguars. Taylor will get his touchdown. The rest of the offense would need to show up for this to stay close.",
+    ],
+  },
 };
 
 export type BodySegment = { text: string; href?: string };
