@@ -8,15 +8,15 @@ label: SATIRE
 order: 0
 ---
 
-> Poor Form Desk filing. Comedy frame, not a wire story. Scores move; this was the board at the Saturday afternoon pull (~12:39 PM CT).
+> Poor Form Desk filing. Comedy frame, not a wire story. Scores move; this was the board at the Saturday afternoon pull (~12:40 PM CT).
 
 The Desk is not calling upsets before the third quarter. The Desk is filing the board.
 
 **Iowa 20, #25 Wisconsin 0 — HALFTIME.**  
 A ranked team with a zero on the road. Twenty unanswered. Loudest alert on the board. If Wisconsin climbs back, the filing still happened. If they don't, you already saw the shape of the afternoon.
 
-**Syracuse 20, #19 SMU 10 — end of 2nd.**  
-Ranked Mustangs trailing unranked Orange by 10 as the half closes. Same genre: the AP number didn't buy a lead.
+**Syracuse 20, #19 SMU 10 — HALFTIME.**  
+Ranked Mustangs trailing unranked Orange by 10. Same genre: the AP number didn't buy a lead.
 
 **#5 Notre Dame 14, Navy 13 — HALFTIME.**  
 Top-five on the road, up one. Not a collapse — a one-score game against a service academy that came to spoil. Watch the third.
