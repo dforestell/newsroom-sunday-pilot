@@ -8,7 +8,7 @@ label: SATIRE
 order: 0
 ---
 
-> **SATIRE.** Poor Form Desk filing. Comedy frame, not a wire story. Scores move; this was the board at the Saturday afternoon pull (~12:39 PM CT).
+> Poor Form Desk filing. Comedy frame, not a wire story. Scores move; this was the board at the Saturday afternoon pull (~12:39 PM CT).
 
 The Desk is not calling upsets before the third quarter. The Desk is filing the board.
 
