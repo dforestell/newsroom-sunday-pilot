@@ -193,6 +193,40 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "Jacksonville is a 10-point favorite and I'm taking the Jaguars. Taylor will get his touchdown. The rest of the offense would need to show up for this to stay close.",
     ],
   },
+
+  // Week 8 Saturday Chip previews — Sun Nov 1 afternoon + SNF (preview until Dillon OK)
+  "nfl:2026:2:LAC:LAR": {
+    headline: "The Chargers had a bye to fix 0-6. The Rams don't care what they fixed.",
+    body: [
+      "The Chargers are the league's only winless team and its lowest-scoring one. Justin Herbert has 5 touchdowns, 8 interceptions and 21 sacks taken, and Omarion Hampton leads the team with 289 rushing yards. They lost Derwin James Jr. for this one too.",
+      "The Rams are 3-4 and just beat Las Vegas 35-21, with Kyren Williams and Blake Corum both running for more than 90 yards. Matthew Stafford leads the NFL with 1,989 passing yards, and Puka Nacua has at least five catches in 15 straight games.",
+      "The Rams are 6.5-point favorites and I'm taking them, same as last week. A bye week of self-examination is nice. Stafford's yardage is nicer.",
+    ],
+  },
+  "nfl:2026:2:KC:DEN": {
+    headline: "I picked Kansas City to stay perfect. Seattle held them to 3.",
+    body: [
+      "Last Sunday I took the Chiefs at Seattle. They lost 20-3, and Patrick Mahomes has now gone consecutive games without a touchdown pass for the first time in his career. Kansas City is still 5-1 and somehow a 1.5-point favorite in Denver.",
+      "Denver is 5-2 and has won four of five, most recently 30-16 at Arizona with a 62-yard Bo Nix touchdown run. Nix has 7 touchdowns and 3 picks, and the defense led by Zach Allen and Nik Bonitto is doing the heavy lifting. Allen and Jaylen Waddle are both listed questionable.",
+      "Kenneth Walker III has 701 rushing yards and Travis Kelce is averaging a career-best 14.3 yards per catch at 37. The total is 40.5. I'm taking Denver, because I already paid for trusting Kansas City's offense once this month.",
+    ],
+  },
+  "nfl:2026:2:NE:MIA": {
+    headline: "Miami finally won one. New England is still a touchdown better.",
+    body: [
+      "The Dolphins are 1-5 and coming off their first win, 28-25 over the Jets. Malik Willis threw for 208 yards and two scores and ran for another. Miami has rushed for 100-plus yards in five straight games, and Ollie Gordon II has a rushing touchdown in each of the last four.",
+      "New England is 4-3 after a 30-24 loss in Chicago. Drake Maye has 13 touchdowns and 8 interceptions, Hunter Henry leads them with 296 receiving yards, and Elijah Ponder has 5.5 sacks. A.J. Brown and TreVeyon Henderson are listed questionable.",
+      "Willis gets his old Tennessee coach, Mike Vrabel, on the other sideline. That's a nice story. The Patriots are 7-point favorites, and I'm taking New England to win and cover.",
+    ],
+  },
+  "nfl:2026:2:PHI:WSH": {
+    headline: "Sunday night gets 2-5 against 1-4-1. Somebody has to win it.",
+    body: [
+      "Philadelphia has lost five straight, the last one 38-21 to Dallas. Jalen Hurts is out, likely for the season, and Tanner McKee has 426 yards, 2 touchdowns and 1 interception in two starts. DeVonta Smith, the team's leading receiver at 310 yards, is out too.",
+      "Washington is 1-4-1 and coming off a bye. Terry McLaurin is on injured reserve for the season and so is Jacory Croskey-Merritt, the leading rusher. Jayden Daniels is a full participant and averaging 8.5 yards per carry, the best in the league.",
+      "Washington is a 6-point favorite and the Eagles are 1-6 against the spread. I'm taking the Commanders. The loser of this game is in last place, and Philadelphia keeps volunteering for it.",
+    ],
+  },
 };
 
 export type BodySegment = { text: string; href?: string };
