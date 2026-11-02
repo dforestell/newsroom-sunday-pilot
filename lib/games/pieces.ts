@@ -227,6 +227,16 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "Washington is a 6-point favorite and the Eagles are 1-6 against the spread. I'm taking the Commanders. The loser of this game is in last place, and Philadelphia keeps volunteering for it.",
     ],
   },
+
+  // Week 8 Monday Chip preview — MNF CHI @ SEA Mon Nov 2 2026 (preview until Dillon OK)
+  "nfl:2026:2:CHI:SEA": {
+    headline: "Last week I bet against Seattle's defense. I'm done paying that tax.",
+    body: [
+      "Chicago is 5-2 and has won three straight, the latest 30-24 over New England. Caleb Williams has thrown for 300-plus in back-to-back games since coming back from his hamstring, and the Bears lead the league at 154.3 rushing yards a game, with D'Andre Swift at 7 rushing touchdowns. They also just traded for Jeffery Simmons. They lost Cole Kmet for the season.",
+      "Seattle is 4-3 and just held Kansas City to 3 points and 213 yards. I took the Chiefs in that game. The Seahawks allow a league-low 233.9 yards a game and haven't given up a 100-yard rusher in 36 straight games. Jaxon Smith-Njigba leads the NFL at 123.9 receiving yards a game, and the team just added Quenton Nelson up front. Charles Cross and Rashid Shaheed are out.",
+      "Seattle is a 3-point favorite with a 46.5 total. The NFL's best run game meets the streak that eats run games, and I'm taking the streak. Seahawks win, and Swift doesn't get to 100.",
+    ],
+  },
 };
 
 export type BodySegment = { text: string; href?: string };
