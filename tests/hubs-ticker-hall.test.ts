@@ -34,10 +34,13 @@ test("NBA hub no longer advertises the finished Oct 23 game", () => {
   assert.equal(/HOU_SAS|hou-sas-2026-10-23|Game hooks/.test(nba), false);
 });
 
-test("hub links are in the nav and every filed story has a sport", () => {
+test("hub links are in the nav; tagged stories are NFL or NBA (untagged = All only)", () => {
   const nav = source("components/site-nav.tsx");
   assert.ok(nav.includes('href: "/nfl"') && nav.includes('href: "/nba"'));
-  for (const story of loadStories()) assert.ok(story.sport === "NFL" || story.sport === "NBA", story.slug);
+  // sport is optional on stories (docs + schema); CFB/desk filings stay untagged until a /cfb hub exists.
+  for (const story of loadStories()) {
+    if (story.sport) assert.ok(story.sport === "NFL" || story.sport === "NBA", story.slug);
+  }
   for (const call of loadCalls().filter((c) => c.sport === "NBA")) {
     assert.match(call.postUrl, /^https:\/\/x\.com\/ChipAbsolute\/status\/\d+$/, "NBA calls need a real Chip post");
   }
