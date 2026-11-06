@@ -6,5 +6,7 @@
   "take": "Derrick Henry runs for 100 yards on Jacksonville with a rookie QB making his first start.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2118044289506930815",
-  "status": "pending"
+  "status": "missed",
+  "result": "Henry 17 car, 57 yds, 0 TD (ESPN 401873037; Final JAX 33–10 BAL)",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2118724867583533161"
 }
