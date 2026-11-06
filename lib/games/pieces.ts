@@ -127,6 +127,73 @@ export const GAME_PIECES: Record<string, GamePieceInput> = {
       "My call tonight: CeeDee Lamb for 100+ receiving yards. [Track it on /calls](https://poorformsports.com/calls)."
     ]
   },
+  // Week 9 Friday Chip previews — Sun Nov 8 2026 morning+noon CT (Madrid + 7 noon; preview until Dillon OK)
+
+  "nfl:2026:2:CIN:ATL": {
+    headline: "Madrid gets Burrow at breakfast. I already paid for the Bijan take once.",
+    body: [
+      "Cincinnati and Atlanta open Week 9 at the Santiago Bernabéu at 8:30 AM CT, and the Bengals are a 3-point favorite with a 52.5 total. Joe Burrow has 2,115 yards, 20 touchdowns and 6 interceptions. Tee Higgins has 726 receiving yards. Cincinnati is 5-2 and just beat Tennessee 43-36 in overtime.",
+      "Atlanta is 3-5 and got shut out 16-0 by Tampa Bay last week. Bijan Robinson still has 780 rushing yards, the best number on either side of the ball here. Michael Penix Jr. has 9 touchdowns and 5 picks. Brian Robinson Jr. is out; James Pearce Jr. and Divine Deablo are listed questionable.",
+      "Last week I took Atlanta over Tampa Bay because of Bijan. That one is on me. Jordan Battle, Kyle Dugger and Cedric Johnson are all listed questionable for Cincinnati, but I'm taking the Bengals. Burrow is the reason this is a breakfast favorite, not a coin flip.",
+    ],
+  },
+  "nfl:2026:2:CLE:NO": {
+    headline: "Cleveland is 5-3 and a road dog. Watson being questionable is the whole number.",
+    body: [
+      "The Browns are 5-3 and the Saints are 2-5, and somehow New Orleans is a 3-point home favorite with a 42.5 total, the lowest of the noon games. Deshaun Watson is listed questionable with a concussion. That is the line talking.",
+      "Cleveland just lost 27-6 at Pittsburgh. Watson has 1,806 yards, 7 touchdowns and 3 interceptions when he's played. Quinshon Judkins has 342 rushing yards. Harold Fannin Jr. and Quincy Williams are also listed questionable. New Orleans is coming off a bye after a 16-10 loss to Pittsburgh in Paris; Tyler Shough has 13 touchdowns and 6 picks, and Chris Olave has 636 receiving yards. Alvin Kamara is listed questionable.",
+      "I'm taking New Orleans. A 5-3 record does not cover for a questionable quarterback on the road, and the Saints finally get a home game that isn't against a team that already beat them.",
+    ],
+  },
+  "nfl:2026:2:DAL:IND": {
+    headline: "Dallas lost in overtime to Arizona. Indianapolis lost 42-7. I'm still on Dak.",
+    body: [
+      "Dallas is 3-5 after a 33-30 overtime loss to Arizona at home. Dak Prescott has 2,046 yards and 14 touchdowns, CeeDee Lamb has 709 receiving yards, and Javonte Williams has 8 rushing touchdowns. The Cowboys are still a 5.5-point road favorite in Indianapolis.",
+      "The Colts are 2-6 and just got run out of Lucas Oil 42-7 by Jacksonville. Daniel Jones has 5 touchdowns and 9 interceptions. Jonathan Taylor has 610 rushing yards and 8 scores, and he's carrying an offense that isn't giving him much help. Alec Pierce is on injured reserve.",
+      "George Pickens, Jake Ferguson, Tyler Smith and Caleb Downs are all listed questionable for Dallas. I'm taking the Cowboys anyway. Taylor will get his. The rest of Indianapolis has already shown you what it does with a full week to prepare.",
+    ],
+  },
+  "nfl:2026:2:DEN:CAR": {
+    headline: "Denver just beat Kansas City. Carolina is not Kansas City.",
+    body: [
+      "The Broncos are 6-2 and went into Arrowhead and won 28-24 last week. Bo Nix has 1,493 yards, 9 touchdowns and 3 interceptions. J.K. Dobbins has 306 rushing yards. Denver is only a 2.5-point favorite at Carolina, with a 44.5 total.",
+      "Carolina is 3-4 and lost 27-19 to Green Bay on last week's Thursday Night Football. Bryce Young has 1,921 yards and 13 touchdowns. Chuba Hubbard has 540 rushing yards, and Tetairoa McMillan has 569 receiving yards. Damien Lewis and Bobby Okereke are listed questionable.",
+      "Talanoa Hufanga and Brandon Jones are listed questionable for Denver. I'm taking the Broncos. Beating the Chiefs on the road does not get erased by a Panthers team that just spent a Thursday night losing to Green Bay.",
+    ],
+  },
+  "nfl:2026:2:DET:MIA": {
+    headline: "Gibbs just got Minnesota. Miami is 1-6. This is not a trap game.",
+    body: [
+      "Detroit is 5-2 and beat Minnesota 19-15 last week. Jared Goff has 15 touchdowns and 1 interception. Jahmyr Gibbs has 773 rushing yards and 8 touchdowns. The Lions are a 7-point road favorite in Miami with a 50.5 total.",
+      "The Dolphins are 1-6 and have not won at Hard Rock this season. Malik Willis has 6 touchdowns and 5 interceptions. Ollie Gordon II has 408 rushing yards. Five Miami players are listed questionable, none of them fixing the quarterback problem.",
+      "Kerby Joseph is out for Detroit, Jack Campbell is doubtful, and Amon-Ra St. Brown and Brian Branch are listed questionable. I'm still taking Detroit. A 1-6 home team is not a trap. It's a cover.",
+    ],
+  },
+  "nfl:2026:2:LAR:WSH": {
+    headline: "Washington beat Philadelphia. The Rams still get the ball to Stafford.",
+    body: [
+      "Los Angeles is 4-4 and just beat the Chargers 24-9. Matthew Stafford has 2,146 yards and 15 touchdowns. Kyren Williams has 548 rushing yards and 6 scores, and Puka Nacua has 565 receiving yards. The Rams are a 4.5-point road favorite.",
+      "Washington is 2-4-1 and bounced back with a 27-10 win over Philadelphia. Jayden Daniels has 976 passing yards and 236 rushing yards. The receiving corps is thin: Antonio Williams leads them at 259 yards. Dyami Brown and Treylon Burks are listed questionable.",
+      "Trent McDuffie and Kam Curl are listed questionable for the Rams. I'm taking Los Angeles. Beating a 2-6 Eagles team is fine. Matching Stafford and Kyren on a full week is a different job.",
+    ],
+  },
+  "nfl:2026:2:NYG:PHI": {
+    headline: "The Giants are 4-2-1 and favored in Philly. Believe the record, not the logo.",
+    body: [
+      "New York is 4-2-1 and coming off a bye after a 27-21 overtime win over Houston. Jameis Winston has 957 yards, 7 touchdowns and 5 interceptions. Malik Nabers has 605 receiving yards. The Giants are a 3.5-point road favorite with a 38.5 total, the lowest number next to Cleveland-New Orleans.",
+      "Philadelphia is 2-6 and just lost 27-10 at Washington. Tanner McKee has 638 yards, 2 touchdowns and 2 picks. Saquon Barkley is down to 274 rushing yards and is listed questionable along with DeVonta Smith and McKee himself.",
+      "Cam Skattebo, Malik Nabers and Andrew Thomas are listed questionable for the Giants. I'm taking New York. The logo in Philly still sells tickets. The 2-6 record is what shows up on Sunday.",
+    ],
+  },
+  "nfl:2026:2:NYJ:KC": {
+    headline: "Nine and a half at Arrowhead. I already lost money trusting the Jets once.",
+    body: [
+      "Kansas City is 5-2 at home (3-0) after a 28-24 loss to Denver. Patrick Mahomes has 1,795 yards and 12 touchdowns. Kenneth Walker III has 770 rushing yards and 6 scores. The Chiefs are a 9.5-point favorite with a 48.5 total.",
+      "The Jets are 2-6 and lost 38-33 to Las Vegas last week — the same Las Vegas team I took over New York the week before, and then watched New York lose again. Geno Smith has 12 touchdowns and 3 interceptions. Garrett Wilson has 527 receiving yards and is listed questionable with a concussion. Braelon Allen has 565 rushing yards.",
+      "L'Jarius Sneed is on injured reserve for Kansas City. I'm taking the Chiefs. Nine and a half is a lot until you remember which team keeps asking you to trust it on the road.",
+    ],
+  },
+
 };
 
 export type BodySegment = { text: string; href?: string };
