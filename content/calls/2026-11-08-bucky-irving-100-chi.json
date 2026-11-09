@@ -6,5 +6,7 @@
   "take": "Bucky Irving runs for 100 yards at Chicago",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2118724926266024360",
-  "status": "pending"
+  "status": "missed",
+  "result": "ESPN final CHI 27, TB 24: Bucky Irving 20 carries, 97 rushing yards, 2 TD, three short of 100.",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2119811056130486272"
 }
