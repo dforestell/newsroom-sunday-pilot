@@ -6,5 +6,7 @@
   "take": "James Cook scores a touchdown against Minnesota",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2119811300901679521",
-  "status": "pending"
+  "status": "held-up",
+  "result": "James Cook 5-yard rushing TD in the 4th quarter (ESPN 401873051)",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2120007098276687876"
 }
