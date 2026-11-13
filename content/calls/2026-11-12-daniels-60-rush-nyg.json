@@ -6,5 +6,7 @@
   "take": "Jayden Daniels runs for 60+ yards on the Giants.",
   "kind": "forecast",
   "postUrl": "https://x.com/ChipAbsolute/status/2120582226240819401",
-  "status": "pending"
+  "status": "missed",
+  "result": "ESPN final WSH 24, NYG 21: Jayden Daniels 11 carries, 28 rushing yards, 32 short of 60.",
+  "receiptUrl": "https://x.com/ChipAbsolute/status/2121260022705348658"
 }
